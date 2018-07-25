@@ -15,6 +15,7 @@
 }
 
 .App-title {
+  font-family: "Concert One", serif;
   font-size: 1.5em;
 }
 
@@ -23,6 +24,68 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+footer {
+  color: white;
+  padding: 1em 0.5em 0em 0.5em;
+  background-color: #353a3f;
+  clear: left;
+}
+
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.body-content {
+  margin: 0 auto;
+  width: 85%;
+  padding: 20px 0;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+.wrapper-content {
+  margin: 0 auto;
+  width: 80%;
+  padding: 60px 0;
+}
+
+.icon-size {
+  font-size: 18px;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.cart-icon-size {
+  font-size: 21px;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.nav-bar-items-left {
+  margin-left: 60px;
+}
+
+.login-login-link {
+  margin-right: 20px;
 }
