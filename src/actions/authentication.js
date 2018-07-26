@@ -20,7 +20,7 @@ export const userLogOut = () => ({
   type: USER_LOGGED_OUT
 });
 
-export const registerUser = data => dispatch =>
+export const signUpUser = data => dispatch =>
   axios
     .post("/api/v1/auth/signup", data)
     .then(res => dispatch(registerUser(res.data)));
@@ -31,7 +31,7 @@ export const loginUser = data => dispatch =>
     localStorage.setItem("appAccessToken", appAccessToken);
     const user = jwtDecode(appAccessToken);
 
-    return dispatch(userLogIn({ ...user, isLoggedIn: true }));
+    return dispatch(userLogIn({ ...user, logInStatus: true }));
   });
 
 export const logoutUser = () => dispatch => {
