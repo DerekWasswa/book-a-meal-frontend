@@ -4,7 +4,7 @@ import mealReducer from "./auth-reducer";
 import menuReducer from "./auth-reducer";
 import orderReducer from "./auth-reducer";
 
-export default combineReducers({
+export const applicationReducers = combineReducers({
   authReducer,
   mealReducer,
   menuReducer,
