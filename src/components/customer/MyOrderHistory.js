@@ -97,7 +97,7 @@ export default class MyOrderHistory extends React.Component {
                 </Table>
               </div>
               <div
-                class="tab-pane fade active show"
+                className="tab-pane fade active show"
                 id="list-profile"
                 role="tabpanel"
                 aria-labelledby="list-profile-list"
@@ -137,7 +137,7 @@ export default class MyOrderHistory extends React.Component {
                 </Table>
               </div>
               <div
-                class="tab-pane fade"
+                className="tab-pane fade"
                 id="list-messages"
                 role="tabpanel"
                 aria-labelledby="list-messages-list"
@@ -178,7 +178,7 @@ export default class MyOrderHistory extends React.Component {
               </div>
 
               <div
-                class="tab-pane fade"
+                className="tab-pane fade"
                 id="list-settings"
                 role="tabpanel"
                 aria-labelledby="list-settings-list"

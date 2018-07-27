@@ -71,7 +71,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -88,7 +90,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -107,7 +111,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -123,14 +129,16 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
                 </CardColumns>
               </div>
               <div
-                class="tab-pane fade active show"
+                className="tab-pane fade active show"
                 id="list-profile"
                 role="tabpanel"
                 aria-labelledby="list-profile-list"
@@ -150,7 +158,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -166,14 +176,16 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
                 </CardColumns>
               </div>
               <div
-                class="tab-pane fade"
+                className="tab-pane fade"
                 id="list-messages"
                 role="tabpanel"
                 aria-labelledby="list-messages-list"
@@ -192,7 +204,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -209,7 +223,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -217,7 +233,7 @@ export default class Menu extends React.Component {
               </div>
 
               <div
-                class="tab-pane fade"
+                className="tab-pane fade"
                 id="list-settings"
                 role="tabpanel"
                 aria-labelledby="list-settings-list"
@@ -236,7 +252,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -255,7 +273,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>
@@ -271,7 +291,9 @@ export default class Menu extends React.Component {
                         Order Now
                       </Button>&nbsp;
                       <Button outline color="success" size="sm">
-                        <i class="material-icons cart-icon-size">&#xe854;</i>
+                        <i className="material-icons cart-icon-size">
+                          &#xe854;
+                        </i>
                       </Button>
                     </CardBody>
                   </Card>

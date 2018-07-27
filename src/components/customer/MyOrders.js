@@ -1,8 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
-import { Table, Button, Col, Input, Label, FormGroup, Form } from "reactstrap";
+import { Table, Button } from "reactstrap";
 import "../../App.css";
+import UpdateMyOrderForm from "../controlled-forms/UpdateMyOrderForm";
 
 export default class MyOrders extends React.Component {
   render() {
@@ -56,19 +57,19 @@ export default class MyOrders extends React.Component {
         </Table>
 
         <div
-          class="modal fade"
+          className="modal fade"
           id="editOrderModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="myModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Edit Order</h4>
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title">Edit Order</h4>
                 <button
-                  class="close"
+                  className="close"
                   type="button"
                   data-dismiss="modal"
                   aria-label="Close"
@@ -76,48 +77,8 @@ export default class MyOrders extends React.Component {
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <Form>
-                  <FormGroup row>
-                    <Label for="meal" sm={2}>
-                      Meal
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="text"
-                        name="meal"
-                        id="meal"
-                        value="Chicken Luwombo with Matooke"
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="price" sm={2}>
-                      Price
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="number"
-                        name="price"
-                        id="price"
-                        value="20000"
-                      />
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  class="btn btn-secondary"
-                  type="button"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button class="btn btn-primary" type="button">
-                  Save
-                </button>
-              </div>
+              {/* Add a form that has the modal body and footer */}
+              <UpdateMyOrderForm />
             </div>
           </div>
         </div>
