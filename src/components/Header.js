@@ -84,28 +84,26 @@ export class Header extends React.Component {
               <NavItem>
                 <NavLink href="/c-orders">
                   <Badge color="secondary">432</Badge>
-                  <i class="material-icons">&#xe8cc;</i>
+                  <i className="material-icons">&#xe8cc;</i>
                 </NavLink>
               </NavItem>
 
-              <NavItem>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                    href="#"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Derick Wasswa
+              <NavItem className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Derick Wasswa
+                </a>
+                <div className="dropdown-menu">
+                  <a className="dropdown-item" href="#">
+                    Logout
                   </a>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Logout
-                    </a>
-                  </div>
-                </li>
+                </div>
               </NavItem>
             </Nav>
           </Collapse>
