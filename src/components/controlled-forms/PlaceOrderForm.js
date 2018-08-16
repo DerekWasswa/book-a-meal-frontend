@@ -4,15 +4,13 @@ import { setMenu } from "../../actions/menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { notify } from "react-notify-toast";
-import $ from "jquery";
 
 /**
  * @export
- * @class SetMenuForm
+ * @class PlaceOrderForm
  * @extends {React.Component}
  */
-class SetMenuForm extends React.Component {
+class PlaceOrderForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { name: "", description: "", date: "", meals: [] };
@@ -63,15 +61,12 @@ class SetMenuForm extends React.Component {
         date: date,
         meal_id: Number(meal)
       };
-      this.props.setMenu(JSON.stringify(data));
-
-      notify.show("Menu of the Day has been Set successfully.");
-      $("#setMenuModal").modal("hide");
+      let response = this.props.setMenu(JSON.stringify(data));
+      console.log(response);
     });
   }
 
   render() {
-    let vendormeals = this.props.data;
     return (
       <Form onSubmit={this.handleSubmit}>
         <div className="modal-body">
@@ -97,9 +92,7 @@ class SetMenuForm extends React.Component {
                 aria-controls="meals"
               >
                 <i className="icon-basket-loaded" /> Meals&nbsp;
-                <span className="badge badge-pill badge-danger">
-                  {vendormeals.length}
-                </span>
+                <span className="badge badge-pill badge-danger">2</span>
               </a>
             </li>
           </ul>
@@ -150,19 +143,30 @@ class SetMenuForm extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {vendormeals.map((vendormeal, index) => (
-                    <tr key={vendormeal.meal_id}>
-                      <th>
-                        <input
-                          type="checkbox"
-                          value={vendormeal.meal_id}
-                          onChange={this.handleMealSelectionChanges.bind(this)}
-                        />
-                      </th>
-                      <td>{vendormeal.meal}</td>
-                      <td>{vendormeal.price}</td>
-                    </tr>
-                  ))}
+                  <tr>
+                    <th>
+                      <input
+                        type="checkbox"
+                        value={1}
+                        onChange={this.handleMealSelectionChanges.bind(this)}
+                      />
+                    </th>
+                    <td>Beef stew with local Dishes</td>
+                    <td>20000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value={2}
+                        onChange={this.handleMealSelectionChanges.bind(this)}
+                      />
+                    </td>
+                    <td>
+                      Chicken Luwombo with Macroon Chicken Luwombo with Macroon
+                    </td>
+                    <td>12000</td>
+                  </tr>
                 </tbody>
               </Table>
             </div>
@@ -185,7 +189,7 @@ class SetMenuForm extends React.Component {
   }
 }
 
-SetMenuForm.propTypes = {
+PlaceOrderForm.propTypes = {
   setMenu: PropTypes.func.isRequired
 };
 
@@ -195,5 +199,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     { setMenu }
-  )(SetMenuForm)
+  )(PlaceOrderForm)
 );
