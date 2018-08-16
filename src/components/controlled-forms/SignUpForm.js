@@ -1,21 +1,27 @@
 import React from "react";
+import { signUpUser } from "../../actions/authentication";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 /**
  * @export
  * @class SignUpForm
  * @extends {React.Component}
  */
-export class SignUpForm extends React.Component {
+class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      username: "",
       password: "",
       confirmPassword: "",
       caterer: false
     };
 
     this.handleInputChanges = this.handleInputChanges.bind(this);
+    this.handleCheckboxChanges = this.handleCheckboxChanges.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -27,21 +33,36 @@ export class SignUpForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleCheckboxChanges(event) {
+    this.setState({ caterer: event.target.checked });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const email = this.state.email;
-    const password = this.state.password;
-    const confirmPassword = this.state.confirmPassword;
-    const caterer = this.state.caterer;
-    console.log(email);
-    console.log(password);
-    console.log(confirmPassword);
-    console.log(caterer);
+
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+      admin: this.state.caterer,
+      username: this.state.username
+    };
+    let response = this.props.signUpUser(JSON.stringify(data));
+    console.log(response);
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        <div className="input-group mb-3">
+          <input
+            className="form-control"
+            name="username"
+            type="text"
+            value={this.state.username}
+            onChange={this.handleInputChanges}
+            placeholder="Username"
+          />
+        </div>
         <div className="input-group mb-3">
           <input
             className="form-control"
@@ -81,10 +102,10 @@ export class SignUpForm extends React.Component {
               name="caterer"
               type="checkbox"
               value={this.state.caterer}
-              onChange={this.handleInputChanges}
+              onChange={this.handleCheckboxChanges}
             />
             <label className="form-check-label" htmlFor="caterer">
-              Caterer
+              Register Caterer
             </label>
           </div>
         </div>
@@ -97,4 +118,15 @@ export class SignUpForm extends React.Component {
   }
 }
 
-export default SignUpForm;
+SignUpForm.propTypes = {
+  signUpUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { signUpUser }
+  )(SignUpForm)
+);
