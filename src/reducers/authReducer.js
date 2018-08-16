@@ -1,7 +1,11 @@
-import { GET_ORDERS, PLACE_ORDER, UPDATE_ORDER } from "./constants";
+import { USER_REGISTERED, USER_LOGGED_IN, USER_LOGGED_OUT } from "./constants";
 
 const previousState = {
-  order: {}
+  auth: {
+    admin: false,
+    user_id: 0,
+    logInStatus: false
+  }
 };
 
 /**
@@ -10,20 +14,20 @@ const previousState = {
  */
 export default function(state = previousState, action = {}) {
   switch (action.type) {
-    case GET_ORDERS:
+    case USER_REGISTERED:
       return {
         ...state,
-        order: action.data
+        auth: action.data
       };
-    case PLACE_ORDER:
+    case USER_LOGGED_IN:
       return {
         ...state,
-        order: action.data
+        auth: action.data
       };
-    case UPDATE_ORDER:
+    case USER_LOGGED_OUT:
       return {
         ...state,
-        order: action.data
+        auth: action.data
       };
     default:
       return state;
