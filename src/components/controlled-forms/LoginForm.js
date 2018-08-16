@@ -1,11 +1,15 @@
 import React from "react";
+import { loginUser } from "../../actions/authentication";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 /**
  * @export
  * @class LoginForm
  * @extends {React.Component}
  */
-export class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { email: "", password: "" };
@@ -22,15 +26,26 @@ export class LoginForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  componentWillReceiveProps(loginStatus) {
+    if (loginStatus.auth.admin) {
+      this.props.history.push("/meals");
+    } else {
+      this.props.history.push("/c-menu");
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const email = this.state.email;
-    const password = this.state.password;
-    console.log(email);
-    console.log(password);
+    let data = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.loginUser(JSON.stringify(data));
   }
 
   render() {
+    const { auth } = this.props;
+
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="input-group mb-3">
@@ -70,4 +85,21 @@ export class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    admin: PropTypes.bool.isRequired,
+    logInStatus: PropTypes.bool.isRequired,
+    user_id: PropTypes.number.isRequired
+  }).isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.authReducer.auth
+});
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )(LoginForm)
+);
