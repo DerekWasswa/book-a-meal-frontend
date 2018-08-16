@@ -1,12 +1,18 @@
 import React from "react";
 import { Label, Input, FormGroup, Col, Form } from "reactstrap";
+import { addMeal } from "../../actions/meal";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { notify } from "react-notify-toast";
+import $ from "jquery";
 
 /**
  * @export
  * @class AddMealForm
  * @extends {React.Component}
  */
-export class AddMealForm extends React.Component {
+class AddMealForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { meal: "", price: "" };
@@ -25,10 +31,14 @@ export class AddMealForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const meal = this.state.meal;
-    const price = this.state.price;
-    console.log(meal);
-    console.log(price);
+    let data = {
+      meal: this.state.meal,
+      price: Number(this.state.price)
+    };
+    let response = this.props.addMeal(JSON.stringify(data));
+    console.log(response);
+    notify.show("Meal Added Successfully.");
+    $("#addMealModal").modal("hide");
   }
 
   render() {
@@ -84,4 +94,15 @@ export class AddMealForm extends React.Component {
   }
 }
 
-export default AddMealForm;
+AddMealForm.propTypes = {
+  addMeal: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { addMeal }
+  )(AddMealForm)
+);
