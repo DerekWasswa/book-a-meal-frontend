@@ -8,8 +8,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  Badge
+  NavLink
 } from "reactstrap";
 import styles from "./Header.css";
 
@@ -27,6 +26,11 @@ export class Header extends React.Component {
       isOpen: false
     };
   }
+
+  componentWillReceiveProps(app_props) {
+    console.log(app_props);
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -44,19 +48,7 @@ export class Header extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="nav-bar-items-left" navbar>
               <NavItem className="active">
-                <NavLink href="/meals">Meals</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="/menu">Menu</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="/orders">Orders</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="/orderhistory">OrderHistory</NavLink>
+                <NavLink href="/">Home</NavLink>
               </NavItem>
 
               <NavItem className="">
@@ -65,45 +57,6 @@ export class Header extends React.Component {
 
               <NavItem className="">
                 <NavLink href="/contact">Contact Us</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="/c-menu">C-Menu</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="/c-orders">C-Orders</NavLink>
-              </NavItem>
-
-              <NavItem className="">
-                <NavLink href="c-order-history">C-OrderH</NavLink>
-              </NavItem>
-            </Nav>
-
-            <Nav className="ml-auto login-login-link" navbar>
-              <NavItem>
-                <NavLink href="/c-orders">
-                  <Badge color="secondary">432</Badge>
-                  <i className="material-icons">&#xe8cc;</i>
-                </NavLink>
-              </NavItem>
-
-              <NavItem className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  href="#"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Derick Wasswa
-                </a>
-                <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
-                    Logout
-                  </a>
-                </div>
               </NavItem>
             </Nav>
           </Collapse>
