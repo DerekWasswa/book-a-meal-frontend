@@ -1,8 +1,16 @@
-import { PLACE_ORDER, UPDATE_ORDER, GET_ORDERS } from "../reducers/constants";
+import {
+  PLACE_ORDER,
+  UPDATE_ORDER,
+  GET_ORDERS,
+  GET_CUSTOMER_ORDERS
+} from "../reducers/constants";
 import axios from "axios";
+import { baseURL } from "../reducers/constants";
+
+axios.defaults.baseURL = baseURL;
 
 const priviledgedHeader = () => ({
-  Authorization: localStorage.getItem("appAccessToken")
+  "app-access-token": localStorage.getItem("app-access-token")
 });
 
 export const placeOrder = data => ({
@@ -20,23 +28,34 @@ export const getOrders = data => ({
   data
 });
 
+export const getCustomerOrders = data => ({
+  type: GET_CUSTOMER_ORDERS,
+  data
+});
+
 // Create Actions and Have them dispatched
 
 export const makeOrderFromMenu = data => dispatch => {
   return axios
-    .post("/api/v1/orders", data)
-    .then(res => dispatch(updateOrder(res.data)));
+    .post("/orders/", data)
+    .then(res => dispatch(placeOrder(res.data)));
 };
 
 export const updateOrder = data => dispatch => {
   return axios
-    .put(`/api/v1/orders/${data.id}`, data)
+    .put(`/orders/${data.id}`, data)
     .then(res => dispatch(updateOrderOption(res.data)));
 };
 
 export const getAllOrders = () => dispatch => {
   const headers = priviledgedHeader();
   return axios
-    .get("/api/v1/orders", { headers })
+    .get("/orders/", { headers })
     .then(res => dispatch(getOrders(res.data.orders)));
+};
+
+export const getAllCustomerOrders = customerID => dispatch => {
+  return axios
+    .get(`/orders/${customerID}`)
+    .then(res => dispatch(getCustomerOrders(res.data.orders)));
 };

@@ -3,8 +3,11 @@ import {
   USER_LOGGED_IN,
   USER_LOGGED_OUT
 } from "../reducers/constants";
+import { baseURL } from "../reducers/constants";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+
+axios.defaults.baseURL = baseURL;
 
 export const registerUser = data => ({
   type: USER_REGISTERED,
@@ -22,19 +25,18 @@ export const userLogOut = () => ({
 
 export const signUpUser = data => dispatch =>
   axios
-    .post("/api/v1/auth/signup", data)
+    .post("/auth/signup", data)
     .then(res => dispatch(registerUser(res.data)));
 
 export const loginUser = data => dispatch =>
-  axios.post("/api/v1/auth/login", data).then(res => {
-    const { appAccessToken } = res.data;
-    localStorage.setItem("appAccessToken", appAccessToken);
-    const user = jwtDecode(appAccessToken);
-
+  axios.post("/auth/login", data).then(res => {
+    localStorage.setItem("app-access-token", res.data.token);
+    localStorage.setItem("user", JSON.parse(data)["email"]);
+    const user = jwtDecode(res.data.token);
     return dispatch(userLogIn({ ...user, logInStatus: true }));
   });
 
 export const logoutUser = () => dispatch => {
-  localStorage.removeItem("appAccessToken");
+  localStorage.removeItem("app-access-token");
   return dispatch(userLogOut());
 };

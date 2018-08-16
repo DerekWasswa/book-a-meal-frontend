@@ -6,9 +6,12 @@ import {
   GET_MEAL
 } from "../reducers/constants";
 import axios from "axios";
+import { baseURL } from "../reducers/constants";
+
+axios.defaults.baseURL = baseURL;
 
 const priviledgedHeader = () => ({
-  Authorization: localStorage.getItem("appAccessToken")
+  "app-access-token": localStorage.getItem("app-access-token")
 });
 
 export const addMealOption = data => ({
@@ -41,34 +44,34 @@ export const getMealSingular = data => ({
 export const addMeal = data => dispatch => {
   const headers = priviledgedHeader();
   return axios
-    .post("/api/v1/meals", data, { headers })
+    .post("/meals/", data, { headers })
     .then(res => dispatch(addMealOption(res.data)));
 };
 
-export const updateMeal = data => dispatch => {
-  const headers = makeHeaders();
+export const updateMeal = (data, mealID) => dispatch => {
+  const headers = priviledgedHeader();
   return axios
-    .put(`/api/v1/meals/${data.id}`, data, { headers })
+    .put(`/meals/${mealID}`, data, { headers })
     .then(res => dispatch(updateMealOption(res.data)));
 };
 
-export const deleteMeal = id => dispatch => {
-  const headers = makeHeaders();
+export const deleteMeal = mealID => dispatch => {
+  const headers = priviledgedHeader();
   return axios
-    .delete(`/api/v1/meals/${id}`, { headers })
+    .delete(`/meals/${mealID}`, { headers })
     .then(() => dispatch(deleteMealOption()));
 };
 
 export const getAllMeals = () => dispatch => {
   const headers = priviledgedHeader();
   return axios
-    .get("/api/v1/meals", { headers })
-    .then(res => dispatch(getMeals(res.data.meals)));
+    .get("/meals/", { headers })
+    .then(res => dispatch(getMeals(res.data.data)));
 };
 
-export const getMeal = id => dispatch => {
-  const headers = makeHeaders();
+export const getMeal = mealID => dispatch => {
+  const headers = priviledgedHeader();
   return axios
-    .get(`/api/v1/meals/${id}`, { headers })
+    .get(`/meals/${mealID}`, { headers })
     .then(res => dispatch(getMealSingular(res.data)));
 };
