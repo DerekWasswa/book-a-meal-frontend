@@ -8,301 +8,153 @@ import {
   CardText,
   Button
 } from "reactstrap";
+import UserDashboard from "../UserDashboard";
+import Footer from "../Footer";
+import { makeOrderFromMenu } from "../../actions/order";
+import { getMenus } from "../../actions/menu";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { notify } from "react-notify-toast";
 
-export default class Menu extends React.Component {
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clickedMeal: 1
+    };
+
+    this.handlePlaceOrder = this.handlePlaceOrder.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getMenus();
+  }
+
+  handlePlaceOrder(event) {
+    event.preventDefault();
+    const { mealid } = event.target.dataset;
+    const { menuid } = event.target.dataset;
+    let data = {
+      meal_id: mealid,
+      user: localStorage.getItem("user"),
+      menu_id: menuid,
+      date: new Date().toISOString().slice(0, 10)
+    };
+    this.props.makeOrderFromMenu(JSON.stringify(data));
+    notify.show("Your Order has been placed Successfully.");
+  }
+
   render() {
+    const { menus } = this.props;
     return (
-      <div className="body-content">
-        <div className="row">
-          <div className="col-2">
-            <div className="list-group" id="list-tab" role="tablist">
-              <a
-                className="list-group-item list-group-item-action active"
-                id="list-profile-list"
-                data-toggle="tab"
-                href="#list-profile"
-                role="tab"
-                aria-controls="list-profile"
-                aria-selected="true"
-              >
-                11-07-2018
-              </a>
-              <a
-                className="list-group-item list-group-item-action"
-                id="list-messages-list"
-                data-toggle="tab"
-                href="#list-messages"
-                role="tab"
-                aria-controls="list-messages"
-              >
-                13-07-2018
-              </a>
-              <a
-                className="list-group-item list-group-item-action"
-                id="list-settings-list"
-                data-toggle="tab"
-                href="#list-settings"
-                role="tab"
-                aria-controls="list-settings"
-              >
-                23-06-2018
-              </a>
-            </div>
-          </div>
+      <div>
+        <UserDashboard />
 
-          <div className="col-10">
-            <div className="tab-content" id="nav-tabContent">
-              <div
-                className="tab-pane fade"
-                id="list-home"
-                role="tabpanel"
-                aria-labelledby="list-home-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Chicken Luwombo</CardTitle>
-                      <CardSubtitle>50000 UGX</CardSubtitle>
-                      <CardText>
-                        This card has supporting text below as a natural lead-in
-                        to additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>GNUTS Luwombo</CardTitle>
-                      <CardSubtitle>18000 UGX</CardSubtitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
-              </div>
-              <div
-                className="tab-pane fade active show"
-                id="list-profile"
-                role="tabpanel"
-                aria-labelledby="list-profile-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="list-messages"
-                role="tabpanel"
-                aria-labelledby="list-messages-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish en All foods</CardTitle>
-                      <CardSubtitle>25000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Chicken Luwombo</CardTitle>
-                      <CardSubtitle>50000 UGX</CardSubtitle>
-                      <CardText>
-                        This card has supporting text below as a natural lead-in
-                        to additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
+        <div className="wrapper-content ">
+          <div className="body-content">
+            <div className="row">
+              <div className="col-2">
+                <div className="list-group" id="list-tab" role="tablist">
+                  {menus &&
+                    menus.map(menu => (
+                      <a
+                        key={menu.menu_id}
+                        className="list-group-item list-group-item-action active"
+                        id={menu.menu_id}
+                        data-toggle="tab"
+                        href={"#" + menu.menu_id}
+                        role="tab"
+                        aria-controls={menu.menu_id}
+                        aria-selected="true"
+                      >
+                        {menu.name}
+                      </a>
+                    ))}
+                </div>
               </div>
 
-              <div
-                className="tab-pane fade"
-                id="list-settings"
-                role="tabpanel"
-                aria-labelledby="list-settings-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish en All foods</CardTitle>
-                      <CardSubtitle>25000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        Order Now
-                      </Button>&nbsp;
-                      <Button outline color="success" size="sm">
-                        <i className="material-icons cart-icon-size">
-                          &#xe854;
-                        </i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
+              <div className="col-10">
+                <div className="tab-content" id="nav-tabContent">
+                  {menus &&
+                    menus.map(menu => (
+                      <div
+                        key={menu.menu_id}
+                        className="tab-pane fade active show"
+                        id={menu.menu_id}
+                        role="tabpanel"
+                        aria-labelledby="list-profile-list"
+                      >
+                        <CardColumns>
+                          {menu.meals.map(meal => (
+                            <Card key={meal.meal_id}>
+                              <CardBody>
+                                <CardTitle>{meal.meal}</CardTitle>
+                                <CardSubtitle>{meal.price} UGX</CardSubtitle>
+                                <CardText>
+                                  This card has supporting text below as a
+                                  natural lead-in to additional content.
+                                </CardText>
+                                <Button
+                                  data-mealid={meal.meal_id}
+                                  data-menuid={menu.menu_id}
+                                  outline
+                                  color="secondary"
+                                  size="sm"
+                                  onClick={this.handlePlaceOrder}
+                                >
+                                  Order Now
+                                </Button>&nbsp;
+                                <Button outline color="success" size="sm">
+                                  <i className="material-icons cart-icon-size">
+                                    &#xe854;
+                                  </i>
+                                </Button>
+                              </CardBody>
+                            </Card>
+                          ))}
+                        </CardColumns>
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     );
   }
 }
+
+Menu.propTypes = {
+  makeOrderFromMenu: PropTypes.func.isRequired,
+  getMenus: PropTypes.func.isRequired,
+  menus: PropTypes.arrayOf(
+    PropTypes.shape({
+      menu_id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      meals: PropTypes.arrayOf(
+        PropTypes.shape({
+          meal_id: PropTypes.number.isRequired,
+          meal: PropTypes.string.isRequired,
+          price: PropTypes.number.isRequired
+        }).isRequired
+      ).isRequired
+    }).isRequired
+  ).isRequired
+};
+
+const mapStateToProps = state => ({
+  menus: state.menuReducer.menus
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { makeOrderFromMenu, getMenus }
+  )(Menu)
+);
