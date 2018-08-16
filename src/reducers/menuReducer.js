@@ -1,7 +1,19 @@
-import { ADD_MENU_OF_THE_DAY, GET_MENU_OF_THE_DAY } from "./constants";
+import {
+  ADD_MENU_OF_THE_DAY,
+  GET_MENU_OF_THE_DAY,
+  GET_VENDOR_MENUS
+} from "./constants";
 
 const previousState = {
-  menu: {}
+  menu: {
+    menu_id: 0,
+    name: "",
+    description: "",
+    date: "",
+    meals: []
+  },
+  menus: [],
+  caterer_menus: []
 };
 
 /**
@@ -18,7 +30,12 @@ export default function(state = previousState, action = {}) {
     case GET_MENU_OF_THE_DAY:
       return {
         ...state,
-        menu: action.data
+        menus: action.data
+      };
+    case GET_VENDOR_MENUS:
+      return {
+        ...state,
+        caterer_menus: action.data
       };
     default:
       return state;
