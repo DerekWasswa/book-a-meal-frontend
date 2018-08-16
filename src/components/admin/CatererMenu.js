@@ -8,308 +8,200 @@ import {
   CardText,
   Button
 } from "reactstrap";
+import CatererDashboard from "../CatererDashboard";
+import Footer from "../Footer";
+import { getVendorMenus } from "../../actions/menu";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export default class CatererMenu extends React.Component {
+class CatererMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.getVendorMenus();
+  }
+
+  renderInputField(index) {
+    if (index === 0) {
+      return <div />;
+    } else {
+      return (
+        <p>
+          <input onChange={this.handleChange} value={this.state.inputText} />
+        </p>
+      );
+    }
+  }
+
   render() {
+    const { menus } = this.props;
+
     return (
-      <div className="body-content">
-        <div className="row">
-          <div className="col-2">
-            <div className="list-group" id="list-tab" role="tablist">
-              <a
-                className="list-group-item list-group-item-action"
-                id="list-home-list"
-                data-toggle="tab"
-                href="#list-home"
-                role="tab"
-                aria-controls="list-home"
-                aria-selected="false"
-              >
-                10-07-2018
-              </a>
-              <a
-                className="list-group-item list-group-item-action active"
-                id="list-profile-list"
-                data-toggle="tab"
-                href="#list-profile"
-                role="tab"
-                aria-controls="list-profile"
-                aria-selected="true"
-              >
-                11-07-2018
-              </a>
-              <a
-                className="list-group-item list-group-item-action"
-                id="list-messages-list"
-                data-toggle="tab"
-                href="#list-messages"
-                role="tab"
-                aria-controls="list-messages"
-              >
-                13-07-2018
-              </a>
-              <a
-                className="list-group-item list-group-item-action"
-                id="list-settings-list"
-                data-toggle="tab"
-                href="#list-settings"
-                role="tab"
-                aria-controls="list-settings"
-              >
-                23-06-2018
-              </a>
-            </div>
-          </div>
+      <div>
+        <CatererDashboard />
 
-          <div className="col-10">
-            <div className="tab-content" id="nav-tabContent">
-              <div
-                className="tab-pane fade"
-                id="list-home"
-                role="tabpanel"
-                aria-labelledby="list-home-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish en All foods</CardTitle>
-                      <CardSubtitle>25000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Chicken Luwombo</CardTitle>
-                      <CardSubtitle>50000 UGX</CardSubtitle>
-                      <CardText>
-                        This card has supporting text below as a natural lead-in
-                        to additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>GNUTS Luwombo</CardTitle>
-                      <CardSubtitle>18000 UGX</CardSubtitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
-              </div>
-              <div
-                class="tab-pane fade active show"
-                id="list-profile"
-                role="tabpanel"
-                aria-labelledby="list-profile-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="list-messages"
-                role="tabpanel"
-                aria-labelledby="list-messages-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish en All foods</CardTitle>
-                      <CardSubtitle>25000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Chicken Luwombo</CardTitle>
-                      <CardSubtitle>50000 UGX</CardSubtitle>
-                      <CardText>
-                        This card has supporting text below as a natural lead-in
-                        to additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
+        <div className="wrapper-content ">
+          <div className="body-content">
+            <div className="row">
+              <div className="col-2">
+                <div className="list-group" id="list-tab" role="tablist">
+                  {menus &&
+                    menus.map(
+                      (menu, index) =>
+                        index === 0 ? (
+                          <a
+                            key={index}
+                            className="list-group-item list-group-item-action"
+                            id={index}
+                            data-toggle="tab"
+                            href={"#" + index}
+                            role="tab"
+                            aria-controls={index}
+                            aria-selected="true"
+                          >
+                            {menu.name}
+                          </a>
+                        ) : (
+                          <a
+                            key={index}
+                            className="list-group-item list-group-item-action active"
+                            id={index}
+                            data-toggle="tab"
+                            href={"#" + index}
+                            role="tab"
+                            aria-controls={index}
+                            aria-selected="false"
+                          >
+                            {menu.name}
+                          </a>
+                        )
+                    )}
+                </div>
               </div>
 
-              <div
-                class="tab-pane fade"
-                id="list-settings"
-                role="tabpanel"
-                aria-labelledby="list-settings-list"
-              >
-                <CardColumns>
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish en All foods</CardTitle>
-                      <CardSubtitle>25000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Beef Stew</CardTitle>
-                      <CardSubtitle>23000 UGX</CardSubtitle>
-                      <CardText>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This card has
-                        even longer content than the first to show that equal
-                        height action.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-
-                  <Card>
-                    <CardBody>
-                      <CardTitle>Fish fingers</CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <Button outline color="secondary" size="sm">
-                        <i className="material-icons icon-size">&#xe3c9;</i>
-                      </Button>&nbsp;
-                      <Button outline color="danger" size="sm">
-                        <i className="material-icons icon-size">&#xe872;</i>
-                      </Button>
-                    </CardBody>
-                  </Card>
-                </CardColumns>
+              <div className="col-10">
+                <div className="tab-content" id="nav-tabContent">
+                  {menus &&
+                    menus.map(
+                      (menu, index) =>
+                        index === 0 ? (
+                          <div
+                            key={index}
+                            className="tab-pane fade active show"
+                            id={index}
+                            role="tabpanel"
+                            aria-labelledby={index}
+                          >
+                            <CardColumns>
+                              {menu.meals.map(meal => (
+                                <Card key={meal.meal_id}>
+                                  <CardBody>
+                                    <CardTitle>{meal.meal}</CardTitle>
+                                    <CardSubtitle>
+                                      {meal.price} UGX
+                                    </CardSubtitle>
+                                    <CardText>
+                                      This is a wider card with supporting text
+                                      below as a natural lead-in to additional
+                                      content. This content is a little bit
+                                      longer.
+                                    </CardText>
+                                    <Button outline color="secondary" size="sm">
+                                      <i className="material-icons icon-size">
+                                        &#xe3c9;
+                                      </i>
+                                    </Button>&nbsp;
+                                    <Button outline color="danger" size="sm">
+                                      <i className="material-icons icon-size">
+                                        &#xe872;
+                                      </i>
+                                    </Button>
+                                  </CardBody>
+                                </Card>
+                              ))}
+                            </CardColumns>
+                          </div>
+                        ) : (
+                          <div
+                            key={index}
+                            className="tab-pane fade show"
+                            id={menu.menu_id}
+                            role="tabpanel"
+                            aria-labelledby={menu.menu_id}
+                          >
+                            <CardColumns>
+                              {menu.meals.map(meal => (
+                                <Card key={meal.meal_id}>
+                                  <CardBody>
+                                    <CardTitle>{meal.meal}</CardTitle>
+                                    <CardSubtitle>
+                                      {meal.price} UGX
+                                    </CardSubtitle>
+                                    <CardText>
+                                      This is a wider card with supporting text
+                                      below as a natural lead-in to additional
+                                      content. This content is a little bit
+                                      longer.
+                                    </CardText>
+                                    <Button outline color="secondary" size="sm">
+                                      <i className="material-icons icon-size">
+                                        &#xe3c9;
+                                      </i>
+                                    </Button>&nbsp;
+                                    <Button outline color="danger" size="sm">
+                                      <i className="material-icons icon-size">
+                                        &#xe872;
+                                      </i>
+                                    </Button>
+                                  </CardBody>
+                                </Card>
+                              ))}
+                            </CardColumns>
+                          </div>
+                        )
+                    )}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     );
   }
 }
+
+CatererMenu.propTypes = {
+  getVendorMenus: PropTypes.func.isRequired,
+  menus: PropTypes.arrayOf(
+    PropTypes.shape({
+      menu_id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      meals: PropTypes.arrayOf(
+        PropTypes.shape({
+          meal_id: PropTypes.number.isRequired,
+          meal: PropTypes.string.isRequired,
+          price: PropTypes.number.isRequired
+        }).isRequired
+      ).isRequired
+    }).isRequired
+  ).isRequired
+};
+
+const mapStateToProps = state => ({
+  menus: state.menuReducer.caterer_menus
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getVendorMenus }
+  )(CatererMenu)
+);
