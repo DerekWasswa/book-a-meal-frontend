@@ -3,14 +3,60 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "ajv": "^6.5.2",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.2",
+    "history": "^4.7.2",
+    "jquery": "^3.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "jwt-decode": "^2.2.0",
+    "popper.js": "^1.14.3",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-notify-toast": "^0.5.0",
+    "react-redux": "^5.0.7",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "reactstrap": "^6.3.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "jest",
+    "coverage": "react-scripts test --env=jsdom --coverage",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.4.2",
+    "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.4.4",
+    "enzyme-adapter-react-16": "^1.2.0",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-eslint": "^5.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-react": "^7.10.0",
+    "jest": "^23.5.0",
+    "moxios": "^0.4.0",
+    "prettier-eslint": "^8.8.2",
+    "redux-mock-store": "^1.5.3"
+  },
+  "proxy": "http://localhost:3000",
+  "jest": {
+    "verbose": true,
+    "setupTestFrameworkScriptFile": "./src/__tests__/setup/setupEnzyme.js",
+    "testPathIgnorePatterns": [
+      "./src/__tests__/setup/"
+    ]
   }
 }
