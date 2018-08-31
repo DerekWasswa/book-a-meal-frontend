@@ -3,6 +3,7 @@ import { signUpUser } from "../../actions/authentication";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { registrationSuccess } from "../utils/helper";
 
 /**
  * @export
@@ -23,6 +24,12 @@ class SignUpForm extends React.Component {
     this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleCheckboxChanges = this.handleCheckboxChanges.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(registered) {
+    if (registered.auth.message === "Successfully Registered. Please login") {
+      registrationSuccess("Successfully Registered. Please login.", 201);
+    }
   }
 
   handleInputChanges(event) {
@@ -46,11 +53,12 @@ class SignUpForm extends React.Component {
       admin: this.state.caterer,
       username: this.state.username
     };
-    let response = this.props.signUpUser(JSON.stringify(data));
-    console.log(response);
+    this.props.signUpUser(JSON.stringify(data));
   }
 
   render() {
+    const { auth } = this.props;
+
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="input-group mb-3">
@@ -95,19 +103,17 @@ class SignUpForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <div className="form-check form-check-inline mr-1">
+          <span className="switch">
             <input
-              className="form-check-input"
-              id="caterer"
-              name="caterer"
               type="checkbox"
               value={this.state.caterer}
               onChange={this.handleCheckboxChanges}
+              className="switch"
+              name="caterer"
+              id="switch-normal"
             />
-            <label className="form-check-label" htmlFor="caterer">
-              Register Caterer
-            </label>
-          </div>
+            <label htmlFor="switch-normal">Register as Caterer</label>
+          </span>
         </div>
 
         <button className="btn btn-block btn-primary" type="submit">
@@ -119,10 +125,16 @@ class SignUpForm extends React.Component {
 }
 
 SignUpForm.propTypes = {
-  signUpUser: PropTypes.func.isRequired
+  signUpUser: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    message: PropTypes.string.isRequired,
+    status_code: PropTypes.number.isRequired
+  }).isRequired
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  auth: state.authReducer.auth
+});
 
 export default withRouter(
   connect(

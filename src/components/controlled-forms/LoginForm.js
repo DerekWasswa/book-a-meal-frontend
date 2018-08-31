@@ -3,6 +3,7 @@ import { loginUser } from "../../actions/authentication";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { LoginButtons } from "../utils/stateLess";
 
 /**
  * @export
@@ -68,18 +69,15 @@ class LoginForm extends React.Component {
             placeholder="Password"
           />
         </div>
-        <div className="row">
-          <div className="col-6">
-            <button className="btn btn-primary px-4" type="submit">
-              Login
-            </button>
-          </div>
-          <div className="col-6 text-right">
-            <button className="btn btn-link px-0" type="button">
-              Forgot password?
-            </button>
-          </div>
-        </div>
+
+        <LoginButtons
+          loginClass={"btn btn-primary px-4"}
+          forgotPassClass={"btn btn-link px-0"}
+          loginBtnType={"submit"}
+          forgotPassBtnType={"button"}
+          login={"Login"}
+          forgotpassword={"Forgot password?"}
+        />
       </form>
     );
   }

@@ -1,9 +1,7 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
-import "../../App.css";
-import CatererDashboard from "../CatererDashboard";
-import Footer from "../Footer";
+import CatererDashboard from "../dashboard/CatererDashboard";
+import Footer from "../dashboard/Footer";
 import { Table, Button } from "reactstrap";
 import AddMealForm from "../controlled-forms/AddMealForm";
 import UpdateMealForm from "../controlled-forms/UpdateMealForm";
@@ -13,18 +11,31 @@ import { getAllMeals } from "../../actions/meal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { loggedInTokenExp } from "../utils/helper";
+import { ModalHeader, Alerts } from "../utils/stateLess";
 
 class ManageMeals extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { clickedMeal: 0, checkedMeals: [] };
+    this.state = { clickedMeal: 0, checkedMeals: [], meals: [] };
 
     this.handleMealEditionClicks = this.handleMealEditionClicks.bind(this);
     this.handleCheckedMeals = this.handleCheckedMeals.bind(this);
+    this.isLoggedIn = this.isLoggedIn.bind(this);
+  }
+
+  isLoggedIn() {
+    if (loggedInTokenExp) {
+      this.props.history.push("/login");
+    }
   }
 
   componentDidMount() {
     this.props.getAllMeals();
+  }
+
+  componentWillReceiveProps(newMeals) {
+    this.setState({ meals: newMeals.meals });
   }
 
   handleCheckedMeals(event) {
@@ -59,44 +70,48 @@ class ManageMeals extends React.Component {
 
         <div className="wrapper-content ">
           <div className="body-content">
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Select</th>
-                  <th>Meal</th>
-                  <th>Price (UGX)</th>
-                  <th>Edit</th>
-                </tr>
-              </thead>
-              <tbody>
-                {meals.map((meal, index) => (
-                  <tr key={meal.meal_id}>
-                    <th scope="row">{index + 1}</th>
-                    <th>
-                      <input
-                        type="checkbox"
-                        value={meal.meal_id}
-                        onChange={this.handleCheckedMeals}
-                      />
-                    </th>
-                    <td>{meal.meal}</td>
-                    <td>{meal.price}</td>
-                    <td>
-                      <Button
-                        data-param={meal.meal_id}
-                        onClick={this.handleMealEditionClicks}
-                        data-toggle="modal"
-                        data-target="#editMealModal"
-                        key={meal.meal_id}
-                      >
-                        Edit
-                      </Button>
-                    </td>
+            {this.state.meals && this.state.meals.length > 0 ? (
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Select</th>
+                    <th>Meal</th>
+                    <th>Price (UGX)</th>
+                    <th>Edit</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {this.state.meals.map((meal, index) => (
+                    <tr key={meal.meal_id}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <input
+                          type="checkbox"
+                          value={meal.meal_id}
+                          onChange={this.handleCheckedMeals}
+                        />
+                      </td>
+                      <td>{meal.meal}</td>
+                      <td>{meal.price}</td>
+                      <td>
+                        <Button
+                          data-param={meal.meal_id}
+                          onClick={this.handleMealEditionClicks}
+                          data-toggle="modal"
+                          data-target="#editMealModal"
+                          key={meal.meal_id}
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Alerts alertInfo={"No Meals. Click Add to add meals."} />
+            )}
             <Button
               outline
               color="primary"
@@ -131,17 +146,7 @@ class ManageMeals extends React.Component {
             >
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">Add a Meal option</h4>
-                    <button
-                      className="close"
-                      type="button"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
+                  <ModalHeader title={"Add a Meal option"} />
 
                   {/* Add a form that has the modal body and footer */}
                   <AddMealForm />

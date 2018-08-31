@@ -4,8 +4,8 @@ import { addMeal } from "../../actions/meal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { notify } from "react-notify-toast";
 import $ from "jquery";
+import { ModalFooter } from "../utils/stateLess";
 
 /**
  * @export
@@ -35,9 +35,7 @@ class AddMealForm extends React.Component {
       meal: this.state.meal,
       price: Number(this.state.price)
     };
-    let response = this.props.addMeal(JSON.stringify(data));
-    console.log(response);
-    notify.show("Meal Added Successfully.");
+    this.props.addMeal(JSON.stringify(data));
     $("#addMealModal").modal("hide");
   }
 
@@ -77,18 +75,7 @@ class AddMealForm extends React.Component {
           </FormGroup>
         </div>
 
-        <div className="modal-footer">
-          <button
-            className="btn btn-secondary"
-            type="button"
-            data-dismiss="modal"
-          >
-            Close
-          </button>
-          <button className="btn btn-primary" type="submit">
-            Add
-          </button>
-        </div>
+        <ModalFooter name={"Add"} buttonClass={"btn btn-primary"} />
       </Form>
     );
   }

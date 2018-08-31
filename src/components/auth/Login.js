@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../dashboard/Header";
+import Footer from "../dashboard/Footer";
 import LoginForm from "../controlled-forms/LoginForm";
 
 /**

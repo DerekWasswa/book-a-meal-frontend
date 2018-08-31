@@ -1,21 +1,14 @@
 import React from "react";
-import {
-  Card,
-  CardColumns,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Button
-} from "reactstrap";
-import UserDashboard from "../UserDashboard";
-import Footer from "../Footer";
+import { CardText, Button } from "reactstrap";
+import UserDashboard from "../dashboard/UserDashboard";
+import Footer from "../dashboard/Footer";
 import { makeOrderFromMenu } from "../../actions/order";
 import { getMenus } from "../../actions/menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
+import { Alerts } from "../utils/stateLess";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -47,78 +40,158 @@ class Menu extends React.Component {
 
   render() {
     const { menus } = this.props;
+
     return (
       <div>
         <UserDashboard />
 
         <div className="wrapper-content ">
           <div className="body-content">
-            <div className="row">
-              <div className="col-2">
-                <div className="list-group" id="list-tab" role="tablist">
-                  {menus &&
-                    menus.map(menu => (
-                      <a
-                        key={menu.menu_id}
-                        className="list-group-item list-group-item-action active"
-                        id={menu.menu_id}
-                        data-toggle="tab"
-                        href={"#" + menu.menu_id}
-                        role="tab"
-                        aria-controls={menu.menu_id}
-                        aria-selected="true"
-                      >
-                        {menu.name}
-                      </a>
-                    ))}
+            {menus && menus.length > 0 ? (
+              <div className="row">
+                <div className="col-2">
+                  <div className="list-group" id="list-tab" role="tablist">
+                    {menus &&
+                      menus.map(
+                        (menu, index) =>
+                          index === 0 ? (
+                            <a
+                              key={index}
+                              className="list-group-item list-group-item-action active"
+                              id={"list-" + index + "-list"}
+                              data-toggle="tab"
+                              href={"#list-" + index}
+                              role="tab"
+                              aria-controls={"list-" + index}
+                              aria-selected="true"
+                            >
+                              {menu.name}
+                            </a>
+                          ) : (
+                            <a
+                              key={index}
+                              className="list-group-item list-group-item-action"
+                              id={"list-" + index + "-list"}
+                              data-toggle="tab"
+                              href={"#list-" + index}
+                              role="tab"
+                              aria-controls={"list-" + index}
+                              aria-selected="false"
+                            >
+                              {menu.name}
+                            </a>
+                          )
+                      )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="col-10">
-                <div className="tab-content" id="nav-tabContent">
-                  {menus &&
-                    menus.map(menu => (
-                      <div
-                        key={menu.menu_id}
-                        className="tab-pane fade active show"
-                        id={menu.menu_id}
-                        role="tabpanel"
-                        aria-labelledby="list-profile-list"
-                      >
-                        <CardColumns>
-                          {menu.meals.map(meal => (
-                            <Card key={meal.meal_id}>
-                              <CardBody>
-                                <CardTitle>{meal.meal}</CardTitle>
-                                <CardSubtitle>{meal.price} UGX</CardSubtitle>
-                                <CardText>
-                                  This card has supporting text below as a
-                                  natural lead-in to additional content.
-                                </CardText>
-                                <Button
-                                  data-mealid={meal.meal_id}
-                                  data-menuid={menu.menu_id}
-                                  outline
-                                  color="secondary"
-                                  size="sm"
-                                  onClick={this.handlePlaceOrder}
-                                >
-                                  Order Now
-                                </Button>&nbsp;
-                                <Button outline color="success" size="sm">
-                                  <i className="material-icons cart-icon-size">
-                                    &#xe854;
-                                  </i>
-                                </Button>
-                              </CardBody>
-                            </Card>
-                          ))}
-                        </CardColumns>
-                      </div>
-                    ))}
+                <div className="col-10">
+                  <div className="tab-content" id="nav-tabContent">
+                    {menus &&
+                      menus.map(
+                        (menu, index) =>
+                          index === 0 ? (
+                            <div
+                              key={index}
+                              className="tab-pane fade active show"
+                              id={"list-" + index}
+                              role="tabpanel"
+                              aria-labelledby={"list-" + index + "-list"}
+                            >
+                              <div className="row">
+                                {menu.meals.map(meal => (
+                                  <div
+                                    className="col-sm-6 col-md-4"
+                                    key={meal.meal_id}
+                                  >
+                                    <div className="card menu-card">
+                                      <div className="card-header">
+                                        {meal.price} UGX
+                                      </div>
+                                      <div className="card-body">
+                                        <CardText>{meal.meal}</CardText>
+                                        <Button
+                                          data-mealid={meal.meal_id}
+                                          data-menuid={menu.menu_id}
+                                          outline
+                                          color="secondary"
+                                          size="sm"
+                                          onClick={this.handlePlaceOrder}
+                                        >
+                                          Order Now
+                                        </Button>&nbsp;
+                                        <Button
+                                          outline
+                                          color="success"
+                                          size="sm"
+                                        >
+                                          <i className="material-icons cart-icon-size">
+                                            &#xe854;
+                                          </i>
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              key={index}
+                              className="tab-pane fade show"
+                              id={"list-" + index}
+                              role="tabpanel"
+                              aria-labelledby={"list-" + index + "-list"}
+                            >
+                              <div className="row">
+                                {menu.meals.map(meal => (
+                                  <div
+                                    className="col-sm-6 col-md-4"
+                                    key={meal.meal_id}
+                                  >
+                                    <div className="card menu-card">
+                                      <div className="card-header">
+                                        {meal.price} UGX
+                                      </div>
+                                      <div className="card-body">
+                                        <CardText>{meal.meal}</CardText>
+                                        <Button
+                                          data-mealid={meal.meal_id}
+                                          data-menuid={menu.menu_id}
+                                          outline
+                                          color="secondary"
+                                          size="sm"
+                                          onClick={this.handlePlaceOrder}
+                                        >
+                                          Order Now
+                                        </Button>&nbsp;
+                                        <Button
+                                          outline
+                                          color="success"
+                                          size="sm"
+                                        >
+                                          <i className="material-icons cart-icon-size">
+                                            &#xe854;
+                                          </i>
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )
+                      )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <Alerts
+                alertInfo={
+                  "Menu(s) of the day have not been set yet. Check again later."
+                }
+              />
+            )}
           </div>
         </div>
 

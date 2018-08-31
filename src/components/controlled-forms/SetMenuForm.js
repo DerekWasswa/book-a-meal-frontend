@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
 import $ from "jquery";
+import { ModalFooter } from "../utils/stateLess";
 
 /**
  * @export
@@ -56,18 +57,25 @@ class SetMenuForm extends React.Component {
     const date = this.state.date;
     const meals = this.state.meals;
 
-    meals.forEach(meal => {
-      let data = {
-        menu_name: name,
-        description: description,
-        date: date,
-        meal_id: Number(meal)
-      };
-      this.props.setMenu(JSON.stringify(data));
+    // meals.forEach(meal => {
+    //   let data = {
+    //     menu_name: name,
+    //     description: description,
+    //     date: date,
+    //     meal_id: Number(meal)
+    //   };
+    //   this.props.setMenu(JSON.stringify(data));
+    // });
+    let data = {
+      menu_name: name,
+      description: description,
+      date: date,
+      meal_id: meals
+    };
+    this.props.setMenu(data);
 
-      notify.show("Menu of the Day has been Set successfully.");
-      $("#setMenuModal").modal("hide");
-    });
+    notify.show("Menu of the Day has been Set successfully.");
+    $("#setMenuModal").modal("hide");
   }
 
   render() {
@@ -168,18 +176,8 @@ class SetMenuForm extends React.Component {
             </div>
           </div>
         </div>
-        <div className="modal-footer">
-          <button
-            className="btn btn-secondary"
-            type="button"
-            data-dismiss="modal"
-          >
-            Close
-          </button>
-          <button className="btn btn-primary" type="submit">
-            Add Menu
-          </button>
-        </div>
+
+        <ModalFooter name={"Add Menu"} buttonClass={"btn btn-primary"} />
       </Form>
     );
   }
