@@ -1,10 +1,18 @@
-import { USER_REGISTERED, USER_LOGGED_IN, USER_LOGGED_OUT } from "./constants";
+import {
+  USER_REGISTERED,
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT,
+  SUCCESS,
+  ERRORS
+} from "./constants";
 
 const previousState = {
   auth: {
     admin: false,
     user_id: 0,
-    logInStatus: false
+    logInStatus: false,
+    message: "",
+    status_code: 0
   }
 };
 
@@ -26,8 +34,7 @@ export default function(state = previousState, action = {}) {
       };
     case USER_LOGGED_OUT:
       return {
-        ...state,
-        auth: action.data
+        ...state
       };
     default:
       return state;

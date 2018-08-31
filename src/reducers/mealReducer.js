@@ -1,4 +1,12 @@
-import { ADD_MEAL, EDIT_MEAL, DELETE_MEAL, GET_MEALS } from "./constants";
+import {
+  ADD_MEAL,
+  EDIT_MEAL,
+  DELETE_MEAL,
+  GET_MEALS,
+  GET_MEAL,
+  SUCCESS,
+  ERRORS
+} from "./constants";
 
 const previousState = {
   meal: {
@@ -30,10 +38,14 @@ export default function(state = previousState, action = {}) {
         ...state,
         meals: action.data
       };
-    case DELETE_MEAL:
+    case GET_MEAL:
       return {
         ...state,
         meal: action.data
+      };
+    case DELETE_MEAL:
+      return {
+        ...state
       };
     default:
       return state;
