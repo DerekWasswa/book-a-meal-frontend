@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "stable"
+script:
+  - npm install
+  - npm coverage
+
+after_script:
+  - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls
