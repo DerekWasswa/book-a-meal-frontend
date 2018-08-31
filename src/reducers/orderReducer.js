@@ -2,7 +2,10 @@ import {
   GET_ORDERS,
   PLACE_ORDER,
   UPDATE_ORDER,
-  GET_CUSTOMER_ORDERS
+  GET_CUSTOMER_ORDERS,
+  SERVE_ORDER,
+  SUCCESS,
+  ERRORS
 } from "./constants";
 
 const previousState = {
@@ -41,6 +44,11 @@ export default function(state = previousState, action = {}) {
       return {
         ...state,
         orders: action.data
+      };
+    case SERVE_ORDER:
+      return {
+        ...state,
+        order: action.data
       };
     default:
       return state;

@@ -1,7 +1,10 @@
 import {
   ADD_MENU_OF_THE_DAY,
   GET_MENU_OF_THE_DAY,
-  GET_VENDOR_MENUS
+  GET_VENDOR_MENUS,
+  DELETE_MEAL_OFF_THE_MENU,
+  SUCCESS,
+  ERRORS
 } from "./constants";
 
 const previousState = {
@@ -10,7 +13,7 @@ const previousState = {
     name: "",
     description: "",
     date: "",
-    meals: []
+    meals: [{}]
   },
   menus: [],
   caterer_menus: []
@@ -36,6 +39,10 @@ export default function(state = previousState, action = {}) {
       return {
         ...state,
         caterer_menus: action.data
+      };
+    case DELETE_MEAL_OFF_THE_MENU:
+      return {
+        ...state
       };
     default:
       return state;
