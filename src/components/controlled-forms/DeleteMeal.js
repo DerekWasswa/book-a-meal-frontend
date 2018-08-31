@@ -4,8 +4,8 @@ import { deleteMeal } from "../../actions/meal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { notify } from "react-notify-toast";
 import $ from "jquery";
+import { ModalFooter } from "../utils/stateLess";
 
 /**
  * @export
@@ -23,8 +23,6 @@ class DeleteMeal extends React.Component {
     this.props.mealIDs.map(mealID =>
       this.props.deleteMeal(JSON.stringify(mealID))
     );
-
-    notify.show("Meal(s) have been deleted.");
     $("#deleteMealModal").modal("hide");
   }
 
@@ -51,18 +49,7 @@ class DeleteMeal extends React.Component {
             </p>
           </div>
 
-          <div className="modal-footer">
-            <button
-              className="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button className="btn btn-danger" type="submit">
-              Delete
-            </button>
-          </div>
+          <ModalFooter name={"Delete"} buttonClass={"btn btn-danger"} />
         </div>
       </Form>
     );

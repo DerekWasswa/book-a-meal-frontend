@@ -1,25 +1,29 @@
 import React from "react";
 import { Table } from "reactstrap";
-import CatererDashboard from "../CatererDashboard";
-import Footer from "../Footer";
-import "../../App.css";
-import { getAllOrders } from "../../actions/order";
+import CatererDashboard from "../dashboard/CatererDashboard";
+import Footer from "../dashboard/Footer";
+import { getAllOrders, serveOrder } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { notify } from "react-notify-toast";
+import { ModalHeader, Alerts } from "../utils/stateLess";
 
 class Orders extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.serveCustomerOrder = this.serveCustomerOrder.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllOrders();
   }
 
-  handleClick(value) {
-    console.log(value);
+  serveCustomerOrder(event) {
+    event.preventDefault();
+    const { param } = event.target.dataset;
+    this.props.serveOrder(param);
+    notify.show("Order has been serve Successfully.");
   }
 
   render() {
@@ -31,41 +35,50 @@ class Orders extends React.Component {
 
         <div className="wrapper-content ">
           <div className="body-content">
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>Meal</th>
-                  <th>Price (UGX)</th>
-                  <th>Date</th>
-                  <th>Owner</th>
-                  <th>Serve</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders &&
-                  orders.map(order => (
-                    <tr
-                      key={order.order_id}
-                      onClick={() => this.handleClick(order.order_id)}
-                    >
-                      <td>{order.meal.meal}</td>
-                      <td>{order.meal.price}</td>
-                      <td>{order.date}</td>
-                      <td>{order.user}</td>
+            {orders && orders.length > 0 ? (
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th>Meal</th>
+                    <th>Price (UGX)</th>
+                    <th>Date</th>
+                    <th>Owner</th>
+                    <th>Serve</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders &&
+                    orders.map(order => (
+                      <tr key={order.order_id}>
+                        <td>{order.meal.meal}</td>
+                        <td>{order.meal.price}</td>
+                        <td>{order.date}</td>
+                        <td>{order.user}</td>
 
-                      <td>
-                        <button
-                          className="btn btn-success"
-                          data-param={order.order_id}
-                          onClick={this.serveOrder}
-                        >
-                          Serve
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
+                        <td>
+                          {order.status === "Not Served" ? (
+                            <button
+                              className="btn btn-success"
+                              data-param={order.order_id}
+                              onClick={this.serveCustomerOrder}
+                            >
+                              Serve
+                            </button>
+                          ) : (
+                            <button className="btn btn-success" disabled>
+                              Served
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Alerts
+                alertInfo={"No Orders. Set Menu of the Day to receive orders."}
+              />
+            )}
 
             <div
               className="modal fade"
@@ -77,17 +90,7 @@ class Orders extends React.Component {
             >
               <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">Order Meals</h4>
-                    <button
-                      className="close"
-                      type="button"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
+                  <ModalHeader title={"Order Meals"} />
                 </div>
               </div>
             </div>
@@ -102,9 +105,11 @@ class Orders extends React.Component {
 
 Orders.propTypes = {
   getAllOrders: PropTypes.func.isRequired,
+  serveOrder: PropTypes.func.isRequired,
   orders: PropTypes.arrayOf(
     PropTypes.shape({
       order_id: PropTypes.number.isRequired,
+      status: PropTypes.string.isRequired,
       meal: PropTypes.shape({
         meal_id: PropTypes.number.isRequired,
         meal: PropTypes.string.isRequired,
@@ -127,6 +132,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { getAllOrders }
+    { getAllOrders, serveOrder }
   )(Orders)
 );

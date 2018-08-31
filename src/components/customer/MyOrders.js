@@ -1,21 +1,27 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import { Table, Button } from "reactstrap";
-import "../../App.css";
 import UpdateMyOrderForm from "../controlled-forms/UpdateMyOrderForm";
-import UserDashboard from "../UserDashboard";
-import Footer from "../Footer";
+import UserDashboard from "../dashboard/UserDashboard";
+import Footer from "../dashboard/Footer";
 import { getAllCustomerOrders } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import jwtDecode from "jwt-decode";
+import { Alerts } from "../utils/stateLess";
 
 class MyOrders extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      clickedOrder: 0,
+      clickedOrderMenu: 0,
+      clickedOrderMealID: 0,
+      clickedOrderMenuMeals: [{}],
+      order: {}
+    };
   }
 
   componentDidMount() {
@@ -23,8 +29,22 @@ class MyOrders extends React.Component {
     this.props.getAllCustomerOrders(JSON.stringify(user.user_id));
   }
 
-  handleClick(value) {
-    console.log(value);
+  handleOrderEditionClicks(
+    event,
+    clickedOrderID,
+    clickedMenu,
+    orderMenuMeals,
+    mealId,
+    order
+  ) {
+    event.preventDefault();
+    this.setState({
+      clickedOrder: clickedOrderID,
+      clickedOrderMenu: clickedMenu,
+      clickedOrderMealID: mealId,
+      clickedOrderMenuMeals: orderMenuMeals,
+      order: order
+    });
   }
 
   render() {
@@ -36,39 +56,62 @@ class MyOrders extends React.Component {
 
         <div className="wrapper-content ">
           <div className="body-content">
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>Meal</th>
-                  <th>Price (UGX)</th>
-                  <th>Caterer Menu</th>
-                  <th>Date</th>
-                  <th>Edit</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders &&
-                  orders.map(order => (
-                    <tr
-                      key={order.order_id}
-                      onClick={() => this.handleClick(order.order_id)}
-                    >
-                      <td>{order.meal.meal}</td>
-                      <td>{order.meal.price}</td>
-                      <td>{order.menu.name}</td>
-                      <td>{order.date}</td>
-                      <td>
-                        <Button
-                          data-toggle="modal"
-                          data-target="#editOrderModal"
-                        >
-                          Edit
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
+            {orders && orders.length > 0 ? (
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th>Meal</th>
+                    <th>Price (UGX)</th>
+                    <th>Caterer Menu</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders &&
+                    orders.map(order => (
+                      <tr key={order.order_id}>
+                        <td>{order.meal.meal}</td>
+                        <td>{order.meal.price}</td>
+                        <td>{order.menu.name}</td>
+                        <td>{order.date}</td>
+                        <td>
+                          {Math.round(+new Date() / 1000) -
+                            Number(order.expiration) >
+                          3600 ? (
+                            <Button
+                              disabled
+                              data-toggle="tooltip"
+                              title="Can not edit Order. Caterer is working on it."
+                            >
+                              Expired
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={e =>
+                                this.handleOrderEditionClicks(
+                                  e,
+                                  order.order_id,
+                                  order.menu.menu_id,
+                                  order.menu.meals,
+                                  order.meal.meal_id,
+                                  order
+                                )
+                              }
+                              data-toggle="modal"
+                              data-target="#editOrderModal"
+                            >
+                              Edit
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Alerts alertInfo={"No Orders. Place orders from the Menu."} />
+            )}
 
             <div
               className="modal fade"
@@ -81,7 +124,9 @@ class MyOrders extends React.Component {
               <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h4 className="modal-title">Edit Order</h4>
+                    <h4 className="modal-title">
+                      Edit Order (Select Menu Meals to Update your Order)
+                    </h4>
                     <button
                       className="close"
                       type="button"
@@ -92,7 +137,14 @@ class MyOrders extends React.Component {
                     </button>
                   </div>
                   {/* Add a form that has the modal body and footer */}
-                  <UpdateMyOrderForm />
+
+                  <UpdateMyOrderForm
+                    orderIDClicked={this.state.clickedOrder}
+                    orderMenuID={this.state.clickedOrderMenu}
+                    orderMealID={this.state.clickedOrderMealID}
+                    meals={this.state.clickedOrderMenuMeals}
+                    order={this.state.order}
+                  />
                 </div>
               </div>
             </div>
@@ -117,10 +169,18 @@ MyOrders.propTypes = {
       }).isRequired,
       menu: PropTypes.shape({
         menu_id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        meals: PropTypes.arrayOf(
+          PropTypes.shape({
+            meal_id: PropTypes.number.isRequired,
+            meal: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired
+          })
+        ).isRequired
       }).isRequired,
       user: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
+      date: PropTypes.string.isRequired,
+      expiration: PropTypes.string.isRequired
     }).isRequired
   ).isRequired
 };

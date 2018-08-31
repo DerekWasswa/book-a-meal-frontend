@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../dashboard/Header";
+import Footer from "../dashboard/Footer";
 import SignUpForm from "../controlled-forms/SignUpForm";
 
 /**
@@ -23,11 +23,9 @@ export class Signup extends React.Component {
                   <div className="card-body p-4">
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
-                    {console.log("True")}
-                    {console.log("False")}
                     <SignUpForm />
                     <div className="text-center">
-                      <Link to="/">
+                      <Link to="/login">
                         <button className="btn btn-link px-0" type="button">
                           Already Registered? Login
                         </button>
