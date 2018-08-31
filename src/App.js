@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./components/landingpage/main.css";
+import "./components/landingpage/landing.css";
+import { Router, Route } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Meals from "./components/admin/ManageMeal";
@@ -13,13 +15,14 @@ import CustomerOrders from "./components/customer/MyOrders";
 import CustomerOrderHistory from "./components/customer/MyOrderHistory";
 import LandingPage from "./components/landingpage/LandingPage";
 import Notifications from "react-notify-toast";
+import history from "./history";
 
 class App extends Component {
   render() {
     return (
       <div>
         <Notifications />
-        <Router>
+        <Router history={history}>
           <div>
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={Login} />

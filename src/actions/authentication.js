@@ -26,15 +26,31 @@ export const userLogOut = () => ({
 export const signUpUser = data => dispatch =>
   axios
     .post("/auth/signup", data)
-    .then(res => dispatch(registerUser(res.data)));
+    .then(res => {
+      return dispatch(
+        registerUser({
+          ...res.data
+        })
+      );
+    })
+    .catch(function(error) {
+      // handle error
+    });
 
 export const loginUser = data => dispatch =>
-  axios.post("/auth/login", data).then(res => {
-    localStorage.setItem("app-access-token", res.data.token);
-    localStorage.setItem("user", JSON.parse(data)["email"]);
-    const user = jwtDecode(res.data.token);
-    return dispatch(userLogIn({ ...user, logInStatus: true }));
-  });
+  axios
+    .post("/auth/login", data)
+    .then(res => {
+      localStorage.setItem("app-access-token", res.data.token);
+      localStorage.setItem("user", JSON.parse(data)["email"]);
+      const user = jwtDecode(res.data.token);
+      localStorage.setItem("username", user.name);
+      return dispatch(userLogIn({ ...user, logInStatus: true }));
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+    });
 
 export const logoutUser = () => dispatch => {
   localStorage.removeItem("app-access-token");
