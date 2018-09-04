@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import * as authActions from "./order";
+import * as orderActions from "./order";
 import {
   PLACE_ORDER,
   UPDATE_ORDER,
@@ -19,61 +19,139 @@ axios.defaults.baseURL = baseURL;
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const registeredUser = {
+const order = {
   id: 1,
   username: "bkMealUser",
   email: "bkmeal@test.com",
   admin: true
 };
 
-const loginMock = {
-  token: jwt.sign({ admin: true, user_id: 1, name: "bkMealUser" }, "secret")
-};
-
-xdescribe("authentication actions", () => {
+describe("order actions", () => {
   let data;
+  let customerID;
 
   beforeEach(() => {
     moxios.install(axios);
     data = {
-      email: "bkmeal@test.com",
-      password: "test",
-      name: "test",
-      admin: true
+      meal: "Chips and Vegs",
+      price: 12000
     };
+
+    customerID = { admin: true, user_id: 1, name: "bkMealUser" };
   });
 
   afterEach(() => {
     moxios.uninstall();
   });
 
-  it("dispatches USER_REGISTERED action upon user registration", () => {
+  it("dispatches PLACE_ORDER action", () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 201,
-        response: registeredUser
+        response: order
       });
     });
 
     const expectedAction = [
       {
-        type: USER_REGISTERED,
-        data: registeredUser
+        type: PLACE_ORDER,
+        data: order
       }
     ];
 
     const store = mockStore({ data: {} });
-    return store.dispatch(authActions.signUpUser(data)).then(() => {
+    return store.dispatch(orderActions.makeOrderFromMenu(data)).then(() => {
       expect(store.getActions()).toEqual(expectedAction);
     });
   });
 
-  it("dispatches USER_LOGGED_OUT when a user logs out", () => {
-    localStorage.setItem("app-access-token", loginMock.token);
-    const store = mockStore({});
-    const expectedAction = [{ type: USER_LOGGED_OUT }];
-    store.dispatch(authActions.logoutUser());
-    expect(store.getActions()).toEqual(expectedAction);
+  it("dispatches UPDATE_ORDER action", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 202,
+        response: order
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: UPDATE_ORDER,
+        data: order
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.updateOrder(data, 1)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+
+  it("dispatches SERVE_ORDER action", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: order
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: SERVE_ORDER,
+        data: order
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.serveOrder(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("dispatches GET_CUSTOMER_ORDERS action", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: order
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: GET_CUSTOMER_ORDERS,
+        data: order
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllCustomerOrders(customerID)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("dispatches GET_ORDERS action", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: order
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: GET_ORDERS,
+        data: order
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllOrders()).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
   });
 });

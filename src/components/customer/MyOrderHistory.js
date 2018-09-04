@@ -9,14 +9,14 @@ import PropTypes from "prop-types";
 import jwtDecode from "jwt-decode";
 import { Alerts } from "../utils/stateLess";
 
-class MyOrderHistory extends React.Component {
+export class MyOrderHistory extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
     let user = jwtDecode(localStorage.getItem("app-access-token"));
-    this.props.getAllCustomerOrders(JSON.stringify(user.user_id));
+    this.props.getAllCustomerOrders(user);
   }
 
   render() {
@@ -30,123 +30,117 @@ class MyOrderHistory extends React.Component {
           <div className="body-content">
             {orders && orders.length > 0 ? (
               <div className="row">
-                <div className="col-2">
-                  <div className="list-group" id="list-tab" role="tablist">
+
+              <div className="col-12">
+              <ul className="nav nav-tabs" role="tablist">
+                  <li className="nav-item">
+                    <a className="nav-link active" data-toggle="tab" href="#served" role="tab" aria-controls="served">Served</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" data-toggle="tab" href="#pending" role="tab" aria-controls="pending">Pending</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" data-toggle="tab" href="#cancelled" role="tab" aria-controls="cancelled">Cancelled</a>
+                  </li>
+              </ul>
+              <br />
+              <div className="tab-content">
+                <div className="tab-pane active" id="served" role="tabpanel">
+
+                  <Table hover>
+                    <thead>
+                      <tr>
+                        <th>Meal</th>
+                        <th>Price (UGX)</th>
+                        <th>Menu</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
                     {orders &&
                       orders.map(
                         (order, index) =>
-                          index === 0 ? (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action active"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="true"
-                            >
-                              {new Date(order.date).getFullYear() +
-                                "-" +
-                                (
-                                  "0" +
-                                  (new Date(order.date).getMonth() + 1)
-                                ).slice(-2) +
-                                "-" +
-                                ("0" + new Date(order.date).getDate()).slice(
-                                  -2
-                                )}
-                            </a>
-                          ) : (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="false"
-                            >
-                              {new Date(order.date).getFullYear() +
-                                "-" +
-                                (
-                                  "0" +
-                                  (new Date(order.date).getMonth() + 1)
-                                ).slice(-2) +
-                                "-" +
-                                ("0" + new Date(order.date).getDate()).slice(
-                                  -2
-                                )}
-                            </a>
-                          )
-                      )}
-                  </div>
+
+                        order.status === "Served"
+                        ?
+                          <tr key={index}>
+                              <td>{order.meal.meal}</td>
+                              <td>{order.meal.price} UGX</td>
+                              <td>{order.menu.name}</td>
+                              <td>{order.date}</td>
+                          </tr>
+                        :
+                        null
+                    )}
+                    </tbody>
+                    </Table>
+               </div>
+
+                <div className="tab-pane" id="pending" role="tabpanel">
+                  <Table hover>
+                  <thead>
+                    <tr>
+                      <th>Meal</th>
+                      <th>Price (UGX)</th>
+                      <th>Menu</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {orders &&
+                    orders.map(
+                      (order, index) =>
+
+                      order.status === "Not Served"
+                        ?
+                          <tr key={index}>
+                              <td>{order.meal.meal}</td>
+                              <td>{order.meal.price} UGX</td>
+                              <td>{order.menu.name}</td>
+                              <td>{order.date}</td>
+                          </tr>
+                        :
+                        null
+
+                    )}
+                    </tbody>
+                    </Table>
                 </div>
 
-                <div className="col-10">
-                  <div className="tab-content" id="nav-tabContent">
+                <div className="tab-pane" id="cancelled" role="tabpanel">
+                  <Table hover>
+                    <thead>
+                      <tr>
+                        <th>Meal</th>
+                        <th>Price (UGX)</th>
+                        <th>Menu</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                     {orders &&
                       orders.map(
                         (order, index) =>
-                          index === 0 ? (
-                            <div
-                              key={index}
-                              className="tab-pane fade active show"
-                              id={"list-" + index}
-                              role="tabpanel"
-                              aria-labelledby={"list-" + index + "-list"}
-                            >
-                              <Table hover>
-                                <thead>
-                                  <tr>
-                                    <th>Meal</th>
-                                    <th>Price (UGX)</th>
-                                    <th>Caterer</th>
-                                    <th>Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>{order.meal.meal}</td>
-                                    <td>{order.meal.price} UGX</td>
-                                    <td>{order.menu.name}</td>
-                                    <td>{order.status}</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </div>
-                          ) : (
-                            <div
-                              key={index}
-                              className="tab-pane fade show"
-                              id={"list-" + index}
-                              role="tabpanel"
-                              aria-labelledby={"list-" + index + "-list"}
-                            >
-                              <Table hover>
-                                <thead>
-                                  <tr>
-                                    <th>Meal</th>
-                                    <th>Price (UGX)</th>
-                                    <th>Caterer</th>
-                                    <th>Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>{order.meal.meal}</td>
-                                    <td>{order.meal.price} UGX</td>
-                                    <td>{order.menu.name}</td>
-                                    <td>{order.status}</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </div>
-                          )
+                        order.status === "Cancelled"
+                        ?
+                          <tr key={index}>
+                              <td>{order.meal.meal}</td>
+                              <td>{order.meal.price} UGX</td>
+                              <td>{order.menu.name}</td>
+                              <td>{order.date}</td>
+                          </tr>
+                        :
+                        null
                       )}
+                      </tbody>
+                    </Table>
+
                   </div>
-                </div>
+              </div>
+            </div>
+
+
               </div>
             ) : (
               <Alerts alertInfo={"No Orders. Place orders from the Menu."} />

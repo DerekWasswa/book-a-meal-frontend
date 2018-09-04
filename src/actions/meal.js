@@ -53,7 +53,7 @@ export const addMeal = data => dispatch => {
       dispatch(getAllMeals());
     })
     .catch(function(error) {
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data, error.response.status);
     });
 };
 
@@ -66,7 +66,7 @@ export const updateMeal = (data, mealID) => dispatch => {
       dispatch(updateMealOption(response.data));
     })
     .catch(function(error) {
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
@@ -80,7 +80,7 @@ export const deleteMeal = mealID => dispatch => {
       dispatch(getAllMeals());
     })
     .catch(function(error) {
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 

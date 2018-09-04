@@ -15,6 +15,7 @@ describe("MENU REDUCER", () => {
     menu = {
       menu_id: 1,
       name: "Special Sunday",
+      contact: "test@gmail.com",
       description: "Come dine with us",
       date: "2018-08-30",
       meals: [
@@ -39,6 +40,8 @@ describe("MENU REDUCER", () => {
         name: "",
         description: "",
         date: "",
+        vendor: "",
+        contact: "",
         meals: [{}]
       },
       menus: [],
@@ -53,6 +56,8 @@ describe("MENU REDUCER", () => {
         name: "",
         description: "",
         date: "",
+        vendor: "",
+        contact: "",
         meals: [{}]
       },
       menus: [],
@@ -82,6 +87,8 @@ describe("MENU REDUCER", () => {
         name: "",
         description: "",
         date: "",
+        vendor: "",
+        contact: "",
         meals: [{}]
       },
       menus: menu,
@@ -96,6 +103,8 @@ describe("MENU REDUCER", () => {
         name: "",
         description: "",
         date: "",
+        vendor: "",
+        contact: "",
         meals: [{}]
       },
       menus: [],
@@ -115,6 +124,8 @@ describe("MENU REDUCER", () => {
         name: "",
         description: "",
         date: "",
+        vendor: "",
+        contact: "",
         meals: [{}]
       },
       menus: [],

@@ -13,7 +13,7 @@ import { ModalFooter } from "../utils/stateLess";
  * @class SetMenuForm
  * @extends {React.Component}
  */
-class EditMenuForm extends React.Component {
+export class EditMenuForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,18 +59,15 @@ class EditMenuForm extends React.Component {
     const date = this.props.menu.date;
     const meals = this.state.meals;
 
-    meals.forEach(meal => {
-      let data = {
-        menu_name: name,
-        description: description,
-        date: date,
-        meal_id: Number(meal)
-      };
-      this.props.setMenu(JSON.stringify(data));
-
+    let data = {
+      menu_name: name,
+      description: description,
+      date: date,
+      meal_id: meals
+    };
+    this.props.setMenu(data);
       notify.show("Meals have been added to the menu successfully.");
-      $("#editMenuModal").modal("hide");
-    });
+      $("#editMenuModal .close").click()
   }
 
   render() {
@@ -135,6 +132,7 @@ class EditMenuForm extends React.Component {
                           <tr key={meal.meal_id}>
                             <th>
                               <input
+                                name="menumeal"
                                 type="checkbox"
                                 value={meal.meal_id}
                                 onChange={this.handleMealSelectionChanges.bind(

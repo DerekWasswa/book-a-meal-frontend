@@ -12,7 +12,7 @@ import { ModalFooter } from "../utils/stateLess";
  * @class UpdateMealForm
  * @extends {React.Component}
  */
-class UpdateMealForm extends React.Component {
+export class UpdateMealForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { meal: "", price: "" };
@@ -36,7 +36,7 @@ class UpdateMealForm extends React.Component {
       price_update: Number(this.state.price)
     };
     this.props.updateMeal(JSON.stringify(data), this.props.mealID);
-    $("#editMealModal").modal("hide");
+    $("#editMealModal .close").click()
   }
 
   render() {

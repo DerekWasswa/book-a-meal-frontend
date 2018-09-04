@@ -25,10 +25,6 @@ export class Header extends React.Component {
     };
   }
 
-  componentWillReceiveProps(app_props) {
-    console.log(app_props);
-  }
-
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
