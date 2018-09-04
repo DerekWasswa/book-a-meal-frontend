@@ -1,6 +1,6 @@
 import React from "react";
 import jquery from "jquery";
-import "./main.js";
+import "../../__tests__/setup/main.js";
 import { Link } from "react-router-dom";
 import {
   ReactStrapLink,

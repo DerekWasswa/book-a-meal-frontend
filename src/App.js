@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "./components/landingpage/main.css";
-import "./components/landingpage/landing.css";
 import { Router, Route } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";

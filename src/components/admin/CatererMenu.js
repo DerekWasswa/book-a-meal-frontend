@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { ModalHeader, Alerts } from "../utils/stateLess";
 
-class CatererMenu extends React.Component {
+export class CatererMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

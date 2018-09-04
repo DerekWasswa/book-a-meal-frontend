@@ -10,7 +10,7 @@ import { LoginButtons } from "../utils/stateLess";
  * @class LoginForm
  * @extends {React.Component}
  */
-class LoginForm extends React.Component {
+export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { email: "", password: "" };
