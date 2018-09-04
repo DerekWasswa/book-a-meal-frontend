@@ -49,7 +49,7 @@ export const setMenu = data => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
@@ -60,7 +60,7 @@ export const getMenus = () => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
@@ -72,7 +72,7 @@ export const getVendorMenus = () => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
@@ -88,6 +88,6 @@ export const deleteMealOffTheMenu = (menuId, mealId) => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };

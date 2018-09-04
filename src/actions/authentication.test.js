@@ -35,9 +35,7 @@ describe("authentication actions", () => {
     moxios.install(axios);
     data = {
       email: "bkmeal@test.com",
-      password: "test",
-      name: "test",
-      admin: true
+      password: "test"
     };
   });
 
@@ -67,29 +65,29 @@ describe("authentication actions", () => {
     });
   });
 
-  // it("dispatches USER_LOGGED_IN action when a user logins in", () => {
-  //   moxios.wait(() => {
-  //     const request = moxios.requests.mostRecent();
-  //     request.respondWith({
-  //       status: 200,
-  //       response: loginMock
-  //     });
-  //   });
+  it("dispatches USER_LOGGED_IN action when a user logins in", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: loginMock
+      });
+    });
 
-  //   const user = jwtDecode(loginMock.token);
+    const user = jwtDecode(loginMock.token);
 
-  //   const expectedAction = [
-  //     {
-  //       type: USER_LOGGED_IN,
-  //       data: { ...user, logInStatus: true }
-  //     }
-  //   ];
+    const expectedAction = [
+      {
+        type: USER_LOGGED_IN,
+        data: { ...user, logInStatus: true }
+      }
+    ];
 
-  //   const store = mockStore({ data: {} });
-  //   return store.dispatch(authActions.loginUser(data)).then(() => {
-  //     expect(store.getActions()).toEqual(expectedAction);
-  //   });
-  // });
+    const store = mockStore({ data: {} });
+    return store.dispatch(authActions.loginUser(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
 
   it("dispatches USER_LOGGED_OUT when a user logs out", () => {
     localStorage.setItem("app-access-token", loginMock.token);

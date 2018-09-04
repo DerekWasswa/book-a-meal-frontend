@@ -21,7 +21,7 @@ import { logoutUser } from "../../actions/authentication";
  * @class CatererDashboard
  * @extends {React.Component}
  */
-class CatererDashboard extends React.Component {
+export class CatererDashboard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,10 +31,6 @@ class CatererDashboard extends React.Component {
     };
 
     this.logout = this.logout.bind(this);
-  }
-
-  componentWillReceiveProps(app_props) {
-    console.log(app_props);
   }
 
   toggle() {

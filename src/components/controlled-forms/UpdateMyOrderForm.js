@@ -13,7 +13,7 @@ import { ModalFooter } from "../utils/stateLess";
  * @class UpdateMyOrderForm
  * @extends {React.Component}
  */
-class UpdateMyOrderForm extends React.Component {
+export class UpdateMyOrderForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +49,7 @@ class UpdateMyOrderForm extends React.Component {
     this.props.updateOrder(JSON.stringify(data), this.props.orderIDClicked);
 
     notify.show("Order has been updated successfully.");
-    $("#editOrderModal").modal("hide");
+    $("#editOrderModal .close").click()
   }
 
   render() {

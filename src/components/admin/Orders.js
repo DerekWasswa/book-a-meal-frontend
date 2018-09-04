@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
 import { ModalHeader, Alerts } from "../utils/stateLess";
 
-class Orders extends React.Component {
+export class Orders extends React.Component {
   constructor(props) {
     super(props);
     this.serveCustomerOrder = this.serveCustomerOrder.bind(this);
@@ -44,6 +44,7 @@ class Orders extends React.Component {
                     <th>Date</th>
                     <th>Owner</th>
                     <th>Serve</th>
+                    <th>Cancel</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,11 +66,38 @@ class Orders extends React.Component {
                               Serve
                             </button>
                           ) : (
+
+                            order.status === "Served" ?
                             <button className="btn btn-success" disabled>
                               Served
-                            </button>
+                            </button> : null
                           )}
                         </td>
+
+
+                        <td>
+                        {order.status === "Not Served" ? (
+                          <button
+                            className="btn btn-danger"
+                            data-param={order.order_id}
+                            onClick={this.serveCustomerOrder}
+                          >
+                            Cancel
+                          </button>
+                        ) :
+                        (
+                          order.status === "Cancelled"
+
+                          ?
+                          <button className="btn btn-danger" disabled>
+                            Cancelled
+                          </button>
+                          :
+                          null
+
+                        )}
+                      </td>
+
                       </tr>
                     ))}
                 </tbody>

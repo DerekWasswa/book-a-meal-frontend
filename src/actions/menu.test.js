@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import * as authActions from "./menu";
+import * as menuActions from "./menu";
 import {
   ADD_MENU_OF_THE_DAY,
   GET_MENU_OF_THE_DAY,
@@ -18,27 +18,34 @@ axios.defaults.baseURL = baseURL;
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const registeredUser = {
-  id: 1,
-  username: "bkMealUser",
-  email: "bkmeal@test.com",
-  admin: true
+const menu = {
+  menu_id: 1,
+  name: "Today",
+  description: "Specials",
+  date: "2018-09-02",
+  vendor: 1,
+  contact: "vendor@gmail.com",
+  meals: [{
+    meal_id: 1,
+    meal: "Food",
+    price: 10000
+  }]
 };
 
-const loginMock = {
-  token: jwt.sign({ admin: true, user_id: 1, name: "bkMealUser" }, "secret")
-};
-
-xdescribe("authentication actions", () => {
+describe("menu actions", () => {
   let data;
 
   beforeEach(() => {
     moxios.install(axios);
     data = {
-      email: "bkmeal@test.com",
-      password: "test",
-      name: "test",
-      admin: true
+      name: "Today",
+      description: "Specials",
+      date: "2018-09-02",
+      vendor_id: 1,
+      contact: "vendor@gmail.com",
+      meals: [{
+        meal_id: 1
+      }]
     };
   });
 
@@ -46,33 +53,92 @@ xdescribe("authentication actions", () => {
     moxios.uninstall();
   });
 
-  it("dispatches USER_REGISTERED action upon user registration", () => {
+  it("dispatches ADD_MENU_OF_THE_DAY action upon menu creation", () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 201,
-        response: registeredUser
+        response: menu
       });
     });
 
     const expectedAction = [
       {
-        type: USER_REGISTERED,
-        data: registeredUser
+        type: ADD_MENU_OF_THE_DAY,
+        data: menu
       }
     ];
 
     const store = mockStore({ data: {} });
-    return store.dispatch(authActions.signUpUser(data)).then(() => {
+    return store.dispatch(menuActions.setMenu(data)).then(() => {
       expect(store.getActions()).toEqual(expectedAction);
     });
   });
 
-  it("dispatches USER_LOGGED_OUT when a user logs out", () => {
-    localStorage.setItem("app-access-token", loginMock.token);
-    const store = mockStore({});
-    const expectedAction = [{ type: USER_LOGGED_OUT }];
-    store.dispatch(authActions.logoutUser());
-    expect(store.getActions()).toEqual(expectedAction);
+  it("dispatches GET_MENU_OF_THE_DAY action upon get menu", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: menu
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: GET_MENU_OF_THE_DAY,
+        data: menu
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(menuActions.getMenus()).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+
+  it("dispatches DELETE_MEAL_OFF_THE_MENU action upon menu deletion", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 202,
+        response: menu
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: DELETE_MEAL_OFF_THE_MENU,
+        data: menu
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(menuActions.deleteMealOffTheMenu(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("dispatches GET_VENDOR_MENUS action upon getting vendor menus", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: menu
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: GET_VENDOR_MENUS,
+        data: menu
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(menuActions.getVendorMenus()).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
   });
 });

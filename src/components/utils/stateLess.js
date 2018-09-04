@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-// fits on one line
-export const ListItem = props => (
-  <li className="list-item">{props.item.name}</li>
-);
-
-export const Paragraph = props => <p>{props.name}</p>;
-
 export const LoginButtons = props => (
   <div className="row">
     <div className="col-6">
@@ -119,49 +112,6 @@ export const ReactStrapLink = props => (
 
 export const HTMLLink = props => <button>{props.name}</button>;
 
-export const Table = props => <button>{props.name}</button>;
-
-export const THEAD = props => <button>{props.name}</button>;
-
-export const Label = props => <button>{props.name}</button>;
-
-export const Span = props => <button>{props.name}</button>;
-
 export const Alerts = props => (
   <div className="alert alert-info">{props.alertInfo}</div>
 );
-
-export const H1 = props => <button>{props.name}</button>;
-export const H2 = props => <button>{props.name}</button>;
-export const H3 = props => <button>{props.name}</button>;
-export const H4 = props => <button>{props.name}</button>;
-
-// component has no logic outside JSX
-// const List = ({ items }) => (
-//   <ul className="list">{items.map(item => <ListItem item={item} />)}</ul>
-// );
-
-// component needs logic outside JSX.
-// const Body = props => {
-//   let items = transformItems(props.rawItems);
-//   return (
-//     <div>
-//       <h1>{props.header}</h1>
-//       <List items={items} />
-//     </div>
-//   );
-// };
-
-// This is equivalent to the last example
-// function Page(props, context) {
-//   return (
-//     <div>
-//       <Body header="My List" rawItems={props.rawItems} />
-//     </div>
-//   );
-// }
-
-// propTypes and contextTypes are supported
-// Page.propTypes = {
-//   rawItems: React.PropTypes.array.isRequired
-// };

@@ -10,7 +10,7 @@ import { registrationSuccess } from "../utils/helper";
  * @class SignUpForm
  * @extends {React.Component}
  */
-class SignUpForm extends React.Component {
+export class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

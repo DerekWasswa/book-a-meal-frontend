@@ -13,6 +13,8 @@ const previousState = {
     name: "",
     description: "",
     date: "",
+    vendor: "",
+    contact: "",
     meals: [{}]
   },
   menus: [],
