@@ -6,7 +6,6 @@ before_install:
 env:
   matrix:
     - REACT=16.4
-sudo: false
 script:
   - npm test -- --coverage
 after_script:
