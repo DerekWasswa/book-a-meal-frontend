@@ -64,6 +64,7 @@ export const updateMeal = (data, mealID) => dispatch => {
     .then(function(response) {
       responseSuccess("Meal has been updated Successfully.", response.status);
       dispatch(updateMealOption(response.data));
+      dispatch(getAllMeals());
     })
     .catch(function(error) {
       // responseError(error.response.data.message, error.response.status);
