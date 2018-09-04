@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
  * @class PlaceOrderForm
  * @extends {React.Component}
  */
-class PlaceOrderForm extends React.Component {
+export class PlaceOrderForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { name: "", description: "", date: "", meals: [] };

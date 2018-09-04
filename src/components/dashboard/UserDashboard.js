@@ -23,7 +23,7 @@ import { notify } from "react-notify-toast";
  * @class Header
  * @extends {React.Component}
  */
-class UserDashboard extends React.Component {
+export class UserDashboard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -33,10 +33,6 @@ class UserDashboard extends React.Component {
     };
 
     this.logout = this.logout.bind(this);
-  }
-
-  componentWillReceiveProps(app_props) {
-    console.log(app_props);
   }
 
   toggle() {

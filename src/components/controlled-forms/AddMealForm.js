@@ -7,12 +7,13 @@ import PropTypes from "prop-types";
 import $ from "jquery";
 import { ModalFooter } from "../utils/stateLess";
 
+
 /**
  * @export
  * @class AddMealForm
  * @extends {React.Component}
  */
-class AddMealForm extends React.Component {
+export class AddMealForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { meal: "", price: "" };
@@ -20,7 +21,6 @@ class AddMealForm extends React.Component {
     this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleInputChanges(event) {
     const target = event.target;
     const name = target.name;
@@ -36,7 +36,7 @@ class AddMealForm extends React.Component {
       price: Number(this.state.price)
     };
     this.props.addMeal(JSON.stringify(data));
-    $("#addMealModal").modal("hide");
+    $("#addMealModal .close").click()
   }
 
   render() {

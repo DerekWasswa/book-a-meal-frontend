@@ -12,7 +12,7 @@ import { ModalFooter } from "../utils/stateLess";
  * @class DeleteMeal
  * @extends {React.Component}
  */
-class DeleteMeal extends React.Component {
+export class DeleteMeal extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,7 +23,7 @@ class DeleteMeal extends React.Component {
     this.props.mealIDs.map(mealID =>
       this.props.deleteMeal(JSON.stringify(mealID))
     );
-    $("#deleteMealModal").modal("hide");
+    $("#deleteMealModal .close").click()
   }
 
   render() {

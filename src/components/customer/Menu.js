@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
 import { Alerts } from "../utils/stateLess";
 
-class Menu extends React.Component {
+export class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -134,6 +134,17 @@ class Menu extends React.Component {
                                   </div>
                                 ))}
                               </div>
+
+                              <br />
+                              <h4>Caterer</h4>
+
+                              <div>Name: {menu.vendor}</div>
+                              <div>Email: {menu.contact}</div>
+                              <div>Menu: {menu.name}</div>
+                              <div>Description: {menu.description}</div>
+                              <div>Date: {menu.date}</div>
+
+
                             </div>
                           ) : (
                             <div
@@ -179,6 +190,19 @@ class Menu extends React.Component {
                                   </div>
                                 ))}
                               </div>
+
+
+
+                              <br />
+                              <h4>Caterer</h4>
+
+                              <div>Name: {menu.vendor}</div>
+                              <div>Email: {menu.contact}</div>
+                              <div>Menu: {menu.name}</div>
+                              <div>Description: {menu.description}</div>
+                              <div>Date: {menu.date}</div>
+
+
                             </div>
                           )
                       )}

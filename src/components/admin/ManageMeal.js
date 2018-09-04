@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import { loggedInTokenExp } from "../utils/helper";
 import { ModalHeader, Alerts } from "../utils/stateLess";
 
-class ManageMeals extends React.Component {
+export class ManageMeals extends React.Component {
   constructor(props) {
     super(props);
     this.state = { clickedMeal: 0, checkedMeals: [], meals: [] };
@@ -88,6 +88,7 @@ class ManageMeals extends React.Component {
                       <td>
                         <input
                           type="checkbox"
+                          name="mealitem"
                           value={meal.meal_id}
                           onChange={this.handleCheckedMeals}
                         />

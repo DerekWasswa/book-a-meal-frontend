@@ -66,7 +66,7 @@ export const updateOrder = (data, orderId) => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
@@ -78,18 +78,18 @@ export const getAllOrders = () => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };
 
 export const getAllCustomerOrders = customerID => dispatch => {
   return axios
-    .get(`/orders/${customerID}`)
+    .get(`/orders/${customerID.user_id}`)
     .then(res => dispatch(getCustomerOrders(res.data.orders)))
     .catch(function(error) {
       // handle error
       console.log(error.response.statusText);
-      responseError(error.response.statusText, error.response.status);
+      // responseError(error.response.statusText, error.response.status);
     });
 };
 
@@ -104,6 +104,6 @@ export const serveOrder = orderID => dispatch => {
     .catch(function(error) {
       // handle error
       console.log(error);
-      responseError(error.response.data.message, error.response.status);
+      // responseError(error.response.data.message, error.response.status);
     });
 };

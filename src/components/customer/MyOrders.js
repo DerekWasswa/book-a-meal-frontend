@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import jwtDecode from "jwt-decode";
 import { Alerts } from "../utils/stateLess";
 
-class MyOrders extends React.Component {
+export class MyOrders extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,7 +26,7 @@ class MyOrders extends React.Component {
 
   componentDidMount() {
     let user = jwtDecode(localStorage.getItem("app-access-token"));
-    this.props.getAllCustomerOrders(JSON.stringify(user.user_id));
+    this.props.getAllCustomerOrders(user);
   }
 
   handleOrderEditionClicks(
