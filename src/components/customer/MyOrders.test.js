@@ -18,6 +18,8 @@ describe("<MyOrders />", () => {
 
   let wrapper;
   let orders;
+  let order;
+  let menuMeals;
   let emptyOrders;
   let getAllCustomerOrders;
   const mockStore = configureStore()
@@ -29,6 +31,56 @@ describe("<MyOrders />", () => {
 
   beforeEach(() => {
     emptyOrders = [];
+
+    menuMeals = [
+      {
+        meal_id: 1,
+        meal: "Rolex",
+        price: 4000
+      },
+      {
+        meal_id: 2,
+        meal: "Chicken",
+        price: 10000
+      },
+      {
+        meal_id: 3,
+        meal: "Chicken",
+        price: 10000
+      }
+    ];
+
+    order = {
+      order_id: 1,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Not Served",
+      expiration: Math.round(+new Date() / 1000).toString()
+     };
 
     orders = [{
       order_id: 1,
@@ -59,8 +111,133 @@ describe("<MyOrders />", () => {
       user: "test@test.com",
       date: "2018-09-03",
       status: "Not Served",
+      expiration: Math.round(+new Date() / 1000).toString()
+     },
+     {
+      order_id: 2,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 2,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Not Served",
       expiration: "1535732626"
-     }];
+     },
+     {
+      order_id: 3,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 3,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Cancelled",
+      expiration: Math.round(+new Date() / 1000).toString()
+     },
+     {
+      order_id: 4,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 4,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served",
+      expiration: Math.round(+new Date() / 1000).toString()
+     },
+     {
+      order_id: 5,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 5,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served",
+      expiration: Math.round(+new Date() / 1000).toString()
+     }
+    ];
 
     getAllCustomerOrders = jest.fn()
 
@@ -74,14 +251,13 @@ describe("<MyOrders />", () => {
   });
 
 
-it("renders customers' orders", () => {
-  wrapper = shallow(
-    <MyOrders
-      orders={orders}
-      getAllCustomerOrders={getAllCustomerOrders} />);
-  expect(wrapper).toBeDefined();
-});
-
+  it("renders customers' orders", () => {
+    wrapper = shallow(
+      <MyOrders
+        orders={orders}
+        getAllCustomerOrders={getAllCustomerOrders} />);
+    expect(wrapper).toBeDefined();
+  });
 
   it('calls the `children` components', ()=>{
     let update = sinon.stub().resolves({success: true})
@@ -135,12 +311,16 @@ it("renders customers' orders", () => {
         getAllCustomerOrders={getAllCustomerOrders} />
     );
 
-    wrapper.find(Button).at(0).simulate('click', { preventDefault() {} });
-    expect(wrapper.state('clickedOrder')).toEqual(0);
-    expect(wrapper.state('clickedOrderMenu')).toEqual(0);
-    expect(wrapper.state('clickedOrderMealID')).toEqual(0);
-    expect(wrapper.state('clickedOrderMenuMeals')).toEqual([{}]);
-    expect(wrapper.state('order')).toEqual({});
+    wrapper.find(Button).at(0).simulate('click', { preventDefault() {} }, 1 , 1, 1, menuMeals, order);
+    wrapper.find(Button).at(1).simulate('click', { preventDefault() {} }, 1 , 1, 1, menuMeals, order);
+    expect(wrapper.state('clickedOrder')).toEqual(1);
+    expect(wrapper.state('clickedOrderMenu')).toEqual(1);
+    expect(wrapper.state('clickedOrderMealID')).toEqual(1);
+    expect(wrapper.state('clickedOrderMenuMeals')).toEqual([
+      {"meal": "Rolex", "meal_id": 1, "price": 4000},
+      {"meal": "Chicken", "meal_id": 2, "price": 10000}
+    ]);
+    expect(wrapper.state('order')).toEqual(order);
   })
 
 
