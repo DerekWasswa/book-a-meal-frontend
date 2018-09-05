@@ -54,6 +54,7 @@ export class LoginForm extends React.Component {
             name="email"
             className="form-control"
             type="email"
+            required={true}
             value={this.state.email}
             onChange={this.handleInputChanges}
             placeholder="Email"
@@ -74,6 +75,7 @@ export class LoginForm extends React.Component {
           loginClass={"btn btn-primary px-4"}
           forgotPassClass={"btn btn-link px-0"}
           loginBtnType={"submit"}
+          required={true}
           forgotPassBtnType={"button"}
           login={"Login"}
           forgotpassword={"Forgot password?"}

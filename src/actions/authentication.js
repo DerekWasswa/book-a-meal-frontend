@@ -1,7 +1,8 @@
 import {
   USER_REGISTERED,
   USER_LOGGED_IN,
-  USER_LOGGED_OUT
+  USER_LOGGED_OUT,
+  ERRORS
 } from "../reducers/constants";
 import { baseURL } from "../reducers/constants";
 import jwtDecode from "jwt-decode";
@@ -23,6 +24,11 @@ export const userLogOut = () => ({
   type: USER_LOGGED_OUT
 });
 
+export const showError = data => ({
+  type: ERRORS,
+  data
+});
+
 export const signUpUser = data => dispatch =>
   axios
     .post("/auth/signup", data)
@@ -35,6 +41,13 @@ export const signUpUser = data => dispatch =>
     })
     .catch(function(error) {
       // handle error
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 
 export const loginUser = data => dispatch =>
@@ -49,7 +62,13 @@ export const loginUser = data => dispatch =>
     })
     .catch(function(error) {
       // handle error
-      console.log(error);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 
 export const logoutUser = () => dispatch => {

@@ -52,6 +52,7 @@ export class UpdateMealForm extends React.Component {
                 type="text"
                 name="meal"
                 id="meal"
+                required={true}
                 value={this.state.meal}
                 onChange={this.handleInputChanges}
                 placeholder="Chicken Luwombo with Matooke"
@@ -67,6 +68,7 @@ export class UpdateMealForm extends React.Component {
                 type="number"
                 name="price"
                 id="price"
+                required={true}
                 value={this.state.price}
                 onChange={this.handleInputChanges}
                 placeholder="0"

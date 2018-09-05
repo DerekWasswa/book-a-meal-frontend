@@ -17,6 +17,17 @@ axios.defaults.baseURL = baseURL;
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+
+const serverError = {
+  status_code: 500,
+  message: "Internet connection or Server Temporarily down! Try again again soon."
+}
+
+const errorMealOperation = {
+  status_code: 401,
+  message: "Error Meal Operation"
+}
+
 const loginMock = {
   token: jwt.sign({ admin: true, user_id: 1, name: "bkMealUser" }, "secret")
 };
@@ -89,7 +100,6 @@ describe("meal actions", () => {
     });
   });
 
-
   it("dispatches EDIT_MEAL action upon meal edition", () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -155,4 +165,116 @@ describe("meal actions", () => {
       // expect(store.getActions()).toEqual(expectedAction);
     });
   });
+
+  it("ADD_MEAL action upon meal addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.addMeal(data)).then(() => {});
+  });
+
+  it("ADD_MEAL action upon meal addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorMealOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.addMeal(data)).then(() => {});
+  });
+
+  it("DELETE_MEAL action upon meal addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    window.localStorage = {
+      getItem: key =>{return {"app-access-token": loginMock.token}},
+      setItem: (key, value)=> { store["app-access-token"] = loginMock.token},
+      removeItem: key => Reflect.deleteProperty(store, key)
+    }
+    return store.dispatch(mealActions.deleteMeal()).then(() => {});
+  });
+
+  it("DELETE_MEAL action upon meal addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorMealOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    window.localStorage = {
+      getItem: key =>{return {"app-access-token": loginMock.token}},
+      setItem: (key, value)=> { store["app-access-token"] = loginMock.token},
+      removeItem: key => Reflect.deleteProperty(store, key)
+    }
+    return store.dispatch(mealActions.deleteMeal()).then(() => {});
+  });
+
+  it("EDIT_MEAL action upon meal addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.updateMeal(data)).then(() => {});
+  });
+
+  it("EDIT_MEAL action upon meal addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorMealOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.updateMeal(data)).then(() => {});
+  });
+
+  it("GET_MEAL action upon meal addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.getMeal()).then(() => {});
+  });
+
+  it("GET_MEAL action upon meal addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorMealOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.getMeal()).then(() => {});
+  });
+
+  it("GET_MEALS action upon meal addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.getAllMeals()).then(() => {});
+  });
+
+  it("GET_MEALS action upon meal addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorMealOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(mealActions.getAllMeals()).then(() => {});
+  });
+
+
 });

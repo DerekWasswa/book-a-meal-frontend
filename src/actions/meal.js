@@ -3,11 +3,11 @@ import {
   EDIT_MEAL,
   DELETE_MEAL,
   GET_MEALS,
-  GET_MEAL
+  GET_MEAL,
+  ERRORS
 } from "../reducers/constants";
 import axios from "axios";
 import { baseURL } from "../reducers/constants";
-import { responseError } from "../components/utils/handleResponseErrors";
 import { responseSuccess } from "../components/utils/handleResponseSuccess";
 
 axios.defaults.baseURL = baseURL;
@@ -41,6 +41,11 @@ export const getMealSingular = data => ({
   data
 });
 
+export const showError = data => ({
+  type: ERRORS,
+  data
+});
+
 // Create Actions and Have them dispatched
 
 export const addMeal = data => dispatch => {
@@ -53,7 +58,13 @@ export const addMeal = data => dispatch => {
       dispatch(getAllMeals());
     })
     .catch(function(error) {
-      // responseError(error.response.data, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -67,7 +78,13 @@ export const updateMeal = (data, mealID) => dispatch => {
       dispatch(getAllMeals());
     })
     .catch(function(error) {
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -81,7 +98,13 @@ export const deleteMeal = mealID => dispatch => {
       dispatch(getAllMeals());
     })
     .catch(function(error) {
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -92,7 +115,11 @@ export const getAllMeals = () => dispatch => {
     .then(res => dispatch(getMeals(res.data.data)))
     .catch(function(error) {
       if (error.response) {
-        responseError(error.response.data.message, error.response.status);
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
       }
     });
 };
@@ -105,6 +132,13 @@ export const getMeal = mealID => dispatch => {
       dispatch(getMealSingular(response.data));
     })
     .catch(function(error) {
-      responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
+
 };

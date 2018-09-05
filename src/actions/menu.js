@@ -2,11 +2,11 @@ import {
   GET_MENU_OF_THE_DAY,
   ADD_MENU_OF_THE_DAY,
   GET_VENDOR_MENUS,
-  DELETE_MEAL_OFF_THE_MENU
+  DELETE_MEAL_OFF_THE_MENU,
+  ERRORS
 } from "../reducers/constants";
 import axios from "axios";
 import { baseURL } from "../reducers/constants";
-import { responseError } from "../components/utils/handleResponseErrors";
 import { responseSuccess } from "../components/utils/handleResponseSuccess";
 
 axios.defaults.baseURL = baseURL;
@@ -35,6 +35,11 @@ export const deleteMealOff = data => ({
   data
 });
 
+export const showError = data => ({
+  type: ERRORS,
+  data
+});
+
 // Create Actions and Have them dispatched
 
 export const setMenu = data => dispatch => {
@@ -47,9 +52,13 @@ export const setMenu = data => dispatch => {
     })
 
     .catch(function(error) {
-      // handle error
-      console.log(error);
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -58,9 +67,13 @@ export const getMenus = () => dispatch => {
     .get("/menu/")
     .then(res => dispatch(getMenuOfTheDay(res.data.data)))
     .catch(function(error) {
-      // handle error
-      console.log(error);
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -70,9 +83,13 @@ export const getVendorMenus = () => dispatch => {
     .get("/vendor/menu/", { headers })
     .then(res => dispatch(getVendorData(res.data.data)))
     .catch(function(error) {
-      // handle error
-      console.log(error);
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };
 
@@ -86,8 +103,12 @@ export const deleteMealOffTheMenu = (menuId, mealId) => dispatch => {
       dispatch(getVendorMenus());
     })
     .catch(function(error) {
-      // handle error
-      console.log(error);
-      // responseError(error.response.data.message, error.response.status);
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
     });
 };

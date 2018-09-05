@@ -1,8 +1,16 @@
 import reducer from "./authReducer";
-import { USER_REGISTERED, USER_LOGGED_IN, USER_LOGGED_OUT } from "./constants";
+import { USER_REGISTERED, USER_LOGGED_IN, USER_LOGGED_OUT, ERRORS } from "./constants";
+import sinon from 'sinon';
+import notify from "react-notify-toast";
+jest.mock('react-notify-toast')
 
 describe("AUTHENTICATION REDUCER", () => {
   let user;
+  let serverError;
+  let reset;
+  let notify;
+  let update = sinon.stub().resolves({success: true})
+
   let initialState;
 
   beforeEach(() => {
@@ -12,6 +20,16 @@ describe("AUTHENTICATION REDUCER", () => {
       email: "bkmeal@test.com",
       admin: true
     };
+
+    serverError = {
+      status_code: 500,
+      message: "Server Temporarily down! Try again again soon."
+    };
+
+    notify = {
+      show: sinon.spy()
+    }
+    reset = sinon.spy()
 
     initialState = {
       auth: {
@@ -66,4 +84,5 @@ describe("AUTHENTICATION REDUCER", () => {
       }
     });
   });
+
 });

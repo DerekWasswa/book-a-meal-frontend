@@ -6,6 +6,7 @@ import {
   SUCCESS,
   ERRORS
 } from "./constants";
+import { responseError } from "../components/utils/handleResponseErrors";
 
 const previousState = {
   menu: {
@@ -46,6 +47,9 @@ export default function(state = previousState, action = {}) {
       return {
         ...state
       };
+    case ERRORS:
+      responseError(action.data.message, action.data.status_code);
+      return state;
     default:
       return state;
   }
