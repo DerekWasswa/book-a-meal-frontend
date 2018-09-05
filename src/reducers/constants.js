@@ -23,4 +23,8 @@ export const CANCEL_ORDER = "CANCEL_ORDER";
 export const SUCCESS = "SUCCESS";
 export const ERRORS = "ERRORS";
 
-export const baseURL = "http://127.0.0.1:5000/api/v1";
+// Development baseURL
+// export const baseURL = "http://127.0.0.1:5000/api/v1";
+
+// Production baseURL
+export const baseURL = "https://book-meals-app-256.herokuapp.com/api/v1";
