@@ -18,6 +18,7 @@ export const GET_CUSTOMER_ORDERS = "GET_CUSTOMER_ORDERS";
 export const PLACE_ORDER = "PLACE_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const SERVE_ORDER = "SERVE_ORDER";
+export const CANCEL_ORDER = "CANCEL_ORDER";
 
 export const SUCCESS = "SUCCESS";
 export const ERRORS = "ERRORS";
