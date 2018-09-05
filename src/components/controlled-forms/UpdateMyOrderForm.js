@@ -32,9 +32,7 @@ export class UpdateMyOrderForm extends React.Component {
 
   handleMealSelectionChanges(event) {
     const target = event.target;
-    const name = target.name;
     const value = target.value;
-
     this.setState({ orderMealID: value });
   }
 
@@ -46,7 +44,8 @@ export class UpdateMyOrderForm extends React.Component {
       user: localStorage.getItem("user"),
       order_to_update: this.state.orderMealID
     };
-    this.props.updateOrder(JSON.stringify(data), this.props.orderIDClicked);
+    let orderID = this.props.orderIDClicked;
+    this.props.updateOrder(JSON.stringify(data), orderID);
 
     notify.show("Order has been updated successfully.");
     $("#editOrderModal .close").click()

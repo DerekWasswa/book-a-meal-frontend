@@ -70,7 +70,7 @@ export const updateOrder = (data, orderId) => dispatch => {
     .then(function(response) {
       dispatch(updateOrderOption(response.data));
       let user = jwtDecode(localStorage.getItem("app-access-token"));
-      dispatch(getAllCustomerOrders(JSON.stringify(user.user_id)));
+      dispatch(getAllCustomerOrders(user));
     })
     .catch(function(error) {
       if (error.response) {

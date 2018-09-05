@@ -22,6 +22,8 @@ export class MyOrders extends React.Component {
       clickedOrderMenuMeals: [{}],
       order: {}
     };
+
+    this.handleOrderEditionClicks = this.handleOrderEditionClicks.bind(this);
   }
 
   componentDidMount() {
@@ -29,14 +31,7 @@ export class MyOrders extends React.Component {
     this.props.getAllCustomerOrders(user);
   }
 
-  handleOrderEditionClicks(
-    event,
-    clickedOrderID,
-    clickedMenu,
-    orderMenuMeals,
-    mealId,
-    order
-  ) {
+  handleOrderEditionClicks = (clickedOrderID, clickedMenu, orderMenuMeals, mealId, order) => event => {
     event.preventDefault();
     this.setState({
       clickedOrder: clickedOrderID,
@@ -46,6 +41,24 @@ export class MyOrders extends React.Component {
       order: order
     });
   }
+
+  // handleOrderEditionClicks(
+  //   event,
+  //   clickedOrderID,
+  //   clickedMenu,
+  //   orderMenuMeals,
+  //   mealId,
+  //   order
+  // ) {
+  //   event.preventDefault();
+  //   this.setState({
+  //     clickedOrder: clickedOrderID,
+  //     clickedOrderMenu: clickedMenu,
+  //     clickedOrderMealID: mealId,
+  //     clickedOrderMenuMeals: orderMenuMeals,
+  //     order: order
+  //   });
+  // }
 
   render() {
     const { orders } = this.props;
@@ -70,42 +83,46 @@ export class MyOrders extends React.Component {
                 <tbody>
                   {orders &&
                     orders.map(order => (
-                      <tr key={order.order_id}>
-                        <td>{order.meal.meal}</td>
-                        <td>{order.meal.price}</td>
-                        <td>{order.menu.name}</td>
-                        <td>{order.date}</td>
-                        <td>
-                          {Math.round(+new Date() / 1000) -
-                            Number(order.expiration) >
-                          3600 ? (
-                            <Button
-                              disabled
-                              data-toggle="tooltip"
-                              title="Can not edit Order. Caterer is working on it."
-                            >
-                              Expired
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={e =>
-                                this.handleOrderEditionClicks(
-                                  e,
-                                  order.order_id,
-                                  order.menu.menu_id,
-                                  order.menu.meals,
-                                  order.meal.meal_id,
-                                  order
-                                )
-                              }
-                              data-toggle="modal"
-                              data-target="#editOrderModal"
-                            >
-                              Edit
-                            </Button>
-                          )}
-                        </td>
-                      </tr>
+
+                      order.status === "Not Served"
+                        ?
+                        <tr key={order.order_id}>
+                          <td>{order.meal.meal}</td>
+                          <td>{order.meal.price}</td>
+                          <td>{order.menu.name}</td>
+                          <td>{order.date}</td>
+                          <td>
+                            {Math.round(+new Date() / 1000) -
+                              Number(order.expiration) >
+                            3600 ? (
+                              <Button
+                                disabled
+                                data-toggle="tooltip"
+                                title="Can not edit Order. Caterer is working on it."
+                              >
+                                Expired
+                              </Button>
+                            ) : (
+                              <Button
+                                onClick={
+                                  this.handleOrderEditionClicks(
+                                    order.order_id,
+                                    order.menu.menu_id,
+                                    order.menu.meals,
+                                    order.meal.meal_id,
+                                    order
+                                  )
+                                }
+                                data-toggle="modal"
+                                data-target="#editOrderModal"
+                              >
+                                Edit
+                              </Button>
+                            )}
+                          </td>
+                        </tr>
+                      :
+                      null
                     ))}
                 </tbody>
               </Table>
