@@ -42,30 +42,12 @@ export class MyOrders extends React.Component {
     });
   }
 
-  // handleOrderEditionClicks(
-  //   event,
-  //   clickedOrderID,
-  //   clickedMenu,
-  //   orderMenuMeals,
-  //   mealId,
-  //   order
-  // ) {
-  //   event.preventDefault();
-  //   this.setState({
-  //     clickedOrder: clickedOrderID,
-  //     clickedOrderMenu: clickedMenu,
-  //     clickedOrderMealID: mealId,
-  //     clickedOrderMenuMeals: orderMenuMeals,
-  //     order: order
-  //   });
-  // }
-
   render() {
     const { orders } = this.props;
 
     return (
       <div>
-        <UserDashboard />
+        <UserDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">

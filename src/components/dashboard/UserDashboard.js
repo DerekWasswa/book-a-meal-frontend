@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authentication";
 import { notify } from "react-notify-toast";
+import jwtDecode from "jwt-decode";
+
 
 /**
  * @export
@@ -49,7 +51,9 @@ export class UserDashboard extends React.Component {
     this.props.history.push("/login");
   }
 
+
   render() {
+
     return (
       <div className="header">
         <Navbar color="dark" className="navbar-dark" expand="md">
@@ -79,7 +83,30 @@ export class UserDashboard extends React.Component {
 
               <LinkContainer to="/c-order-history" activeClassName="active">
                 <NavItem className="">
-                  <NavLink href="/c-order-history">Order History</NavLink>
+                  <NavLink href="/c-order-history">
+                    Order History
+                    <span className="badge-notify-served">
+                    {
+                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Served" })).length > 0
+                      ?
+                      <Badge color="success">{this.props.orders.filter(obj => {return obj.status === "Served"}).length}</Badge>
+                      :
+                      null
+                    }
+                    {
+                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Not Served" })).length > 0
+                      ?
+                      <Badge className="badge-notify-pending" color="info">{this.props.orders.filter(obj => {return obj.status === "Not Served"}).length}</Badge>
+                      : null
+                    }
+                    {
+                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Cancelled" })).length > 0
+                      ?
+                      <Badge className="badge-notify-canceled" color="danger">{this.props.orders.filter(obj => {return obj.status === "Cancelled"}).length}</Badge>
+                      : null
+                    }
+                    </span>
+                  </NavLink>
                 </NavItem>
               </LinkContainer>
             </Nav>
@@ -123,7 +150,8 @@ UserDashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+});
 
 export default withRouter(
   connect(
