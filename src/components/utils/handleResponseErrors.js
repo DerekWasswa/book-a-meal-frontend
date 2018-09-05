@@ -7,5 +7,9 @@ export const responseError = (message, statusCode) => {
       "Authentication has expired, kindly Login to authenticate again."
     );
     history.push("/login");
+  }else if(message === "Invalid/Wrong Password") {
+    notify.show("Invalid Email or Password");
+  }else{
+    notify.show(message);
   }
 };

@@ -24,6 +24,16 @@ const registeredUser = {
   admin: true
 };
 
+const serverError = {
+  status: 500,
+  response: "Internet connection or Server Temporarily down! Try again again soon."
+}
+
+const invalidEmailOrPassword = {
+  status: 401,
+  response: "Invalid Email or Password"
+}
+
 const loginMock = {
   token: jwt.sign({ admin: true, user_id: 1, name: "bkMealUser" }, "secret")
 };
@@ -96,4 +106,81 @@ describe("authentication actions", () => {
     store.dispatch(authActions.logoutUser());
     expect(store.getActions()).toEqual(expectedAction);
   });
+
+  it("USER_REGISTERED action fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const expectedAction = [
+      {
+        type: USER_REGISTERED,
+        data: serverError
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(authActions.signUpUser(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("USER_LOGGED_IN action fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const expectedAction = [
+      {
+        type: USER_LOGGED_IN,
+        data: serverError
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(authActions.loginUser(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("USER_REGISTERED action fails due to invalid email or password error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(invalidEmailOrPassword);
+    });
+
+    const expectedAction = [
+      {
+        type: USER_REGISTERED,
+        data: invalidEmailOrPassword
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(authActions.signUpUser(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("USER_LOGGED_IN action fails due to wrong email or password", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(invalidEmailOrPassword);
+    });
+
+    const expectedAction = [
+      {
+        type: USER_LOGGED_IN,
+        data: invalidEmailOrPassword
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(authActions.loginUser(data)).then(() => {
+      // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
 });

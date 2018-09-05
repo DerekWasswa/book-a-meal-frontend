@@ -16,6 +16,16 @@ import axios from "axios";
 
 axios.defaults.baseURL = baseURL;
 
+const serverError = {
+  status_code: 500,
+  message: "Server Temporarily down! Try again again soon."
+}
+
+const errorOrderOperation = {
+  status_code: 401,
+  message: "Error for order operation"
+}
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -88,7 +98,6 @@ describe("order actions", () => {
     });
   });
 
-
   it("dispatches SERVE_ORDER action", () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -154,4 +163,114 @@ describe("order actions", () => {
       // expect(store.getActions()).toEqual(expectedAction);
     });
   });
+
+  it("PLACE_ORDER action upon order addition fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.makeOrderFromMenu(data)).then(() => {});
+  });
+
+  it("PLACE_ORDER action upon order addition fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorOrderOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.makeOrderFromMenu(data)).then(() => {});
+  });
+
+  it("UPDATE_ORDER action upon update order fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.updateOrder(data, 1)).then(() => {
+    });
+  });
+
+  it("UPDATE_ORDER action upon update order fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorOrderOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.updateOrder(data, 1)).then(() => {
+    });
+  });
+
+  it("SERVE_ORDER action upon serve order fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.serveOrder(data)).then(() => {
+    });
+  });
+
+  it("SERVE_ORDER action upon serve order fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorOrderOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.serveOrder(data)).then(() => {
+    });
+  });
+
+  it("GET_CUSTOMER_ORDERS action upon getting customer orders fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllCustomerOrders(customerID)).then(() => {
+    });
+  });
+
+  it("GET_CUSTOMER_ORDERS action upon getting customer orders fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorOrderOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllCustomerOrders(customerID)).then(() => {
+    });
+  });
+
+  it("GET_ORDERS action fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject(serverError);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllOrders()).then(() => {
+    });
+  });
+
+  it("GET_ORDERS action fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith(errorOrderOperation);
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.getAllOrders()).then(() => {
+    });
+  });
+
+
 });

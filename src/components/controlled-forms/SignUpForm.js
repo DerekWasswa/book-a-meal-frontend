@@ -66,6 +66,7 @@ export class SignUpForm extends React.Component {
             className="form-control"
             name="username"
             type="text"
+            required={true}
             value={this.state.username}
             onChange={this.handleInputChanges}
             placeholder="Username"
@@ -76,6 +77,7 @@ export class SignUpForm extends React.Component {
             className="form-control"
             name="email"
             type="email"
+            required={true}
             value={this.state.email}
             onChange={this.handleInputChanges}
             placeholder="Email"
@@ -86,6 +88,7 @@ export class SignUpForm extends React.Component {
             name="password"
             className="form-control"
             type="password"
+            required={true}
             value={this.state.password}
             onChange={this.handleInputChanges}
             placeholder="Password"
@@ -96,6 +99,7 @@ export class SignUpForm extends React.Component {
             name="confirmPassword"
             className="form-control"
             type="password"
+            required={true}
             value={this.state.confirmPassword}
             onChange={this.handleInputChanges}
             placeholder="Repeat password"
@@ -106,6 +110,7 @@ export class SignUpForm extends React.Component {
           <span className="switch">
             <input
               type="checkbox"
+              required={true}
               value={this.state.caterer}
               onChange={this.handleCheckboxChanges}
               className="switch"

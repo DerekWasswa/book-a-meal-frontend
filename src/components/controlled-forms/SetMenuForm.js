@@ -112,6 +112,7 @@ export class SetMenuForm extends React.Component {
                   type="text"
                   name="name"
                   id="name"
+                  required={true}
                   value={this.state.name}
                   onChange={this.handleInputChanges}
                   placeholder="Chilliz Special Friday"
@@ -122,6 +123,7 @@ export class SetMenuForm extends React.Component {
                 <Input
                   type="textarea"
                   name="description"
+                  required={true}
                   value={this.state.description}
                   onChange={this.handleInputChanges}
                   id="description"
@@ -133,6 +135,7 @@ export class SetMenuForm extends React.Component {
                   type="date"
                   name="date"
                   id="dates"
+                  required={true}
                   value={this.state.date}
                   onChange={this.handleInputChanges}
                   placeholder="date placeholder"
