@@ -4,6 +4,7 @@ import {
   UPDATE_ORDER,
   GET_CUSTOMER_ORDERS,
   SERVE_ORDER,
+  CANCEL_ORDER,
   SUCCESS,
   ERRORS
 } from "./constants";
@@ -47,6 +48,11 @@ export default function(state = previousState, action = {}) {
         orders: action.data
       };
     case SERVE_ORDER:
+      return {
+        ...state,
+        order: action.data
+      };
+    case CANCEL_ORDER:
       return {
         ...state,
         order: action.data

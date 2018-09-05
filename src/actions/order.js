@@ -4,6 +4,7 @@ import {
   GET_ORDERS,
   GET_CUSTOMER_ORDERS,
   SERVE_ORDER,
+  CANCEL_ORDER,
   ERRORS
 } from "../reducers/constants";
 import axios from "axios";
@@ -38,6 +39,11 @@ export const getCustomerOrders = data => ({
 
 export const serveCustomerOrder = data => ({
   type: SERVE_ORDER,
+  data
+});
+
+export const cancelCustomerOrder = data => ({
+  type: CANCEL_ORDER,
   data
 });
 
@@ -120,6 +126,25 @@ export const serveOrder = orderID => dispatch => {
     .put(`/orders/serve/${orderID}`, null, { headers })
     .then(function(response) {
       dispatch(serveCustomerOrder(response.data.message));
+      dispatch(getAllOrders());
+    })
+    .catch(function(error) {
+      if (error.response) {
+        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+      }
+
+      if(error.request){
+        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+      }
+    });
+};
+
+export const cancelOrder = orderID => dispatch => {
+  const headers = priviledgedHeader();
+  return axios
+    .put(`/orders/cancel/${orderID}`, null, { headers })
+    .then(function(response) {
+      dispatch(cancelCustomerOrder(response.data.message));
       dispatch(getAllOrders());
     })
     .catch(function(error) {

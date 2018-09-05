@@ -10,6 +10,7 @@ import {
   SERVE_ORDER,
   GET_CUSTOMER_ORDERS,
   GET_ORDERS,
+  CANCEL_ORDER,
   baseURL
 } from "../reducers/constants";
 import axios from "axios";
@@ -117,6 +118,27 @@ describe("order actions", () => {
     const store = mockStore({ data: {} });
     return store.dispatch(orderActions.serveOrder(data)).then(() => {
       // expect(store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it("dispatches CANCEL_ORDER action", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: order
+      });
+    });
+
+    const expectedAction = [
+      {
+        type: CANCEL_ORDER,
+        data: order
+      }
+    ];
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.cancelOrder(data)).then(() => {
     });
   });
 
@@ -272,5 +294,32 @@ describe("order actions", () => {
     });
   });
 
+  it("CANCEL_ORDER action upon cancelling order fails due to server error", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject({
+        status: 500,
+        response: "Server Temporarily down! Try again again soon."
+      });
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.cancelOrder(data)).then(() => {
+    });
+  });
+
+  it("CANCEL_ORDER action upon cancelling order fails due to wrong operation", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 401,
+        response: "Server Temporarily down! Try again again soon."
+      });
+    });
+
+    const store = mockStore({ data: {} });
+    return store.dispatch(orderActions.cancelOrder(data)).then(() => {
+    });
+  });
 
 });

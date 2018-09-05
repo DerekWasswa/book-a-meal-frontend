@@ -52,21 +52,21 @@ export class OrderHistory extends React.Component {
               <div>
                 <div className="row">
 
-                <div class="col-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active" data-toggle="tab" href="#served" role="tab" aria-controls="served">Served</a>
+                <div className="col-12">
+                <ul className="nav nav-tabs" role="tablist">
+                    <li className="nav-item">
+                      <a className="nav-link active" data-toggle="tab" href="#served" role="tab" aria-controls="served">Served</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#pending" role="tab" aria-controls="pending">Pending</a>
+                    <li className="nav-item">
+                      <a className="nav-link" data-toggle="tab" href="#pending" role="tab" aria-controls="pending">Pending</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#cancelled" role="tab" aria-controls="cancelled">Cancelled</a>
+                    <li className="nav-item">
+                      <a className="nav-link" data-toggle="tab" href="#cancelled" role="tab" aria-controls="cancelled">Cancelled</a>
                     </li>
                 </ul>
                 <br />
-                <div class="tab-content">
-                  <div class="tab-pane active" id="served" role="tabpanel">
+                <div className="tab-content">
+                  <div className="tab-pane active" id="served" role="tabpanel">
 
                     <Table hover>
                       <thead>
@@ -98,7 +98,7 @@ export class OrderHistory extends React.Component {
                       </Table>
                  </div>
 
-                  <div class="tab-pane" id="pending" role="tabpanel">
+                  <div className="tab-pane" id="pending" role="tabpanel">
                     <Table hover>
                     <thead>
                       <tr>
@@ -129,7 +129,7 @@ export class OrderHistory extends React.Component {
                       </Table>
                   </div>
 
-                  <div class="tab-pane" id="cancelled" role="tabpanel">
+                  <div className="tab-pane" id="cancelled" role="tabpanel">
                     <Table hover>
                       <thead>
                         <tr>

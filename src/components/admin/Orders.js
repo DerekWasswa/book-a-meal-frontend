@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import CatererDashboard from "../dashboard/CatererDashboard";
 import Footer from "../dashboard/Footer";
-import { getAllOrders, serveOrder } from "../../actions/order";
+import { getAllOrders, serveOrder, cancelOrder } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -13,6 +13,7 @@ export class Orders extends React.Component {
   constructor(props) {
     super(props);
     this.serveCustomerOrder = this.serveCustomerOrder.bind(this);
+    this.cancelCustomerOrder = this.cancelCustomerOrder.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +25,13 @@ export class Orders extends React.Component {
     const { param } = event.target.dataset;
     this.props.serveOrder(param);
     notify.show("Order has been serve Successfully.");
+  }
+
+  cancelCustomerOrder(event) {
+    event.preventDefault();
+    const { param } = event.target.dataset;
+    this.props.cancelOrder(param);
+    notify.show("Order has been cancelled Successfully.");
   }
 
   render() {
@@ -80,7 +88,7 @@ export class Orders extends React.Component {
                           <button
                             className="btn btn-danger"
                             data-param={order.order_id}
-                            onClick={this.serveCustomerOrder}
+                            onClick={this.cancelCustomerOrder}
                           >
                             Cancel
                           </button>
@@ -134,6 +142,7 @@ export class Orders extends React.Component {
 Orders.propTypes = {
   getAllOrders: PropTypes.func.isRequired,
   serveOrder: PropTypes.func.isRequired,
+  cancelOrder: PropTypes.func.isRequired,
   orders: PropTypes.arrayOf(
     PropTypes.shape({
       order_id: PropTypes.number.isRequired,
@@ -160,6 +169,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { getAllOrders, serveOrder }
+    { getAllOrders, serveOrder, cancelOrder }
   )(Orders)
 );
