@@ -18,6 +18,7 @@ describe("<Orders />", () => {
   let emptyOrders;
   let getAllOrders;
   let serveOrder;
+  let cancelOrder;
   const mockStore = configureStore()
   let store, initialState;
   let reset;
@@ -80,6 +81,7 @@ describe("<Orders />", () => {
 
      getAllOrders = jest.fn()
      serveOrder = jest.fn()
+     cancelOrder = jest.fn()
 
     initialState = {
       orders: [{}]
@@ -100,6 +102,7 @@ describe("<Orders />", () => {
       <Orders
         orders={orders}
         getAllOrders={getAllOrders}
+        cancelOrder={cancelOrder}
         serveOrder={serveOrder}  />);
     expect(wrapper).toBeDefined();
   });
@@ -111,6 +114,7 @@ describe("<Orders />", () => {
             <Orders
               orders={orders}
               getAllOrders={getAllOrders}
+              cancelOrder={cancelOrder}
               serveOrder={serveOrder}  />
         </Provider>
       </MemoryRouter>);
@@ -128,6 +132,7 @@ describe("<Orders />", () => {
             <Orders
               orders={emptyOrders}
               getAllOrders={getAllOrders}
+              cancelOrder={cancelOrder}
               serveOrder={serveOrder}  />
           </MemoryRouter>
         </Provider>
@@ -147,6 +152,7 @@ describe("<Orders />", () => {
         notify
         orders={orders}
         getAllOrders={getAllOrders}
+        cancelOrder={cancelOrder}
         serveOrder={serveOrder}
         reset />
     );
@@ -154,6 +160,7 @@ describe("<Orders />", () => {
     wrapper.find("button").at(0).simulate('click', { target: {dataset: {param: 1}}, preventDefault() {} });
     wrapper.find("button").at(1).simulate('click', {target: {dataset: {param: 2}}, preventDefault() {} });
     expect(serveOrder).toBeCalled();
+    expect(cancelOrder).toBeCalled();
     expect(notify.show).toBe(notify.show);
   })
 

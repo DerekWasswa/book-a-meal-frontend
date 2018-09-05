@@ -5,6 +5,7 @@ import {
   GET_CUSTOMER_ORDERS,
   GET_ORDERS,
   SERVE_ORDER,
+  CANCEL_ORDER,
   SUCCESS,
   ERRORS
 } from "./constants";
@@ -105,4 +106,12 @@ describe("ORDER REDUCER", () => {
       orders: []
     });
   });
+
+  it("responds to the CANCEL_ORDER action creator", () => {
+    expect(reducer(initialState, { type: CANCEL_ORDER, data: order })).toEqual({
+      order: order,
+      orders: []
+    });
+  });
+
 });
