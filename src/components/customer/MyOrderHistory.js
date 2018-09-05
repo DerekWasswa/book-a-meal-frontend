@@ -24,7 +24,7 @@ export class MyOrderHistory extends React.Component {
 
     return (
       <div>
-        <UserDashboard />
+        <UserDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">
@@ -34,13 +34,13 @@ export class MyOrderHistory extends React.Component {
               <div className="col-12">
               <ul className="nav nav-tabs" role="tablist">
                   <li className="nav-item">
-                    <a className="nav-link active" data-toggle="tab" href="#served" role="tab" aria-controls="served">Served</a>
+                    <a className="nav-link text-success active" data-toggle="tab" href="#served" role="tab" aria-controls="served">Served</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#pending" role="tab" aria-controls="pending">Pending</a>
+                    <a className="nav-link text-info" data-toggle="tab" href="#pending" role="tab" aria-controls="pending">Pending</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#cancelled" role="tab" aria-controls="cancelled">Cancelled</a>
+                    <a className="nav-link text-danger" data-toggle="tab" href="#cancelled" role="tab" aria-controls="cancelled">Cancelled</a>
                   </li>
               </ul>
               <br />

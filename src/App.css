@@ -206,3 +206,18 @@ footer {
 .switch + .switch {
   margin-left: 1rem;
 }
+
+/* Notification Badges for Orders */
+.badge-notify-served {
+  position:relative;
+  top: -16px;
+  left: -5px;
+}
+
+.badge-notify-pending {
+  margin-left: 3px;
+}
+
+.badge-notify-canceled {
+  margin-left: 3px;
+}
