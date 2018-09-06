@@ -2,6 +2,10 @@
   "name": "book-a-meal-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "5.6.0",
+    "node": "8.11.4"
+  },
   "dependencies": {
     "ajv": "^6.5.2",
     "axios": "^0.18.0",
@@ -54,7 +58,6 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3"
   },
-  "proxy": "http://localhost:3000",
   "jest": {
     "verbose": true,
     "setupTestFrameworkScriptFile": "./src/__tests__/setup/setupEnzyme.js",
