@@ -14,10 +14,12 @@ export class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedMeal: 1
+      clickedMeal: 1,
+      cart: localStorage.getItem('meals') !== null && JSON.parse(localStorage.getItem('meals')).length
     };
 
     this.handlePlaceOrder = this.handlePlaceOrder.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
   componentDidMount() {
@@ -34,16 +36,63 @@ export class Menu extends React.Component {
       menu_id: menuid,
       date: new Date().toISOString().slice(0, 10)
     };
-    this.props.makeOrderFromMenu(JSON.stringify(data));
-    notify.show("Your Order has been placed Successfully.");
+    this.props.makeOrderFromMenu(JSON.stringify(data))
+    .then(function(data) {
+      if(data.data.status_code === 201){
+        notify.show("Your Order has been placed Successfully.");
+      }
+    });
+  }
+
+  handleAddToCart = (meal_id, meal, price, menu_id) => event => {
+    event.preventDefault();
+
+    let mealJSON = {"mealId": meal_id, "meal": meal, "price": Number(price), "menuId": menu_id, "quantity": 1, "subtotal": Number(price)};
+
+    if(localStorage.getItem('meals') !== null){
+      var mealArray = [];
+
+      mealArray = JSON.parse(localStorage.getItem('meals'));
+
+      // Add a Meal only once, otherwise just increment the quantity in the cart
+      if ((mealArray.filter(obj => { return obj.mealId === meal_id })).length < 1){
+        mealArray.push(mealJSON);
+        var stringMeals = JSON.stringify(mealArray);
+        localStorage.setItem('meals', stringMeals);
+      }
+    }
+    else{
+      var mealArray = [];
+      mealArray[0] = mealJSON;
+      var stringMeals = JSON.stringify(mealArray);
+      localStorage.setItem('meals', stringMeals);
+      var today = new Date();
+      // var midnight = today.setHours(24,0,0,0);
+      localStorage.setItem('expiration', Math.round(+new Date().setHours(24,0,0,0) / 1000));
+    }
+    // Update the number of items in the cart
+    this.setState({
+      cart: localStorage.getItem('meals') !== null && JSON.parse(localStorage.getItem('meals')).length
+    })
+    notify.show("Added to Cart.", "success");
+
   }
 
   render() {
+    // Check if the cart meals are not obsolote
+    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
+      localStorage.removeItem("meals");
+      localStorage.removeItem("expiration");
+    }
+
+
     const { menus } = this.props;
 
     return (
       <div>
-        <UserDashboard />
+        <UserDashboard cart={
+          this.state.cart
+        } />
 
         <div className="wrapper-content ">
           <div className="body-content">
@@ -124,6 +173,14 @@ export class Menu extends React.Component {
                                           outline
                                           color="success"
                                           size="sm"
+                                          onClick={
+                                            this.handleAddToCart(
+                                              meal.meal_id,
+                                              meal.meal,
+                                              meal.price,
+                                              menu.menu_id
+                                            )
+                                          }
                                         >
                                           <i className="material-icons cart-icon-size">
                                             &#xe854;
@@ -180,6 +237,14 @@ export class Menu extends React.Component {
                                           outline
                                           color="success"
                                           size="sm"
+                                          onClick={
+                                            this.handleAddToCart(
+                                              meal.meal_id,
+                                              meal.meal,
+                                              meal.price,
+                                              menu.menu_id
+                                            )
+                                          }
                                         >
                                           <i className="material-icons cart-icon-size">
                                             &#xe854;

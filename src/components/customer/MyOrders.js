@@ -43,11 +43,19 @@ export class MyOrders extends React.Component {
   }
 
   render() {
+    // Check if the cart meals are not obsolote
+    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
+      localStorage.removeItem("meals");
+      localStorage.removeItem("expiration");
+    }
+
     const { orders } = this.props;
 
     return (
       <div>
-        <UserDashboard orders={orders} />
+        <UserDashboard orders={orders} cart={
+          localStorage.getItem('meals') !== null && JSON.parse(localStorage.getItem('meals')).length
+        } />
 
         <div className="wrapper-content ">
           <div className="body-content">
