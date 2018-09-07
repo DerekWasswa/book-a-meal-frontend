@@ -221,3 +221,15 @@ footer {
 .badge-notify-canceled {
   margin-left: 3px;
 }
+
+/* Loader  */
+.center-loader{
+  width: 50%;
+  margin: 0 auto;
+}
+
+.loader {
+  width: 200px;
+  height: 200px;
+  background: url(./img/ripple_small.gif) no-repeat center;
+}

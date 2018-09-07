@@ -93,6 +93,12 @@ describe("<Menu />", () => {
 
   });
 
+  afterEach(() => {
+    // Set Data in the localstorage for tests
+    spyOn(window.localStorage, 'removeItem');
+    window.localStorage.removeItem("meals");
+    window.localStorage.removeItem("expiration");
+  })
 
   it("renders menu of day to customers", () => {
     wrapper = shallow(
@@ -154,6 +160,39 @@ describe("<Menu />", () => {
     wrapper.find(Button).at(0).simulate('click', { target: {dataset: {mealid: 1, menuid: 1}}, preventDefault() {} });
     wrapper.find(Button).at(1).simulate('click', {target: {dataset: {mealid: 1, menuid: 1}}, preventDefault() {} });
     expect(makeOrderFromMenu).toBeCalled();
+    expect(notify.show).toBe(notify.show);
+  });
+
+
+  it('calls `handleAddToCart` when cart button is clicked', ()=>{
+    let makeOrderFromMenu = jest.fn()
+    let update = sinon.stub().resolves({success: true})
+
+    // Set Data in the localstorage for tests
+    spyOn(window.localStorage, 'removeItem');
+    spyOn(window.localStorage, 'setItem');
+    let mealJSON = {"mealId": 1, "meal": "Chicken", "price": 1000, "menuId": 1, "quantity": 3, "subtotal": 3000};
+    let mealJSONTWO = {"mealId": 2, "meal": "Chicken", "price": 1000, "menuId": 1, "quantity": 3, "subtotal": 3000};
+    var mealArray = [];
+    mealArray.push(mealJSON);
+    mealArray.push(mealJSONTWO);
+    var stringMeals = JSON.stringify(mealArray);
+    window.localStorage.setItem("meals", stringMeals);
+    window.localStorage.setItem("expiration", 1526354000);
+
+    wrapper = shallow(
+      <Menu
+        update
+        notify
+        menus={menus}
+        makeOrderFromMenu={makeOrderFromMenu}
+        getMenus={getMenus}
+        reset />
+    );
+    wrapper.find(Button).at(7).simulate('click', { preventDefault() {} }, 1 , "Chicken", 10000, 1);
+    wrapper.find(Button).at(7).simulate('click', { preventDefault() {} }, 2 , "Chicken", 10000, 1);
+
+    expect(wrapper.state('cart')).toEqual(1);
     expect(notify.show).toBe(notify.show);
   });
 

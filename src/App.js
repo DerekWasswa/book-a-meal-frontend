@@ -9,6 +9,7 @@ import Menu from "./components/admin/CatererMenu";
 import MenuCustomer from "./components/customer/Menu";
 import CustomerOrders from "./components/customer/MyOrders";
 import CustomerOrderHistory from "./components/customer/MyOrderHistory";
+import Cart from "./components/customer/Cart";
 import LandingPage from "./components/landingpage/LandingPage";
 import Notifications from "react-notify-toast";
 import history from "./history";
@@ -29,6 +30,7 @@ class App extends Component {
             <Route exact path="/orderhistory" component={OrderHistory} />
             <Route exact path="/c-menu" component={MenuCustomer} />
             <Route exact path="/c-orders" component={CustomerOrders} />
+            <Route exact path="/cart" component={Cart} />
             <Route
               exact
               path="/c-order-history"

@@ -110,7 +110,6 @@ export class SignUpForm extends React.Component {
           <span className="switch">
             <input
               type="checkbox"
-              required={true}
               value={this.state.caterer}
               onChange={this.handleCheckboxChanges}
               className="switch"

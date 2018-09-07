@@ -112,10 +112,13 @@ export class UserDashboard extends React.Component {
             </Nav>
 
             <Nav className="ml-auto login-login-link" navbar>
-              <LinkContainer to="/c-orders" activeClassName="active">
+              <LinkContainer to="/cart" activeClassName="active">
                 <NavItem>
-                  <NavLink href="/c-orders">
-                    <Badge color="secondary">432</Badge>
+                  <NavLink href="/cart">
+                    <Badge color="secondary">
+                    {
+                      this.props.cart && this.props.cart
+                    }</Badge>
                     <i className="material-icons">&#xe8cc;</i>
                   </NavLink>
                 </NavItem>
