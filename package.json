@@ -59,7 +59,6 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3"
   },
-  "proxy": "http://localhost:3000",
   "jest": {
     "verbose": true,
     "setupTestFrameworkScriptFile": "./src/__tests__/setup/setupEnzyme.js",
