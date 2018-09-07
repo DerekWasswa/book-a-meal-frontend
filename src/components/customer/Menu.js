@@ -37,11 +37,7 @@ export class Menu extends React.Component {
       date: new Date().toISOString().slice(0, 10)
     };
     this.props.makeOrderFromMenu(JSON.stringify(data))
-    .then(function(data) {
-      if(data.data.status_code === 201){
-        notify.show("Your Order has been placed Successfully.");
-      }
-    });
+    notify.show("Your Order has been placed Successfully.");
   }
 
   handleAddToCart = (meal_id, meal, price, menu_id) => event => {
