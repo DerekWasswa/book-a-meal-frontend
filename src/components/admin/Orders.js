@@ -39,7 +39,7 @@ export class Orders extends React.Component {
 
     return (
       <div>
-        <CatererDashboard />
+        <CatererDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">

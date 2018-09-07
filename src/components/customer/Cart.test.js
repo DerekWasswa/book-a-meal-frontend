@@ -265,6 +265,7 @@ describe("<Cart />", () => {
   })
 
   it("renders cart", () => {
+
     spyOn(window.localStorage, 'removeItem');
     spyOn(window.localStorage, 'setItem');
     let mealJSON = {"mealId": 1, "meal": "Chicken", "price": 1000, "menuId": 1, "quantity": 3, "subtotal": 3000};

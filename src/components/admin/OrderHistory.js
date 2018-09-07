@@ -44,7 +44,7 @@ export class OrderHistory extends React.Component {
     let { orders } = this.props;
     return (
       <div>
-        <CatererDashboard />
+        <CatererDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">

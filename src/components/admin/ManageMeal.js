@@ -8,6 +8,7 @@ import UpdateMealForm from "../controlled-forms/UpdateMealForm";
 import SetMenuForm from "../controlled-forms/SetMenuForm";
 import DeleteMeal from "../controlled-forms/DeleteMeal";
 import { getAllMeals } from "../../actions/meal";
+import { getAllOrders } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -32,6 +33,7 @@ export class ManageMeals extends React.Component {
 
   componentDidMount() {
     this.props.getAllMeals();
+    this.props.getAllOrders();
   }
 
   componentWillReceiveProps(newMeals) {
@@ -63,10 +65,11 @@ export class ManageMeals extends React.Component {
 
   render() {
     const { meals } = this.props;
+    let { orders } = this.props;
 
     return (
       <div>
-        <CatererDashboard />
+        <CatererDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">
@@ -233,22 +236,41 @@ export class ManageMeals extends React.Component {
 
 ManageMeals.propTypes = {
   getAllMeals: PropTypes.func.isRequired,
+  getAllOrders: PropTypes.func.isRequired,
   meals: PropTypes.arrayOf(
     PropTypes.shape({
       meal_id: PropTypes.number.isRequired,
       meal: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired
     }).isRequired
+  ).isRequired,
+  orders: PropTypes.arrayOf(
+    PropTypes.shape({
+      order_id: PropTypes.number.isRequired,
+      status: PropTypes.string.isRequired,
+      meal: PropTypes.shape({
+        meal_id: PropTypes.number.isRequired,
+        meal: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired
+      }).isRequired,
+      menu: PropTypes.shape({
+        menu_id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired
+      }).isRequired,
+      user: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired
+    }).isRequired
   ).isRequired
 };
 
 const mapStateToProps = state => ({
-  meals: state.mealReducer.meals
+  meals: state.mealReducer.meals,
+  orders: state.orderReducer.orders
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { getAllMeals }
+    { getAllMeals, getAllOrders }
   )(ManageMeals)
 );
