@@ -71,7 +71,7 @@ export class Cart extends React.Component {
                 this.props.makeOrderFromMenu(JSON.stringify(data))
             }
         }
-        notify.show("Checkout successful.");
+        notify.show("Checkout successful.", "success");
         localStorage.removeItem('meals');
         localStorage.removeItem('expiration');
         this.setState({

@@ -14,16 +14,74 @@ describe("<CatererMenu />", () => {
 
   let wrapper;
   let menus;
+  let orders;
   let menuEdit;
   let emptyMenu;
   let meals;
   let getVendorMenus;
   let getAllMeals;
   let deleteMealOffTheMenu;
+  let getAllOrders;
   const mockStore = configureStore()
   let store, initialState;
 
   beforeEach(() => {
+
+    orders = [{
+      order_id: 1,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Food",
+              price: 10
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Not Served"
+     },
+     {
+      order_id: 2,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 2,
+          name: "Special Sunday",
+          contact: "test@gmail.com"
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served"
+     },
+     {
+      order_id: 3,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 3,
+          name: "Special Sunday",
+          contact: "test@gmail.com"
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Cancelled"
+     }
+    ];
 
     emptyMenu = [];
     menus = [{
@@ -80,6 +138,7 @@ describe("<CatererMenu />", () => {
     getVendorMenus = jest.fn()
     getAllMeals = jest.fn()
     deleteMealOffTheMenu = jest.fn()
+    getAllOrders = jest.fn()
 
     initialState = {
       menu: {
@@ -106,12 +165,15 @@ describe("<CatererMenu />", () => {
     wrapper = shallow(<CatererMenu
       menus={menus}
       meals={meals}
+      orders={orders}
       getAllMeals={getAllMeals}
       getVendorMenus={getVendorMenus}
+      getAllOrders={getAllOrders}
       deleteMealOffTheMenu={deleteMealOffTheMenu} />);
     expect(wrapper).toBeDefined();
     expect(getAllMeals).toHaveBeenCalled();
     expect(getVendorMenus).toHaveBeenCalled();
+    expect(getAllOrders).toHaveBeenCalled();
   });
 
   it('calls the `children` components', ()=>{
@@ -121,6 +183,8 @@ describe("<CatererMenu />", () => {
             <CatererMenu
               menus={menus}
               meals={meals}
+              orders={orders}
+              getAllOrders={getAllOrders}
               getAllMeals={getAllMeals}
               getVendorMenus={getVendorMenus}
               deleteMealOffTheMenu={deleteMealOffTheMenu} />
@@ -142,6 +206,8 @@ describe("<CatererMenu />", () => {
             <CatererMenu
               menus={emptyMenu}
               meals={meals}
+              orders={orders}
+              getAllOrders={getAllOrders}
               getAllMeals={getAllMeals}
               getVendorMenus={getVendorMenus}
               deleteMealOffTheMenu={deleteMealOffTheMenu} />
@@ -158,6 +224,8 @@ describe("<CatererMenu />", () => {
     wrapper = shallow(<CatererMenu
       menus={menus}
       meals={meals}
+      orders={orders}
+      getAllOrders={getAllOrders}
       getAllMeals={getAllMeals}
       getVendorMenus={getVendorMenus}
       deleteMealOffTheMenu={deleteMealOffTheMenu} />);
@@ -174,6 +242,8 @@ describe("<CatererMenu />", () => {
     wrapper = shallow(<CatererMenu
       menus={menus}
       meals={meals}
+      orders={orders}
+      getAllOrders={getAllOrders}
       getAllMeals={getAllMeals}
       getVendorMenus={getVendorMenus}
       deleteMealOffTheMenu={deleteMealOffTheMenu} />);

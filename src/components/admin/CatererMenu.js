@@ -5,6 +5,7 @@ import Footer from "../dashboard/Footer";
 import EditMenuForm from "../controlled-forms/EditMenuForm";
 import { getVendorMenus, deleteMealOffTheMenu } from "../../actions/menu";
 import { getAllMeals } from "../../actions/meal";
+import { getAllOrders } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -21,6 +22,7 @@ export class CatererMenu extends React.Component {
   componentDidMount() {
     this.props.getVendorMenus();
     this.props.getAllMeals();
+    this.props.getAllOrders();
   }
 
   handleMenuEditClick(event, menu) {
@@ -36,10 +38,11 @@ export class CatererMenu extends React.Component {
   render() {
     const { menus } = this.props;
     const { meals } = this.props;
+    const { orders } = this.props;
 
     return (
       <div>
-        <CatererDashboard />
+        <CatererDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">
@@ -279,6 +282,24 @@ CatererMenu.propTypes = {
   getVendorMenus: PropTypes.func.isRequired,
   getAllMeals: PropTypes.func.isRequired,
   deleteMealOffTheMenu: PropTypes.func.isRequired,
+  getAllOrders: PropTypes.func.isRequired,
+  orders: PropTypes.arrayOf(
+    PropTypes.shape({
+      order_id: PropTypes.number.isRequired,
+      status: PropTypes.string.isRequired,
+      meal: PropTypes.shape({
+        meal_id: PropTypes.number.isRequired,
+        meal: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired
+      }).isRequired,
+      menu: PropTypes.shape({
+        menu_id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired
+      }).isRequired,
+      user: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired,
   menus: PropTypes.arrayOf(
     PropTypes.shape({
       menu_id: PropTypes.number.isRequired,
@@ -305,12 +326,13 @@ CatererMenu.propTypes = {
 
 const mapStateToProps = state => ({
   menus: state.menuReducer.caterer_menus,
-  meals: state.mealReducer.meals
+  meals: state.mealReducer.meals,
+  orders: state.orderReducer.orders
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { getVendorMenus, getAllMeals, deleteMealOffTheMenu }
+    { getVendorMenus, getAllMeals, deleteMealOffTheMenu, getAllOrders }
   )(CatererMenu)
 );

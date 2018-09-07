@@ -24,14 +24,14 @@ export class Orders extends React.Component {
     event.preventDefault();
     const { param } = event.target.dataset;
     this.props.serveOrder(param);
-    notify.show("Order has been serve Successfully.");
+    notify.show("Order has been serve Successfully.", "success");
   }
 
   cancelCustomerOrder(event) {
     event.preventDefault();
     const { param } = event.target.dataset;
     this.props.cancelOrder(param);
-    notify.show("Order has been cancelled Successfully.");
+    notify.show("Order has been cancelled Successfully.", "success");
   }
 
   render() {
@@ -39,7 +39,7 @@ export class Orders extends React.Component {
 
     return (
       <div>
-        <CatererDashboard />
+        <CatererDashboard orders={orders} />
 
         <div className="wrapper-content ">
           <div className="body-content">

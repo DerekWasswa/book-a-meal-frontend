@@ -66,7 +66,7 @@ export class EditMenuForm extends React.Component {
       meal_id: meals
     };
     this.props.setMenu(data);
-      notify.show("Meals have been added to the menu successfully.");
+      notify.show("Meals have been added to the menu successfully.", "success");
       $("#editMenuModal .close").click()
   }
 

@@ -16,11 +16,69 @@ describe("<ManageMeal />", () => {
 
   let getAllMeals;
   let meals, newMeals;
+  let orders;
   let expectedMeals;
+  let getAllOrders;
   const mockStore = configureStore()
   let store, initialState;
 
   beforeEach(() => {
+
+    orders = [{
+      order_id: 1,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Food",
+              price: 10
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Not Served"
+     },
+     {
+      order_id: 2,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 2,
+          name: "Special Sunday",
+          contact: "test@gmail.com"
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served"
+     },
+     {
+      order_id: 3,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 3,
+          name: "Special Sunday",
+          contact: "test@gmail.com"
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Cancelled"
+     }
+    ];
 
     meals = [
       {
@@ -73,6 +131,7 @@ describe("<ManageMeal />", () => {
       }
     ];
     getAllMeals = jest.fn();
+    getAllOrders = jest.fn();
 
     initialState = {
       meal: {
@@ -90,9 +149,12 @@ describe("<ManageMeal />", () => {
     let wrapper = shallow(
       <ManageMeals
         meals={meals}
+        orders={orders}
+        getAllOrders={getAllOrders}
         getAllMeals={getAllMeals} />);
     expect(wrapper).toBeDefined();
     expect(getAllMeals).toHaveBeenCalled();
+    expect(getAllOrders).toHaveBeenCalled();
     expect(getAllMeals.mock.calls[0]).toEqual([])
   });
 
@@ -101,6 +163,8 @@ describe("<ManageMeal />", () => {
       <ManageMeals
         store={store}
         meals={meals}
+        orders={orders}
+        getAllOrders={getAllOrders}
         getAllMeals={getAllMeals} />);
 
     // triggers componentWillReceiveProps
@@ -115,6 +179,8 @@ describe("<ManageMeal />", () => {
           <MemoryRouter>
             <ManageMeals
               meals={meals}
+              orders={orders}
+              getAllOrders={getAllOrders}
               getAllMeals={getAllMeals} />
           </MemoryRouter>
         </Provider>
@@ -136,6 +202,8 @@ describe("<ManageMeal />", () => {
         <MemoryRouter>
           <ManageMeals
             meals={meals}
+            orders={orders}
+            getAllOrders={getAllOrders}
             getAllMeals={getAllMeals} />
         </MemoryRouter>
       </Provider>

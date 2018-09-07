@@ -7,7 +7,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Badge
 } from "reactstrap";
 import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 import { withRouter } from "react-router-dom";
@@ -77,7 +78,20 @@ export class CatererDashboard extends React.Component {
 
               <LinkContainer to="/orders" activeClassName="active">
                 <NavItem className="">
-                  <NavLink href="/orders">Orders</NavLink>
+                  <NavLink href="/orders">
+                    Orders
+
+                    <span className="badge-notify-served">
+                    {
+                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Not Served" })).length > 0
+                      ?
+                      <Badge color="success">{this.props.orders.filter(obj => {return obj.status === "Not Served"}).length}</Badge>
+                      :
+                      null
+                    }
+                    </span>
+
+                  </NavLink>
                 </NavItem>
               </LinkContainer>
 
