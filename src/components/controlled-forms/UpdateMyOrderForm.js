@@ -47,7 +47,7 @@ export class UpdateMyOrderForm extends React.Component {
     let orderID = this.props.orderIDClicked;
     this.props.updateOrder(JSON.stringify(data), orderID);
 
-    notify.show("Order has been updated successfully.");
+    notify.show("Order has been updated successfully.", "success");
     $("#editOrderModal .close").click()
   }
 
