@@ -41,6 +41,66 @@ describe("Caterer Order History Component", () => {
       user: "test@test.com",
       date: "2018-09-03",
       status: "Not Served"
+     },
+     {
+      order_id: 2,
+      meal: {
+        meal_id: 2,
+        meal: "Chicken",
+        price: 10000
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served"
+     },
+     {
+      order_id: 3,
+      meal: {
+        meal_id: 2,
+        meal: "Chicken",
+        price: 10000
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Cancelled"
      }];
 
      getAllOrders = jest.fn()

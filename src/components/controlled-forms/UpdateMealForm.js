@@ -37,6 +37,12 @@ export class UpdateMealForm extends React.Component {
     };
     this.props.updateMeal(JSON.stringify(data), this.props.mealID);
     $("#editMealModal .close").click()
+
+    this.setState({
+      meal: "",
+      price: ""
+    })
+
   }
 
   render() {

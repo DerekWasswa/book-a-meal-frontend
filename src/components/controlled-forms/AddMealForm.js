@@ -37,11 +37,16 @@ export class AddMealForm extends React.Component {
     };
     this.props.addMeal(JSON.stringify(data));
     $("#addMealModal .close").click()
+
+    this.setState({
+      meal: "",
+      price: ""
+    })
   }
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form id="addMealForm" onSubmit={this.handleSubmit}>
         <div className="modal-body">
           <FormGroup row>
             <Label for="meal" sm={2}>
