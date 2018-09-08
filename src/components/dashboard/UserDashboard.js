@@ -35,6 +35,7 @@ export class UserDashboard extends React.Component {
     };
 
     this.logout = this.logout.bind(this);
+    this.determineNotificationBadge = this.determineNotificationBadge.bind(this);
   }
 
   toggle() {
@@ -51,6 +52,13 @@ export class UserDashboard extends React.Component {
     this.props.history.push("/login");
   }
 
+  determineNotificationBadge(status, notificationColor, badgeClass){
+    if(this.props.orders && (this.props.orders.filter(obj => { return obj.status === status })).length > 0){
+      return <Badge color={notificationColor} className={badgeClass}>{this.props.orders.filter(obj => {return obj.status === status}).length}</Badge>;
+    }else{
+      return null;
+    }
+  }
 
   render() {
 
@@ -87,23 +95,13 @@ export class UserDashboard extends React.Component {
                     Order History
                     <span className="badge-notify-served">
                     {
-                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Served" })).length > 0
-                      ?
-                      <Badge color="success">{this.props.orders.filter(obj => {return obj.status === "Served"}).length}</Badge>
-                      :
-                      null
+                      this.determineNotificationBadge("Served", "success")
                     }
                     {
-                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Not Served" })).length > 0
-                      ?
-                      <Badge className="badge-notify-pending" color="info">{this.props.orders.filter(obj => {return obj.status === "Not Served"}).length}</Badge>
-                      : null
+                      this.determineNotificationBadge("Not Served", "info", "badge-notify-pending")
                     }
                     {
-                      this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Cancelled" })).length > 0
-                      ?
-                      <Badge className="badge-notify-canceled" color="danger">{this.props.orders.filter(obj => {return obj.status === "Cancelled"}).length}</Badge>
-                      : null
+                      this.determineNotificationBadge("Cancelled", "danger", "badge-notify-canceled")
                     }
                     </span>
                   </NavLink>
