@@ -19,6 +19,12 @@ engines:
         enabled: false
   stylelint:
     enabled: true
+  duplications:
+    enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 75
 ratings:
   paths:
     - "**.js"
@@ -26,3 +32,6 @@ ratings:
     - "**.scss"
 exclude_patterns:
   - "**/*.test.js"
+  - "**/css/"
+  - "**/js/"
+  - "**/__tests__/"
