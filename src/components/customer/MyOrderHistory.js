@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import jwtDecode from "jwt-decode";
 import { Alerts } from "../utils/stateLess";
+import { removeCartMealsIfMenuIsObsolete, orderPropType } from "../utils/helper";
 
 export class MyOrderHistory extends React.Component {
   constructor(props) {
@@ -21,10 +22,7 @@ export class MyOrderHistory extends React.Component {
 
   render() {
     // Check if the cart meals are not obsolote
-    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
-      localStorage.removeItem("meals");
-      localStorage.removeItem("expiration");
-    }
+    removeCartMealsIfMenuIsObsolete();
 
     let { orders } = this.props;
 
@@ -189,33 +187,7 @@ export class MyOrderHistory extends React.Component {
   }
 }
 
-MyOrderHistory.propTypes = {
-  getAllCustomerOrders: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(
-    PropTypes.shape({
-      order_id: PropTypes.number.isRequired,
-      meal: PropTypes.shape({
-        meal_id: PropTypes.number.isRequired,
-        meal: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired
-      }).isRequired,
-      menu: PropTypes.shape({
-        menu_id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        meals: PropTypes.arrayOf(
-          PropTypes.shape({
-            meal_id: PropTypes.number.isRequired,
-            meal: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired
-          })
-        ).isRequired
-      }).isRequired,
-      user: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired
-};
+MyOrderHistory.propTypes = orderPropType();
 
 const mapStateToProps = state => ({
   orders: state.orderReducer.orders

@@ -10,12 +10,13 @@ import {
   NavLink,
   Badge
 } from "reactstrap";
-import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { notify } from "react-notify-toast";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authentication";
+import { DashboardLink, DashboardIndexLink } from "../utils/stateLess";
 
 /**
  * @export
@@ -58,23 +59,12 @@ export class CatererDashboard extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="nav-bar-items-left" navbar>
-              <IndexLinkContainer to="/" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/">Home</NavLink>
-                </NavItem>
-              </IndexLinkContainer>
 
-              <LinkContainer to="/meals" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/meals">Meals</NavLink>
-                </NavItem>
-              </LinkContainer>
+              <DashboardIndexLink location={"/"} title={"Home"} activeClassName="active" />
 
-              <LinkContainer to="/vendor/menu" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/vendor/menu">Menu</NavLink>
-                </NavItem>
-              </LinkContainer>
+              <DashboardLink location={"/meals"} title={"Meals"} activeClassName="active" />
+              <DashboardLink location={"/vendor/menu"} title={"Menu"} activeClassName="active" />
+
 
               <LinkContainer to="/orders" activeClassName="active">
                 <NavItem className="">
@@ -95,11 +85,7 @@ export class CatererDashboard extends React.Component {
                 </NavItem>
               </LinkContainer>
 
-              <LinkContainer to="/orderhistory" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/orderhistory">OrderHistory</NavLink>
-                </NavItem>
-              </LinkContainer>
+              <DashboardLink location={"/orderhistory"} title={"OrderHistory"} activeClassName="active" />
             </Nav>
 
             <Nav className="ml-auto login-login-link" navbar>

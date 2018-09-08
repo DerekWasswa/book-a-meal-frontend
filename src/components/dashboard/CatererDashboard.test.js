@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 import notify from "react-notify-toast";
+import { DashboardIndexLink, DashboardLink } from "../utils/stateLess";
 import sinon from 'sinon';
 jest.mock('react-notify-toast')
 
@@ -49,7 +50,8 @@ describe("<CatererDashboard />", () => {
     expect(wrapper.find(NavbarToggler).exists()).toBe(true);
     expect(wrapper.find(Collapse).exists()).toBe(true);
     expect(wrapper.find(Nav).exists()).toBe(true);
-    expect(wrapper.find(IndexLinkContainer).exists()).toBe(true);
+    expect(wrapper.find(DashboardIndexLink).exists()).toBe(true);
+    expect(wrapper.find(DashboardLink).exists()).toBe(true);
     expect(wrapper.find(NavItem).exists()).toBe(true);
     expect(wrapper.find(NavLink).exists()).toBe(true);
     expect(wrapper.find(LinkContainer).exists()).toBe(true);
@@ -58,10 +60,6 @@ describe("<CatererDashboard />", () => {
     expect(wrapper.find(NavbarBrand).text()).toBe("<NavbarBrand />");
 
     expect(wrapper.find(NavLink).at(0).text()).toBe("<NavLink />");
-    expect(wrapper.find(NavLink).at(1).text()).toBe("<NavLink />");
-    expect(wrapper.find(NavLink).at(2).text()).toBe("<NavLink />");
-    expect(wrapper.find(NavLink).at(3).text()).toBe("<NavLink />");
-    expect(wrapper.find(NavLink).at(4).text()).toBe("<NavLink />");
 
     expect(wrapper.find("a").at(1).text()).toBe("Logout");
 

@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
 import { Alerts } from "../utils/stateLess";
+import { removeCartMealsIfMenuIsObsolete } from "../utils/helper";
 
 export class Menu extends React.Component {
   constructor(props) {
@@ -62,8 +63,6 @@ export class Menu extends React.Component {
       mealArray[0] = mealJSON;
       var stringMeals = JSON.stringify(mealArray);
       localStorage.setItem('meals', stringMeals);
-      var today = new Date();
-      // var midnight = today.setHours(24,0,0,0);
       localStorage.setItem('expiration', Math.round(+new Date().setHours(24,0,0,0) / 1000));
     }
     // Update the number of items in the cart
@@ -76,10 +75,7 @@ export class Menu extends React.Component {
 
   render() {
     // Check if the cart meals are not obsolote
-    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
-      localStorage.removeItem("meals");
-      localStorage.removeItem("expiration");
-    }
+    removeCartMealsIfMenuIsObsolete();
 
 
     const { menus } = this.props;

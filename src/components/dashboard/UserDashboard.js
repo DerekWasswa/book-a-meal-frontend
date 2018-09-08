@@ -11,14 +11,14 @@ import {
   Badge
 } from "reactstrap";
 
-import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authentication";
 import { notify } from "react-notify-toast";
 import jwtDecode from "jwt-decode";
-
+import { DashboardLink, DashboardIndexLink } from "../utils/stateLess";
 
 /**
  * @export
@@ -71,23 +71,10 @@ export class UserDashboard extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="nav-bar-items-left" navbar>
-              <IndexLinkContainer to="/" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/">Home</NavLink>
-                </NavItem>
-              </IndexLinkContainer>
 
-              <LinkContainer to="/c-menu" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/c-menu">Menu</NavLink>
-                </NavItem>
-              </LinkContainer>
-
-              <LinkContainer to="/c-orders" activeClassName="active">
-                <NavItem className="">
-                  <NavLink href="/c-orders">Orders</NavLink>
-                </NavItem>
-              </LinkContainer>
+              <DashboardIndexLink location={"/"} title={"Home"} activeClassName="active" />
+              <DashboardLink location={"/c-menu"} title={"Menu"} activeClassName="active" />
+              <DashboardLink location={"/c-orders"} title={"Orders"} activeClassName="active" />
 
               <LinkContainer to="/c-order-history" activeClassName="active">
                 <NavItem className="">

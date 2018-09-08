@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { NavItem, NavLink } from "reactstrap";
+import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 
 export const LoginButtons = props => (
   <div className="row">
@@ -114,4 +116,20 @@ export const HTMLLink = props => <button>{props.name}</button>;
 
 export const Alerts = props => (
   <div className="alert alert-info">{props.alertInfo}</div>
+);
+
+export const DashboardLink = props => (
+  <LinkContainer to={props.location} activeClassName="active">
+    <NavItem className="">
+      <NavLink href={props.location}>{props.title}</NavLink>
+    </NavItem>
+  </LinkContainer>
+);
+
+export const DashboardIndexLink = props => (
+  <IndexLinkContainer to={props.location} activeClassName="active">
+    <NavItem className="">
+      <NavLink href={props.location}>{props.title}</NavLink>
+    </NavItem>
+  </IndexLinkContainer>
 );
