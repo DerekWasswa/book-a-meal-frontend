@@ -67,6 +67,13 @@ export class SetMenuForm extends React.Component {
 
     notify.show("Menu of the Day has been Set successfully.", "success");
     $("#setMenuModal .close").click()
+
+    this.setState({
+        name: "",
+        description: "",
+        date: "",
+        meals: []
+    })
   }
 
   render() {

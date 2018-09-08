@@ -323,5 +323,23 @@ describe("<MyOrders />", () => {
     expect(wrapper.state('order')).toEqual(order);
   })
 
+  it("renders customers' orders", () => {
+
+    // Set Data in the localstorage for tests
+    spyOn(window.localStorage, 'getItem');
+    spyOn(window.localStorage, 'removeItem');
+    let mealJSON = {"mealId": 1, "meal": "Chicken", "price": 1000, "menuId": 1, "quantity": 1, "subtotal": 1000};
+    var mealArray = [];
+    mealArray.push(mealJSON);
+    var stringMeals = JSON.stringify(mealArray);
+    window.localStorage.setItem("meals", stringMeals);
+    window.localStorage.setItem("expiration", 1526354000);
+
+    wrapper = shallow(
+      <MyOrders
+        orders={orders}
+        getAllCustomerOrders={getAllCustomerOrders} />);
+    expect(wrapper).toBeDefined();
+  });
 
 });

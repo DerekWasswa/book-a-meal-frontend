@@ -20,19 +20,10 @@ export class EditMenuForm extends React.Component {
       meals: []
     };
 
-    this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMealSelectionChanges = this.handleMealSelectionChanges.bind(
       this
     );
-  }
-
-  handleInputChanges(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-
-    this.setState({ [name]: value });
   }
 
   handleMealSelectionChanges(event) {
