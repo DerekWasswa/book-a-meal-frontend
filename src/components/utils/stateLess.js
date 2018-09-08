@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NavItem, NavLink } from "reactstrap";
+import { NavItem, NavLink, Table } from "reactstrap";
 import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 
 export const LoginButtons = props => (
@@ -132,4 +132,45 @@ export const DashboardIndexLink = props => (
       <NavLink href={props.location}>{props.title}</NavLink>
     </NavItem>
   </IndexLinkContainer>
+);
+
+export const OrderHistoryStatusData = props => (
+
+    props.orders && (props.orders.filter(obj => { return obj.status === props.status })).length > 0
+    ?
+
+      <Table hover>
+        <thead>
+          <tr>
+            <th>Meal</th>
+            <th>Price (UGX)</th>
+            <th>Menu</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {props.orders &&
+          props.orders.map(
+            (order, index) =>
+
+            order.status === props.status
+            ?
+              <tr key={index}>
+                  <td>{order.meal.meal}</td>
+                  <td>{order.meal.price} UGX</td>
+                  <td>{order.menu.name}</td>
+                  <td>{order.date}</td>
+              </tr>
+            :
+            null
+        )}
+        </tbody>
+        </Table>
+
+      :
+        <Alerts
+          alertInfo={props.statusData}
+          />
+
 );

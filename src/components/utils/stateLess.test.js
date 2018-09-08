@@ -7,8 +7,13 @@ import {
   Alerts,
   LandingPageMenu,
   LandingPageBodySection,
-  LandingPageFooter
+  LandingPageFooter,
+  DashboardIndexLink,
+  DashboardLink,
+  OrderHistoryStatusData
 } from "./stateLess";
+import { NavItem, NavLink, Table } from "reactstrap";
+import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { shallow } from "enzyme";
 
@@ -212,4 +217,116 @@ it("renders landing page footer", () => {
   expect(wrapper.find("p").text()).toBe("AB");
 
   expect(wrapper.find("a").text()).toBe("B");
+});
+
+it("renders DashboardIndexLink", () => {
+  const props = {
+    location: "/",
+    title: "Home"
+  };
+
+  let wrapper = shallow(<DashboardIndexLink {...props} />);
+
+  expect(wrapper.find(IndexLinkContainer).exists()).toBe(true);
+  expect(wrapper.find(NavItem).exists()).toBe(true);
+  expect(wrapper.find(NavLink).exists()).toBe(true);
+});
+
+it("renders DashboardLink", () => {
+  const props = {
+    location: "/",
+    title: "Home"
+  };
+
+  let wrapper = shallow(<DashboardLink {...props} />);
+
+  expect(wrapper.find(LinkContainer).exists()).toBe(true);
+  expect(wrapper.find(NavItem).exists()).toBe(true);
+  expect(wrapper.find(NavLink).exists()).toBe(true);
+});
+
+it("renders OrderHistoryStatusData Served", () => {
+
+  const props = {
+    orders: [{
+      order_id: 1,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served"
+     }],
+    status: "Served",
+    statusData: "No Served Orders."
+  };
+
+  let wrapper = shallow(<OrderHistoryStatusData {...props} />);
+
+  expect(wrapper.find(Table).exists()).toBe(true);
+  expect(wrapper.find(Alerts).exists()).toBe(false);
+});
+
+it("renders OrderHistoryStatusData Served", () => {
+
+  const props = {
+    orders: [{
+      order_id: 1,
+      meal: {
+        meal_id: 1,
+        meal: "Food",
+        price: 10
+      },
+      menu: {
+          menu_id: 1,
+          name: "Special Sunday",
+          contact: "test@gmail.com",
+          description: "Come dine with us",
+          date: "2018-08-30",
+          meals: [
+            {
+              meal_id: 1,
+              meal: "Rolex",
+              price: 4000
+            },
+            {
+              meal_id: 2,
+              meal: "Chicken",
+              price: 10000
+            }
+          ]
+      },
+      user: "test@test.com",
+      date: "2018-09-03",
+      status: "Served"
+     }],
+    status: "Not Served",
+    statusData: "No Served Orders."
+  };
+
+  let wrapper = shallow(<OrderHistoryStatusData {...props} />);
+
+  expect(wrapper.find(Table).exists()).toBe(false);
+  expect(wrapper.find(Alerts).exists()).toBe(true);
 });

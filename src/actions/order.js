@@ -17,6 +17,18 @@ const priviledgedHeader = () => ({
   "app-access-token": localStorage.getItem("app-access-token")
 });
 
+function handleResponseError(error, dispatch) {
+  if (error.response) {
+    dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+  }
+
+  if(error.request){
+    dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+  }
+}
+
+// Action Creators
+
 export const placeOrder = data => ({
   type: PLACE_ORDER,
   data
@@ -59,13 +71,7 @@ export const makeOrderFromMenu = data => dispatch => {
     .post("/orders/", data)
     .then(res => dispatch(placeOrder(res.data)))
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch)
     });
 };
 
@@ -79,13 +85,7 @@ export const updateOrder = (data, orderId) => dispatch => {
       dispatch(getAllCustomerOrders(user));
     })
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 };
 
@@ -95,13 +95,7 @@ export const getAllOrders = () => dispatch => {
     .get("/orders/", { headers })
     .then(res => dispatch(getOrders(res.data.orders)))
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 };
 
@@ -110,13 +104,7 @@ export const getAllCustomerOrders = customerID => dispatch => {
     .get(`/orders/${customerID.user_id}`)
     .then(res => dispatch(getCustomerOrders(res.data.orders)))
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 };
 
@@ -129,13 +117,7 @@ export const serveOrder = orderID => dispatch => {
       dispatch(getAllOrders());
     })
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 };
 
@@ -148,12 +130,6 @@ export const cancelOrder = orderID => dispatch => {
       dispatch(getAllOrders());
     })
     .catch(function(error) {
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 };
