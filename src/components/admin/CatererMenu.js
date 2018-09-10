@@ -9,7 +9,8 @@ import { getAllOrders } from "../../actions/order";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { ModalHeader, Alerts } from "../utils/stateLess";
+import { ModalHeader, Alerts, CatererMenuTabs, CatererMenuDetails } from "../utils/stateLess";
+import { ordersPropType, menusPropType } from "../utils/helper";
 
 export class CatererMenu extends React.Component {
   constructor(props) {
@@ -54,31 +55,9 @@ export class CatererMenu extends React.Component {
                       menus.map(
                         (menu, index) =>
                           index === 0 ? (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action active"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="true"
-                            >
-                              {menu.name}
-                            </a>
+                            <CatererMenuTabs name={menu.name} itemClass={"list-group-item list-group-item-action active"} index={index} />
                           ) : (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="false"
-                            >
-                              {menu.name}
-                            </a>
+                            <CatererMenuTabs name={menu.name} itemClass={"list-group-item list-group-item-action"} index={index} />
                           )
                       )}
                   </div>
@@ -133,13 +112,8 @@ export class CatererMenu extends React.Component {
                               </div>
 
                               <div>
-                                <br />
-                                <h4>Menu</h4>
+                                <CatererMenuDetails name={menu.name} description={menu.description} date={menu.date} />
 
-                                <div>Name: {menu.name}</div>
-                                <div>Description: {menu.description}</div>
-                                <div>Date: {menu.date}</div>
-                                <br />
                                 <Button
                                   data-toggle="modal"
                                   data-target="#editMenuModal"
@@ -206,13 +180,8 @@ export class CatererMenu extends React.Component {
                               </div>
 
                               <div>
-                                <br />
-                                <h4>Menu</h4>
+                                <CatererMenuDetails name={menu.name} description={menu.description} date={menu.date} />
 
-                                <div>Name: {menu.name}</div>
-                                <div>Description: {menu.description}</div>
-                                <div>Date: {menu.date}</div>
-                                <br />
                                 <Button
                                   outline
                                   color="secondary"
@@ -283,38 +252,8 @@ CatererMenu.propTypes = {
   getAllMeals: PropTypes.func.isRequired,
   deleteMealOffTheMenu: PropTypes.func.isRequired,
   getAllOrders: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(
-    PropTypes.shape({
-      order_id: PropTypes.number.isRequired,
-      status: PropTypes.string.isRequired,
-      meal: PropTypes.shape({
-        meal_id: PropTypes.number.isRequired,
-        meal: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired
-      }).isRequired,
-      menu: PropTypes.shape({
-        menu_id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired
-      }).isRequired,
-      user: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
-  menus: PropTypes.arrayOf(
-    PropTypes.shape({
-      menu_id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-      meals: PropTypes.arrayOf(
-        PropTypes.shape({
-          meal_id: PropTypes.number.isRequired,
-          meal: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired
-        }).isRequired
-      ).isRequired
-    }).isRequired
-  ).isRequired,
+  orders: ordersPropType(),
+  menus: menusPropType(),
   meals: PropTypes.arrayOf(
     PropTypes.shape({
       meal_id: PropTypes.number.isRequired,

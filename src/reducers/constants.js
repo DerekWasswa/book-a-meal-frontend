@@ -24,7 +24,7 @@ export const SUCCESS = "SUCCESS";
 export const ERRORS = "ERRORS";
 
 // Development baseURL
-export const baseURL = "http://127.0.0.1:5000/api/v1";
+// export const baseURL = "http://127.0.0.1:5000/api/v1";
 
 // Production baseURL
-// export const baseURL = "https://book-meals-app-256.herokuapp.com/api/v1";
+export const baseURL = "https://book-meals-app-256.herokuapp.com/api/v1";

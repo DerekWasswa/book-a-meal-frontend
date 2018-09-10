@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
 import { ModalHeader, Alerts } from "../utils/stateLess";
+import { ordersPropType } from "../utils/helper";
 
 export class Orders extends React.Component {
   constructor(props) {
@@ -143,23 +144,7 @@ Orders.propTypes = {
   getAllOrders: PropTypes.func.isRequired,
   serveOrder: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(
-    PropTypes.shape({
-      order_id: PropTypes.number.isRequired,
-      status: PropTypes.string.isRequired,
-      meal: PropTypes.shape({
-        meal_id: PropTypes.number.isRequired,
-        meal: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired
-      }).isRequired,
-      menu: PropTypes.shape({
-        menu_id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired
-      }).isRequired,
-      user: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired
+  orders: ordersPropType()
 };
 
 const mapStateToProps = state => ({

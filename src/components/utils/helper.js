@@ -56,3 +56,45 @@ export function orderPropType() {
     ).isRequired
   };
 }
+
+export function ordersPropType(){
+  return (
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        order_id: PropTypes.number.isRequired,
+        status: PropTypes.string.isRequired,
+        meal: PropTypes.shape({
+          meal_id: PropTypes.number.isRequired,
+          meal: PropTypes.string.isRequired,
+          price: PropTypes.number.isRequired
+        }).isRequired,
+        menu: PropTypes.shape({
+          menu_id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired
+        }).isRequired,
+        user: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired
+      }).isRequired
+    ).isRequired
+  );
+}
+
+export function menusPropType() {
+  return (
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        menu_id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        meals: PropTypes.arrayOf(
+          PropTypes.shape({
+            meal_id: PropTypes.number.isRequired,
+            meal: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired
+          }).isRequired
+        ).isRequired
+      }).isRequired
+    ).isRequired
+  );
+}

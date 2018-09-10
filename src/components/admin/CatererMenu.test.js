@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { CatererMenu } from "./CatererMenu";
 import { shallow, mount } from "enzyme";
 import configureStore from 'redux-mock-store'
-import { ModalHeader, Alerts } from "../utils/stateLess";
+import { ModalHeader, Alerts, CatererMenuTabs, CatererMenuDetails } from "../utils/stateLess";
 import { Button } from "reactstrap";
 import CatererDashboard from "../dashboard/CatererDashboard";
 import Footer from "../dashboard/Footer";
@@ -197,6 +197,8 @@ describe("<CatererMenu />", () => {
     expect(wrapper.find(ModalHeader).length).toEqual(1);
     expect(wrapper.find(Alerts).length).toEqual(0);
     expect(wrapper.find(CatererDashboard).length).toEqual(1);
+    expect(wrapper.find(CatererMenuTabs).length).toEqual(1);
+    expect(wrapper.find(CatererMenuDetails).length).toEqual(1);
   });
 
   it('calls the `Alerts` components', ()=>{

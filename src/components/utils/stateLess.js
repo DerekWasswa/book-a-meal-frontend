@@ -174,3 +174,44 @@ export const OrderHistoryStatusData = props => (
           />
 
 );
+
+
+export const CatererMenuTabs = props => (
+  <a
+    key={props.index}
+    className={props.itemClass}
+    id={"list-" + props.index + "-list"}
+    data-toggle="tab"
+    href={"#list-" + props.index}
+    role="tab"
+    aria-controls={"list-" + props.index}
+    aria-selected="true"
+    >
+    {props.name}
+  </a>
+);
+
+export const CustomerMenuDetails = props => (
+  <div>
+    <br />
+    <h4>Caterer</h4>
+
+    <div>Name: {props.vendor}</div>
+    <div>Email: {props.contact}</div>
+    <div>Menu: {props.name}</div>
+    <div>Description: {props.description}</div>
+    <div>Date: {props.date}</div>
+  </div>
+);
+
+export const CatererMenuDetails = props => (
+  <div>
+    <br />
+    <h4>Menu</h4>
+
+    <div>Name: {props.name}</div>
+    <div>Description: {props.description}</div>
+    <div>Date: {props.date}</div>
+    <br />
+  </div>
+);

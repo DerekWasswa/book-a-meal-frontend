@@ -10,7 +10,10 @@ import {
   LandingPageFooter,
   DashboardIndexLink,
   DashboardLink,
-  OrderHistoryStatusData
+  OrderHistoryStatusData,
+  CatererMenuTabs,
+  CatererMenuDetails,
+  CustomerMenuDetails
 } from "./stateLess";
 import { NavItem, NavLink, Table } from "reactstrap";
 import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
@@ -329,4 +332,46 @@ it("renders OrderHistoryStatusData Served", () => {
 
   expect(wrapper.find(Table).exists()).toBe(false);
   expect(wrapper.find(Alerts).exists()).toBe(true);
+});
+
+it("renders CatererMenuTabs", () => {
+  const props = {
+    index: 2,
+    name: "Menu",
+    itemClass: "active"
+  };
+
+  let wrapper = shallow(<CatererMenuTabs {...props} />);
+
+  expect(wrapper.find("a").exists()).toBe(true);
+});
+
+it("renders CustomerMenuDetails", () => {
+  const props = {
+    vendor: "One",
+    name: "Two",
+    description: "Three",
+    date: "Four",
+    contact: "Five"
+  };
+
+  let wrapper = shallow(<CustomerMenuDetails {...props} />);
+
+  expect(wrapper.find("div").exists()).toBe(true);
+  expect(wrapper.find("br").exists()).toBe(true);
+  expect(wrapper.find("h4").exists()).toBe(true);
+});
+
+it("renders CatererMenuDetails", () => {
+  const props = {
+    name: "Monday",
+    description: "Dine",
+    date: "Today"
+  };
+
+  let wrapper = shallow(<CatererMenuDetails {...props} />);
+
+  expect(wrapper.find("br").exists()).toBe(true);
+  expect(wrapper.find("div").exists()).toBe(true);
+  expect(wrapper.find("h4").exists()).toBe(true);
 });

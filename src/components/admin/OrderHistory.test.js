@@ -1,7 +1,16 @@
 import React from "react";
 import { OrderHistory } from "./OrderHistory";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import configureStore from 'redux-mock-store'
+import CatererDashboard from "../dashboard/CatererDashboard";
+import { Alerts, OrderHistoryStatusData } from "../utils/stateLess";
+import Footer from "../dashboard/Footer";
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from "react-redux";
+import jwtDecode from "jwt-decode";
+import jwt from "jsonwebtoken";
+import sinon from 'sinon';
+jest.mock('jwt-decode')
 
 describe("Caterer Order History Component", () => {
 
@@ -10,6 +19,10 @@ describe("Caterer Order History Component", () => {
   let getAllOrders;
   const mockStore = configureStore()
   let store, initialState;
+
+  let reset;
+  let jwtDecode;
+  let update = sinon.stub().resolves({success: true})
 
   beforeEach(() => {
     orders = [{
@@ -111,6 +124,8 @@ describe("Caterer Order History Component", () => {
 
     store = mockStore(initialState)
 
+    jwtDecode = sinon.spy();
+    reset = sinon.spy();
   });
 
 
@@ -122,5 +137,31 @@ describe("Caterer Order History Component", () => {
     expect(wrapper).toBeDefined();
   });
 
+  it('calls the `children` components', ()=>{
+    let update = sinon.stub().resolves({success: true})
+    let getAllOrders = jest.fn()
 
+    let wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter>
+            <OrderHistory
+              update
+              jwtDecode
+              getAllOrders={getAllOrders}
+              orders={orders}
+              reset  />
+          </MemoryRouter>
+        </Provider>
+    );
+
+    var stub = sinon.stub(window.localStorage, "getItem");
+    stub.returns({ admin: true, user_id: 1, name: "bkMealUser" });
+
+    expect(wrapper.find(CatererDashboard).length).toEqual(1);
+    expect(wrapper.find(Footer).length).toEqual(1);
+    expect(wrapper.find(OrderHistoryStatusData).length).toEqual(3);
+    expect(wrapper.find(Alerts).length).toEqual(0);
+    expect(getAllOrders).toHaveBeenCalled();
+    expect(jwtDecode).toBe(jwtDecode);
+  });
 });

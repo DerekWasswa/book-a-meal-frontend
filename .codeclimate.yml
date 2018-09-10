@@ -30,6 +30,20 @@ engines:
         enabled: false
       import/no-named-as-default-member:
         enabled: false
+      react/jsx-curly-brace-presence:
+        enabled: false
+      jsx-a11y/aria-proptypes:
+        enabled: false
+      array-callback-return:
+        enabled: false
+      prefer-const:
+        enabled: false
+      require-jsdoc:
+        enabled: false
+      no-unused-expressions:
+        enabled: false
+      class-methods-use-this:
+        enabled: false
   stylelint:
     enabled: true
   duplications:
