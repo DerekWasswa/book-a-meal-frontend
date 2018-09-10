@@ -4,7 +4,7 @@ import { shallow, mount } from "enzyme";
 import UserDashboard from "../dashboard/UserDashboard";
 import Footer from "../dashboard/Footer";
 import { Button } from "reactstrap";
-import { Alerts } from "../utils/stateLess";
+import { Alerts, CatererMenuTabs, CustomerMenuDetails } from "../utils/stateLess";
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import sinon from 'sinon';
@@ -125,6 +125,8 @@ describe("<Menu />", () => {
 
     expect(wrapper.find(UserDashboard).length).toEqual(1);
     expect(wrapper.find(Footer).length).toEqual(1);
+    expect(wrapper.find(CatererMenuTabs).length).toEqual(2);
+    expect(wrapper.find(CustomerMenuDetails).length).toEqual(2);
     expect(wrapper.find(Alerts).length).toEqual(0);
   });
 

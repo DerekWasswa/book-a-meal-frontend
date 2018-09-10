@@ -8,7 +8,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { notify } from "react-notify-toast";
-import { Alerts } from "../utils/stateLess";
+import { Alerts, CatererMenuTabs, CustomerMenuDetails } from "../utils/stateLess";
+import { removeCartMealsIfMenuIsObsolete, menusPropType } from "../utils/helper";
 
 export class Menu extends React.Component {
   constructor(props) {
@@ -62,8 +63,6 @@ export class Menu extends React.Component {
       mealArray[0] = mealJSON;
       var stringMeals = JSON.stringify(mealArray);
       localStorage.setItem('meals', stringMeals);
-      var today = new Date();
-      // var midnight = today.setHours(24,0,0,0);
       localStorage.setItem('expiration', Math.round(+new Date().setHours(24,0,0,0) / 1000));
     }
     // Update the number of items in the cart
@@ -76,10 +75,7 @@ export class Menu extends React.Component {
 
   render() {
     // Check if the cart meals are not obsolote
-    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
-      localStorage.removeItem("meals");
-      localStorage.removeItem("expiration");
-    }
+    removeCartMealsIfMenuIsObsolete();
 
 
     const { menus } = this.props;
@@ -100,31 +96,9 @@ export class Menu extends React.Component {
                       menus.map(
                         (menu, index) =>
                           index === 0 ? (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action active"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="true"
-                            >
-                              {menu.name}
-                            </a>
+                            <CatererMenuTabs name={menu.name} itemClass={"list-group-item list-group-item-action active"} index={index} />
                           ) : (
-                            <a
-                              key={index}
-                              className="list-group-item list-group-item-action"
-                              id={"list-" + index + "-list"}
-                              data-toggle="tab"
-                              href={"#list-" + index}
-                              role="tab"
-                              aria-controls={"list-" + index}
-                              aria-selected="false"
-                            >
-                              {menu.name}
-                            </a>
+                            <CatererMenuTabs name={menu.name} itemClass={"list-group-item list-group-item-action"} index={index} />
                           )
                       )}
                   </div>
@@ -188,15 +162,7 @@ export class Menu extends React.Component {
                                 ))}
                               </div>
 
-                              <br />
-                              <h4>Caterer</h4>
-
-                              <div>Name: {menu.vendor}</div>
-                              <div>Email: {menu.contact}</div>
-                              <div>Menu: {menu.name}</div>
-                              <div>Description: {menu.description}</div>
-                              <div>Date: {menu.date}</div>
-
+                              <CustomerMenuDetails name={menu.name} vendor={menu.vendor} contact={menu.contact} description={menu.description} date={menu.date} />
 
                             </div>
                           ) : (
@@ -252,17 +218,7 @@ export class Menu extends React.Component {
                                 ))}
                               </div>
 
-
-
-                              <br />
-                              <h4>Caterer</h4>
-
-                              <div>Name: {menu.vendor}</div>
-                              <div>Email: {menu.contact}</div>
-                              <div>Menu: {menu.name}</div>
-                              <div>Description: {menu.description}</div>
-                              <div>Date: {menu.date}</div>
-
+                              <CustomerMenuDetails name={menu.name} vendor={menu.vendor} contact={menu.contact} description={menu.description} date={menu.date} />
 
                             </div>
                           )
@@ -289,21 +245,7 @@ export class Menu extends React.Component {
 Menu.propTypes = {
   makeOrderFromMenu: PropTypes.func.isRequired,
   getMenus: PropTypes.func.isRequired,
-  menus: PropTypes.arrayOf(
-    PropTypes.shape({
-      menu_id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-      meals: PropTypes.arrayOf(
-        PropTypes.shape({
-          meal_id: PropTypes.number.isRequired,
-          meal: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired
-        }).isRequired
-      ).isRequired
-    }).isRequired
-  ).isRequired
+  menus: menusPropType()
 };
 
 const mapStateToProps = state => ({

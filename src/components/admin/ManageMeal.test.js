@@ -191,7 +191,7 @@ describe("<ManageMeal />", () => {
     expect(wrapper.find(DeleteMeal).length).toEqual(1);
     expect(wrapper.find(SetMenuForm).length).toEqual(1);
     expect(wrapper.find(UpdateMealForm).length).toEqual(1);
-    expect(wrapper.find(ModalHeader).length).toEqual(1);
+    expect(wrapper.find(ModalHeader).length).toEqual(4);
     expect(wrapper.find(Alerts).length).toEqual(1);
     expect(wrapper.find(Footer).length).toEqual(1);
   });

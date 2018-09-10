@@ -140,6 +140,7 @@ export class ManageMeals extends React.Component {
             >
               Set Menu of the Day
             </Button>{" "}
+
             <div
               className="modal fade"
               id="addMealModal"
@@ -157,6 +158,7 @@ export class ManageMeals extends React.Component {
                 </div>
               </div>
             </div>
+
             <div
               className="modal fade"
               id="deleteMealModal"
@@ -170,6 +172,7 @@ export class ManageMeals extends React.Component {
                 <DeleteMeal mealIDs={this.state.checkedMeals} />
               </div>
             </div>
+
             <div
               className="modal fade"
               id="setMenuModal"
@@ -180,19 +183,8 @@ export class ManageMeals extends React.Component {
             >
               <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">
-                      Add Meal(s) to Menu of the Day
-                    </h4>
-                    <button
-                      className="close"
-                      type="button"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
+
+                  <ModalHeader title={"Add Meal(s) to Menu of the Day"} />
 
                   {/* Add a form that has the modal body and footer */}
                   <SetMenuForm data={meals} />
@@ -209,17 +201,9 @@ export class ManageMeals extends React.Component {
             >
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">Edit a Meal option</h4>
-                    <button
-                      className="close"
-                      type="button"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
+
+                  <ModalHeader title={"Edit a Meal option"} />
+
                   {/* Add a form that has the modal body and footer */}
                   <UpdateMealForm mealID={this.state.clickedMeal} />
                 </div>

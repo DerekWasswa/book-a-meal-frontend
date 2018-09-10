@@ -1,3 +1,16 @@
+checks:
+  identical-code:
+    config:
+      threshold: 100
+  similar-code:
+    config:
+      threshold: 100
+  file-lines:
+    config:
+      threshold: 350
+  method-lines:
+    config:
+      threshold: 300
 engines:
   eslint:
     enabled: true
@@ -17,8 +30,28 @@ engines:
         enabled: false
       import/no-named-as-default-member:
         enabled: false
+      react/jsx-curly-brace-presence:
+        enabled: false
+      jsx-a11y/aria-proptypes:
+        enabled: false
+      array-callback-return:
+        enabled: false
+      prefer-const:
+        enabled: false
+      require-jsdoc:
+        enabled: false
+      no-unused-expressions:
+        enabled: false
+      class-methods-use-this:
+        enabled: false
   stylelint:
     enabled: true
+  duplications:
+    enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 100
 ratings:
   paths:
     - "**.js"
@@ -26,3 +59,6 @@ ratings:
     - "**.scss"
 exclude_patterns:
   - "**/*.test.js"
+  - "**/css/"
+  - "**/js/"
+  - "**/__tests__/"

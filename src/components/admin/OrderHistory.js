@@ -1,38 +1,39 @@
 import React from "react";
-import { Table } from "reactstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { getAllOrders } from "../../actions/order";
+import { Alerts, OrderHistoryStatusData } from "../utils/stateLess";
 import CatererDashboard from "../dashboard/CatererDashboard";
 import Footer from "../dashboard/Footer";
-import { getAllOrders } from "../../actions/order";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Alerts } from "../utils/stateLess";
 
+/**
+ * @returns {Object} Renders an order history object
+ */
 export class OrderHistory extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      total: 0,
-      served: 0,
-      cancelled: 0,
-      pending: 0
-    };
-
     this.computeOrderTotals = this.computeOrderTotals.bind(this);
   }
 
+  /**
+   * @returns {Object} All Order statuses
+   */
   componentDidMount() {
     this.props.getAllOrders();
   }
 
+  /**
+   * @param {Object} orders made
+   * @returns {int} amount made by caterer
+   */
   computeOrderTotals(orders) {
-    var total = 0;
+    let total = 0;
     {
       orders &&
         orders.map(order => {
           if (order.status === "Served") {
-            total = total + order.meal.price;
+            total += order.meal.price;
           }
         });
     }
@@ -66,125 +67,25 @@ export class OrderHistory extends React.Component {
                 </ul>
                 <br />
                 <div className="tab-content">
-                <div className="tab-pane active" id="served" role="tabpanel">
 
-                  {
-                    this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Served" })).length > 0
-                    ?
+                  <div className="tab-pane active" id="served" role="tabpanel">
 
-                      <Table hover>
-                        <thead>
-                          <tr>
-                            <th>Meal</th>
-                            <th>Price (UGX)</th>
-                            <th>Menu</th>
-                            <th>Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                    <OrderHistoryStatusData orders={this.props.orders} status="Served" statusData={"No Served Orders."} />
 
-                        {orders &&
-                          orders.map(
-                            (order, index) =>
-
-                            order.status === "Served"
-                            ?
-                              <tr key={index}>
-                                  <td>{order.meal.meal}</td>
-                                  <td>{order.meal.price} UGX</td>
-                                  <td>{order.menu.name}</td>
-                                  <td>{order.date}</td>
-                              </tr>
-                            :
-                            null
-                        )}
-                        </tbody>
-                        </Table>
-
-                      :
-                        <Alerts
-                          alertInfo={"No Served Orders."}
-                          />
-                  }
-
-               </div>
-
-                <div className="tab-pane" id="pending" role="tabpanel">
-
-                  {
-                    this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Not Served" })).length > 0
-                    ?
-                      <Table hover>
-                        <thead>
-                          <tr>
-                            <th>Meal</th>
-                            <th>Price (UGX)</th>
-                            <th>Menu</th>
-                            <th>Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {orders &&
-                          orders.map(
-                            (order, index) =>
-
-                            order.status === "Not Served"
-                              ?
-                                <tr key={index}>
-                                    <td>{order.meal.meal}</td>
-                                    <td>{order.meal.price} UGX</td>
-                                    <td>{order.menu.name}</td>
-                                    <td>{order.date}</td>
-                                </tr>
-                              :
-                              null
-
-                          )}
-                          </tbody>
-                        </Table>
-
-                        :
-                        <Alerts alertInfo={"No Pending Orders."} />
-                  }
-
-                </div>
-
-                <div className="tab-pane" id="cancelled" role="tabpanel">
-                  {
-                    this.props.orders && (this.props.orders.filter(obj => { return obj.status === "Cancelled" })).length > 0
-                    ?
-                      <Table hover>
-                        <thead>
-                          <tr>
-                            <th>Meal</th>
-                            <th>Price (UGX)</th>
-                            <th>Menu</th>
-                            <th>Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {orders &&
-                          orders.map(
-                            (order, index) =>
-                            order.status === "Cancelled"
-                            ?
-                              <tr key={index}>
-                                  <td>{order.meal.meal}</td>
-                                  <td>{order.meal.price} UGX</td>
-                                  <td>{order.menu.name}</td>
-                                  <td>{order.date}</td>
-                              </tr>
-                            :
-                            null
-                          )}
-                          </tbody>
-                        </Table>
-                      :
-                      <Alerts
-                      alertInfo={"No Cancelled Orders."}
-                      />
-                    }
                   </div>
+
+                  <div className="tab-pane" id="pending" role="tabpanel">
+
+                    <OrderHistoryStatusData orders={this.props.orders} status="Not Served" statusData={"No Pending Orders."} />
+
+                  </div>
+
+                  <div className="tab-pane" id="cancelled" role="tabpanel">
+
+                    <OrderHistoryStatusData orders={this.props.orders} status="Cancelled" statusData={"No Cancelled Orders."} />
+
+                  </div>
+
                 </div>
               </div>
 
@@ -213,7 +114,6 @@ export class OrderHistory extends React.Component {
 }
 
 OrderHistory.propTypes = {
-  getAllOrders: PropTypes.func.isRequired,
   orders: PropTypes.arrayOf(
     PropTypes.shape({
       order_id: PropTypes.number.isRequired,
@@ -237,7 +137,8 @@ OrderHistory.propTypes = {
       date: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired
+  ).isRequired,
+  getAllOrders: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

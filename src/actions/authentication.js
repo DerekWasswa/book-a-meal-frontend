@@ -10,6 +10,16 @@ import axios from "axios";
 
 axios.defaults.baseURL = baseURL;
 
+function handleResponseError(error, dispatch) {
+  if (error.response) {
+    dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
+  }
+
+  if(error.request){
+    dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
+  }
+}
+
 export const registerUser = data => ({
   type: USER_REGISTERED,
   data
@@ -41,13 +51,7 @@ export const signUpUser = data => dispatch =>
     })
     .catch(function(error) {
       // handle error
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 
 export const loginUser = data => dispatch =>
@@ -62,13 +66,7 @@ export const loginUser = data => dispatch =>
     })
     .catch(function(error) {
       // handle error
-      if (error.response) {
-        dispatch(showError({message: error.response.data.message, status_code: error.response.status}));
-      }
-
-      if(error.request){
-        dispatch(showError({message: "Internet connection or Server Temporarily down! Try again again soon.", status_code: 500}));
-      }
+      handleResponseError(error, dispatch);
     });
 
 export const logoutUser = () => dispatch => {

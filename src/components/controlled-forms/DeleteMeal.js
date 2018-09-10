@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import $ from "jquery";
-import { ModalFooter } from "../utils/stateLess";
+import { ModalFooter, ModalHeader } from "../utils/stateLess";
 
 /**
  * @export
@@ -30,17 +30,8 @@ export class DeleteMeal extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title">Delete a Meal option</h4>
-            <button
-              className="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
+
+          <ModalHeader title={"Delete a Meal option"} />
 
           <div className="modal-body">
             <h4 className="text-danger">This operation cannot be undone!!!</h4>

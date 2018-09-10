@@ -4,7 +4,7 @@ import { shallow, mount } from "enzyme";
 import configureStore from 'redux-mock-store'
 import UserDashboard from "../dashboard/UserDashboard";
 import Footer from "../dashboard/Footer";
-import { Alerts } from "../utils/stateLess";
+import { Alerts, OrderHistoryStatusData } from "../utils/stateLess";
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import jwtDecode from "jwt-decode";
@@ -119,7 +119,7 @@ describe("<MyOrderHistory />", () => {
       status: "Cancelled"
      }];
 
-     getAllCustomerOrders = jest.fn()
+    getAllCustomerOrders = jest.fn()
 
     initialState = {
       orders: [{}]
@@ -159,6 +159,7 @@ describe("<MyOrderHistory />", () => {
 
     expect(wrapper.find(UserDashboard).length).toEqual(1);
     expect(wrapper.find(Footer).length).toEqual(1);
+    expect(wrapper.find(OrderHistoryStatusData).length).toEqual(3);
     expect(wrapper.find(Alerts).length).toEqual(0);
     expect(getAllCustomerOrders).toHaveBeenCalled();
     expect(jwtDecode).toBe(jwtDecode);

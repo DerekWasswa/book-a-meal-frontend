@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { NavItem, NavLink, Table } from "reactstrap";
+import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 
 export const LoginButtons = props => (
   <div className="row">
@@ -114,4 +116,102 @@ export const HTMLLink = props => <button>{props.name}</button>;
 
 export const Alerts = props => (
   <div className="alert alert-info">{props.alertInfo}</div>
+);
+
+export const DashboardLink = props => (
+  <LinkContainer to={props.location} activeClassName="active">
+    <NavItem className="">
+      <NavLink href={props.location}>{props.title}</NavLink>
+    </NavItem>
+  </LinkContainer>
+);
+
+export const DashboardIndexLink = props => (
+  <IndexLinkContainer to={props.location} activeClassName="active">
+    <NavItem className="">
+      <NavLink href={props.location}>{props.title}</NavLink>
+    </NavItem>
+  </IndexLinkContainer>
+);
+
+export const OrderHistoryStatusData = props => (
+
+    props.orders && (props.orders.filter(obj => { return obj.status === props.status })).length > 0
+    ?
+
+      <Table hover>
+        <thead>
+          <tr>
+            <th>Meal</th>
+            <th>Price (UGX)</th>
+            <th>Menu</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {props.orders &&
+          props.orders.map(
+            (order, index) =>
+
+            order.status === props.status
+            ?
+              <tr key={index}>
+                  <td>{order.meal.meal}</td>
+                  <td>{order.meal.price} UGX</td>
+                  <td>{order.menu.name}</td>
+                  <td>{order.date}</td>
+              </tr>
+            :
+            null
+        )}
+        </tbody>
+        </Table>
+
+      :
+        <Alerts
+          alertInfo={props.statusData}
+          />
+
+);
+
+
+export const CatererMenuTabs = props => (
+  <a
+    key={props.index}
+    className={props.itemClass}
+    id={"list-" + props.index + "-list"}
+    data-toggle="tab"
+    href={"#list-" + props.index}
+    role="tab"
+    aria-controls={"list-" + props.index}
+    aria-selected="true"
+    >
+    {props.name}
+  </a>
+);
+
+export const CustomerMenuDetails = props => (
+  <div>
+    <br />
+    <h4>Caterer</h4>
+
+    <div>Name: {props.vendor}</div>
+    <div>Email: {props.contact}</div>
+    <div>Menu: {props.name}</div>
+    <div>Description: {props.description}</div>
+    <div>Date: {props.date}</div>
+  </div>
+);
+
+export const CatererMenuDetails = props => (
+  <div>
+    <br />
+    <h4>Menu</h4>
+
+    <div>Name: {props.name}</div>
+    <div>Description: {props.description}</div>
+    <div>Date: {props.date}</div>
+    <br />
+  </div>
 );

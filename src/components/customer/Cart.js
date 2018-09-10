@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import jwtDecode from "jwt-decode";
 import { ModalHeader, Alerts } from "../utils/stateLess";
 import { notify } from "react-notify-toast";
+import { removeCartMealsIfMenuIsObsolete } from "../utils/helper";
 import $ from "jquery";
 
 
@@ -155,10 +156,7 @@ export class Cart extends React.Component {
   render() {
 
     // Check if the cart meals are not obsolote
-    if(localStorage.getItem('expiration') !== null && (Number(localStorage.getItem('expiration')) - Math.round(+new Date() / 1000)) < 1 ){
-        localStorage.removeItem("meals");
-        localStorage.removeItem("expiration");
-    }
+    removeCartMealsIfMenuIsObsolete();
 
     const { orders } = this.props;
 
