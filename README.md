@@ -11,7 +11,7 @@ An application that allows a user to make meal orders from various vendors
 ## UI Designs
 
 **Welcome Page**
-<img width="1672" alt="screen shot 2018-08-16 at 09 03 17" src="https://user-images.githubusercontent.com/9701272/44194804-cf6f7580-a13f-11e8-86a8-5498d75b7fc3.png">
+<img width="1675" alt="screen shot 2018-09-10 at 09 31 08" src="https://user-images.githubusercontent.com/9701272/45280302-7267a500-b4dc-11e8-84b5-652dbbdf73f5.png">
 
 **Registration Page**
 <img width="1671" alt="screen shot 2018-08-16 at 09 03 48" src="https://user-images.githubusercontent.com/9701272/44194805-cf6f7580-a13f-11e8-93e2-7a466e41cf22.png">
